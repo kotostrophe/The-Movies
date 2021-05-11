@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		02BF2A2F40D2894ADB9586A1 /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */; };
-		ED0EBA0025FCB01A00A20A4B /* Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED0EB9FF25FCB01A00A20A4B /* Identifiable.swift */; };
 		ED1A092925F4AF33008C656F /* ScrollableToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A092825F4AF33008C656F /* ScrollableToolbarView.swift */; };
 		ED1AF44825F3829F00811562 /* LibraryMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1AF44725F3829F00811562 /* LibraryMovieView.swift */; };
 		ED1AF44C25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1AF44B25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift */; };
@@ -59,7 +58,6 @@
 		3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90E61768D271DD64013A7F80 /* Pods-Movies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.debug.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.debug.xcconfig"; sourceTree = "<group>"; };
 		B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
-		ED0EB9FF25FCB01A00A20A4B /* Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Identifiable.swift; sourceTree = "<group>"; };
 		ED1A092825F4AF33008C656F /* ScrollableToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableToolbarView.swift; sourceTree = "<group>"; };
 		ED1AF44725F3829F00811562 /* LibraryMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMovieView.swift; sourceTree = "<group>"; };
 		ED1AF44B25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Identifiable.swift"; sourceTree = "<group>"; };
@@ -154,17 +152,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		ED1EE6B325F1721A00ADDCB8 /* ConfigurationFiles */ = {
-			isa = PBXGroup;
-			children = (
-				EDBA8ADF25F0EA05005BAF81 /* Assets.xcassets */,
-				EDBA8AE425F0EA05005BAF81 /* Info.plist */,
-				ED70077925FE3D930079B1E7 /* .swiftformat */,
-				ED70077A25FE3D930079B1E7 /* .swiftlint.yml */,
-			);
-			path = ConfigurationFiles;
-			sourceTree = "<group>";
-		};
 		ED34792925F3EABC00F46AE8 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -186,22 +173,15 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		ED74CA0225F2BC2100AC8AAF /* Presentation */ = {
+		ED74CA0225F2BC2100AC8AAF /* Screens */ = {
 			isa = PBXGroup;
 			children = (
 				EDBA4A8F25F6AE4F00DCCF60 /* Details */,
 				ED74CA0825F2BCB800AC8AAF /* Library */,
 				ED34792925F3EABC00F46AE8 /* Common */,
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
-		ED74CA0325F2BC2A00AC8AAF /* ScreenBuilder */ = {
-			isa = PBXGroup;
-			children = (
 				ED74CA0425F2BC3700AC8AAF /* ScreenBuilder.swift */,
 			);
-			path = ScreenBuilder;
+			path = Screens;
 			sourceTree = "<group>";
 		};
 		ED74CA0825F2BCB800AC8AAF /* Library */ = {
@@ -249,13 +229,13 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		ED87A8C725FCB7B9004DB404 /* Model */ = {
+		ED87A8C725FCB7B9004DB404 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
 				EDA033EF25F6220400EA173A /* Genre.swift */,
 				EDA033F725F641F800EA173A /* Movie.swift */,
 			);
-			path = Model;
+			path = Entities;
 			sourceTree = "<group>";
 		};
 		ED87A8CC25FCB8CC004DB404 /* Model */ = {
@@ -267,13 +247,41 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
+		EDA1B6D4264AEB7A00F96737 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EDBA8AE125F0EA05005BAF81 /* LaunchScreen.storyboard */,
+				EDBA8ADF25F0EA05005BAF81 /* Assets.xcassets */,
+				EDBA8AE425F0EA05005BAF81 /* Info.plist */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		EDA1B6D5264AEB8A00F96737 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				ED74CA0225F2BC2100AC8AAF /* Screens */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		EDA1B6D6264AEBA600F96737 /* Business */ = {
+			isa = PBXGroup;
+			children = (
+				EDD6311C25F6765900CF7112 /* Services */,
+				ED74C9F225F2B1BD00AC8AAF /* Coordinators */,
+			);
+			path = Business;
+			sourceTree = "<group>";
+		};
 		EDB6AC1C25FCA04200F470BE /* Application */ = {
 			isa = PBXGroup;
 			children = (
 				EDBA8AD625F0EA02005BAF81 /* AppDelegate.swift */,
 				EDBA8AD825F0EA02005BAF81 /* SceneDelegate.swift */,
-				EDBA8AE125F0EA05005BAF81 /* LaunchScreen.storyboard */,
-				ED1EE6B325F1721A00ADDCB8 /* ConfigurationFiles */,
+				ED87A8C725FCB7B9004DB404 /* Entities */,
+				EDA1B6D6264AEBA600F96737 /* Business */,
+				EDA1B6D5264AEB8A00F96737 /* Presentation */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -343,13 +351,11 @@
 			isa = PBXGroup;
 			children = (
 				EDB6AC1C25FCA04200F470BE /* Application */,
-				ED74CA0325F2BC2A00AC8AAF /* ScreenBuilder */,
-				ED74C9F225F2B1BD00AC8AAF /* Coordinators */,
-				EDD6311C25F6765900CF7112 /* Services */,
-				ED74CA0225F2BC2100AC8AAF /* Presentation */,
-				ED87A8C725FCB7B9004DB404 /* Model */,
+				EDA1B6D4264AEB7A00F96737 /* Resources */,
 				EDDD9C3725FB549000D67B6A /* Protocols */,
 				ED1AF44A25F38F0C00811562 /* Extensions */,
+				ED70077925FE3D930079B1E7 /* .swiftformat */,
+				ED70077A25FE3D930079B1E7 /* .swiftlint.yml */,
 			);
 			path = Movies;
 			sourceTree = "<group>";
@@ -377,7 +383,6 @@
 			isa = PBXGroup;
 			children = (
 				EDDD9C3825FB549F00D67B6A /* Sharable.swift */,
-				ED0EB9FF25FCB01A00A20A4B /* Identifiable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -536,7 +541,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint --config ${SRCROOT}/Application/.swiftlint.yml\"\n";
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -570,7 +575,6 @@
 				ED74C9F425F2B1CB00AC8AAF /* Coordinatable.swift in Sources */,
 				ED1AF44C25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift in Sources */,
 				ED48AD7825FCAECB0099E4B3 /* LibraryMovieModel.swift in Sources */,
-				ED0EBA0025FCB01A00A20A4B /* Identifiable.swift in Sources */,
 				EDBA4AA825F6B18A00DCCF60 /* DetailsCoordinator.swift in Sources */,
 				EDA033F025F6220400EA173A /* Genre.swift in Sources */,
 				EDA033F525F641CE00EA173A /* MovieResponse.swift in Sources */,
@@ -727,7 +731,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6G39DP6Y58;
-				INFOPLIST_FILE = "Movies/Application/Configuration Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Movies/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -747,7 +751,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 6G39DP6Y58;
-				INFOPLIST_FILE = "Movies/Application/Configuration Files/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Movies/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
