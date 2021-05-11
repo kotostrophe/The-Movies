@@ -76,7 +76,6 @@
 		ED74CA0F25F2BD6200AC8AAF /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
 		ED74CA1325F2BD8C00AC8AAF /* LibraryNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNetworkService.swift; sourceTree = "<group>"; };
 		ED74CA1825F2BFE600AC8AAF /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
-		ED844CCF25F954BC00266119 /* DetailsHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsHeaderView.swift; sourceTree = "<group>"; };
 		ED844CD225F9555D00266119 /* DetailsHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsHeaderModel.swift; sourceTree = "<group>"; };
 		ED9B393F25F4A8A400035982 /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		EDA033E725F6167500EA173A /* NetworkingRequestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingRequestDataModel.swift; sourceTree = "<group>"; };
@@ -134,14 +133,6 @@
 				B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */,
 			);
 			path = Pods;
-			sourceTree = "<group>";
-		};
-		ED089EE425FAA2EB0045239B /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				ED844CCF25F954BC00266119 /* DetailsHeaderView.swift */,
-			);
-			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		ED1AF44A25F38F0C00811562 /* Extensions */ = {
@@ -335,7 +326,6 @@
 				EDBA8AD425F0EA02005BAF81 /* Products */,
 				AADC62076697FED07F816C6F /* Pods */,
 				03B2BDC23B5DD69DF19BF33A /* Frameworks */,
-				ED089EE425FAA2EB0045239B /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
