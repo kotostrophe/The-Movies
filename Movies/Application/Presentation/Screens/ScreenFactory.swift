@@ -3,15 +3,15 @@
 
 import UIKit
 
-protocol ScreenBuilderProtocol: AnyObject {
-    static func buildLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController
-    static func buildDetails(movie: Movie, coordinator: DetailsCoordinatorProtocol) -> UIViewController
+protocol ScreenFactoryProtocol: AnyObject {
+    func makeLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController
+    func makeDetails(movie: Movie, coordinator: DetailsCoordinatorProtocol) -> UIViewController
 }
 
-final class ScreenBuilder: ScreenBuilderProtocol {
+final class ScreenFactory: ScreenFactoryProtocol {
     // MARK: - Methods
 
-    static func buildLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController {
+    func makeLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController {
         let model = LibraryModel()
         let imageProxyService = ImageProxyService.shared
         let genresProxyService = GenreProxyService.shared
@@ -26,7 +26,7 @@ final class ScreenBuilder: ScreenBuilderProtocol {
         )
     }
 
-    static func buildDetails(movie: Movie, coordinator: DetailsCoordinatorProtocol) -> UIViewController {
+    func makeDetails(movie: Movie, coordinator: DetailsCoordinatorProtocol) -> UIViewController {
         let model = DetailsModel(movie: movie, components: [.title, .info, .description])
         let imageProxyService = ImageProxyService.shared
         let genreProxyService = GenreProxyService.shared

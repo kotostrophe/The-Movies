@@ -8,22 +8,34 @@ protocol DetailsCoordinatorProtocol: Coordinatable {}
 final class DetailsCoordinator: DetailsCoordinatorProtocol {
     // MARK: - Properties
 
-    var coordinators: [Coordinatable] = []
-
-    let navigationController: UINavigationController
     let movie: Movie
+
+    var coordinators: [Coordinatable] = []
+    let navigationController: UINavigationController
+    let screenFactory: ScreenFactoryProtocol
 
     // MARK: - Initializer
 
-    init(navigationController: UINavigationController, movie: Movie) {
+    init(navigationController: UINavigationController, screenFactory: ScreenFactoryProtocol, movie: Movie) {
         self.navigationController = navigationController
+        self.screenFactory = screenFactory
         self.movie = movie
+    }
+
+    convenience init(navigationController: UINavigationController, movie: Movie) {
+        let screenFactory = ScreenFactory()
+        self.init(navigationController: navigationController, screenFactory: screenFactory, movie: movie)
+    }
+
+    convenience init(movie: Movie) {
+        let navigationController = UINavigationController()
+        self.init(navigationController: navigationController, movie: movie)
     }
 
     // MARK: - Methods
 
     func start() {
-        let viewController = ScreenBuilder.buildDetails(movie: movie, coordinator: self)
+        let viewController = screenFactory.makeDetails(movie: movie, coordinator: self)
         navigationController.pushViewController(viewController, animated: true)
     }
 }

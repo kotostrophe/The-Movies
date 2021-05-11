@@ -21,7 +21,7 @@
 		ED74C9F425F2B1CB00AC8AAF /* Coordinatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74C9F325F2B1CB00AC8AAF /* Coordinatable.swift */; };
 		ED74C9F825F2B22000AC8AAF /* ApplicationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74C9F725F2B22000AC8AAF /* ApplicationCoordinator.swift */; };
 		ED74C9FB25F2B4B900AC8AAF /* LibraryCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74C9FA25F2B4B900AC8AAF /* LibraryCoordinator.swift */; };
-		ED74CA0525F2BC3700AC8AAF /* ScreenBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA0425F2BC3700AC8AAF /* ScreenBuilder.swift */; };
+		ED74CA0525F2BC3700AC8AAF /* ScreenFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA0425F2BC3700AC8AAF /* ScreenFactory.swift */; };
 		ED74CA0B25F2BCD700AC8AAF /* LibraryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA0A25F2BCD700AC8AAF /* LibraryViewController.swift */; };
 		ED74CA1025F2BD6200AC8AAF /* LibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA0F25F2BD6200AC8AAF /* LibraryModel.swift */; };
 		ED74CA1425F2BD8C00AC8AAF /* LibraryNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA1325F2BD8C00AC8AAF /* LibraryNetworkService.swift */; };
@@ -71,7 +71,7 @@
 		ED74C9F325F2B1CB00AC8AAF /* Coordinatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinatable.swift; sourceTree = "<group>"; };
 		ED74C9F725F2B22000AC8AAF /* ApplicationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationCoordinator.swift; sourceTree = "<group>"; };
 		ED74C9FA25F2B4B900AC8AAF /* LibraryCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryCoordinator.swift; sourceTree = "<group>"; };
-		ED74CA0425F2BC3700AC8AAF /* ScreenBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenBuilder.swift; sourceTree = "<group>"; };
+		ED74CA0425F2BC3700AC8AAF /* ScreenFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenFactory.swift; sourceTree = "<group>"; };
 		ED74CA0A25F2BCD700AC8AAF /* LibraryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryViewController.swift; sourceTree = "<group>"; };
 		ED74CA0F25F2BD6200AC8AAF /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
 		ED74CA1325F2BD8C00AC8AAF /* LibraryNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNetworkService.swift; sourceTree = "<group>"; };
@@ -169,7 +169,7 @@
 				EDBA4A8F25F6AE4F00DCCF60 /* Details */,
 				ED74CA0825F2BCB800AC8AAF /* Library */,
 				ED34792925F3EABC00F46AE8 /* Common */,
-				ED74CA0425F2BC3700AC8AAF /* ScreenBuilder.swift */,
+				ED74CA0425F2BC3700AC8AAF /* ScreenFactory.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -559,7 +559,7 @@
 				EDA033F825F641F800EA173A /* Movie.swift in Sources */,
 				ED1AF44825F3829F00811562 /* LibraryMovieView.swift in Sources */,
 				EDE39C3925F60E4C00930182 /* NetworkingRequest.swift in Sources */,
-				ED74CA0525F2BC3700AC8AAF /* ScreenBuilder.swift in Sources */,
+				ED74CA0525F2BC3700AC8AAF /* ScreenFactory.swift in Sources */,
 				ED74CA0B25F2BCD700AC8AAF /* LibraryViewController.swift in Sources */,
 				ED74CA1425F2BD8C00AC8AAF /* LibraryNetworkService.swift in Sources */,
 				ED74C9F425F2B1CB00AC8AAF /* Coordinatable.swift in Sources */,
