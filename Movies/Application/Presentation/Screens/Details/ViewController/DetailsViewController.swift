@@ -8,7 +8,7 @@ final class DetailsViewController: UIViewController {
 
     let detailsImageProxyService: ImageProxyServiceProtocol
     let detailsGenreProxyService: GenreProxyServiceProtocol
-    let detailsCoordinator: DetailsFlow
+    let detailsCoordinator: DetailsCoordinatorProtocol
     let detailsModel: DetailsModel
 
     // MARK: - UI Properties
@@ -23,7 +23,7 @@ final class DetailsViewController: UIViewController {
         model: DetailsModel,
         imageProxyService: ImageProxyServiceProtocol,
         genreProxyService: GenreProxyServiceProtocol,
-        coordinator: DetailsFlow
+        coordinator: DetailsCoordinatorProtocol
     ) {
         detailsModel = model
         detailsImageProxyService = imageProxyService

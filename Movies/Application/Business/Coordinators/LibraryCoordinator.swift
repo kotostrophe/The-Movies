@@ -3,16 +3,17 @@
 
 import UIKit
 
-protocol LibraryFlow: Coordinatable {
+protocol LibraryCoordinatorProtocol: Coordinatable {
     func startDetails(movie: Movie)
     func startErrorAlert(error: Error)
 }
 
-final class LibraryCoordinator: LibraryFlow {
+final class LibraryCoordinator: LibraryCoordinatorProtocol {
     // MARK: - Properties
 
+    var coordinators: [Coordinatable] = []
+
     let navigationController: UINavigationController
-    var detailsCoordinator: DetailsFlow?
 
     // MARK: - Initializer
 
@@ -29,8 +30,8 @@ final class LibraryCoordinator: LibraryFlow {
 
     func startDetails(movie: Movie) {
         let detailsCoordinator = DetailsCoordinator(navigationController: navigationController, movie: movie)
-        self.detailsCoordinator = detailsCoordinator
         coordinate(to: detailsCoordinator)
+        coordinators.append(detailsCoordinator)
     }
 
     func startErrorAlert(error: Error) {

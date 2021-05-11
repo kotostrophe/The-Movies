@@ -156,7 +156,6 @@
 		ED74C9F225F2B1BD00AC8AAF /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
-				ED74C9F325F2B1CB00AC8AAF /* Coordinatable.swift */,
 				ED74C9F725F2B22000AC8AAF /* ApplicationCoordinator.swift */,
 				ED74C9FA25F2B4B900AC8AAF /* LibraryCoordinator.swift */,
 				EDBA4AA725F6B18A00DCCF60 /* DetailsCoordinator.swift */,
@@ -372,6 +371,7 @@
 		EDDD9C3725FB549000D67B6A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				ED74C9F325F2B1CB00AC8AAF /* Coordinatable.swift */,
 				EDDD9C3825FB549F00D67B6A /* Sharable.swift */,
 			);
 			path = Protocols;

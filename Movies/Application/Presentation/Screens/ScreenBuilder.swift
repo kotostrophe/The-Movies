@@ -4,14 +4,14 @@
 import UIKit
 
 protocol ScreenBuilderProtocol: AnyObject {
-    static func buildLibrary(coordinator: LibraryFlow) -> UIViewController
-    static func buildDetails(movie: Movie, coordinator: DetailsFlow) -> UIViewController
+    static func buildLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController
+    static func buildDetails(movie: Movie, coordinator: DetailsCoordinatorProtocol) -> UIViewController
 }
 
 final class ScreenBuilder: ScreenBuilderProtocol {
     // MARK: - Methods
 
-    static func buildLibrary(coordinator: LibraryFlow) -> UIViewController {
+    static func buildLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController {
         let model = LibraryModel()
         let imageProxyService = ImageProxyService.shared
         let genresProxyService = GenreProxyService.shared
@@ -26,7 +26,7 @@ final class ScreenBuilder: ScreenBuilderProtocol {
         )
     }
 
-    static func buildDetails(movie: Movie, coordinator: DetailsFlow) -> UIViewController {
+    static func buildDetails(movie: Movie, coordinator: DetailsCoordinatorProtocol) -> UIViewController {
         let model = DetailsModel(movie: movie, components: [.title, .info, .description])
         let imageProxyService = ImageProxyService.shared
         let genreProxyService = GenreProxyService.shared
