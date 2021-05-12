@@ -17,13 +17,15 @@ final class ScreenFactory: ScreenFactoryProtocol {
         let genresProxyService = GenreProxyService.shared
         let networkService = LibraryNetworkService()
 
-        return LibraryViewController(
+        let viewModel = LibraryViewModel(
             model: model,
             networkService: networkService,
             genreProxyService: genresProxyService,
             imageProxyService: imageProxyService,
             coordinator: coordinator
         )
+
+        return LibraryViewController(viewModel: viewModel)
     }
 
     func makeDetails(movie: Movie, coordinator: LibraryCoordinatorProtocol) -> UIViewController {

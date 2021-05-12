@@ -4,109 +4,68 @@
 import UIKit
 
 final class LibraryView: UIView {
+    // MARK: - Properties
+
+    let toolbarHeight: CGFloat = 64.0
+    let collectionViewContentInset: UIEdgeInsets = .init(top: 0, left: 8, bottom: 64 + 8, right: 0)
+
     // MARK: - UI Properties
 
-    let collectionView: UICollectionView
-    let segmentedControl: SegmentedControl
-    let toolbarView: ScrollableToolbarView
-
-    // MARK: - Initializer
-
-    required init() {
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: UICollectionViewFlowLayout())
-        toolbarView = ScrollableToolbarView()
-        segmentedControl = SegmentedControl()
-
-        super.init(frame: .zero)
-        placeComponents()
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    lazy var collectionView = makeCollectionView()
+    lazy var toolbarView = makeSegmentedToolbarView()
 
     // MARK: - Life cycle methods
 
     override func layoutSubviews() {
         super.layoutSubviews()
-
-        setComponents()
-        configureComponents()
-    }
-
-    // MARK: - UI Place methods
-
-    private func placeComponents() {
-        addSubview(collectionView)
-        addSubview(toolbarView)
-        toolbarView.scrollView.addSubview(segmentedControl)
-    }
-
-    // MARK: - UI Setup methods
-
-    private func setComponents() {
-        setView()
-        setCollectionViewComponent()
-        setToolbarViewComponent()
-        setToolbarSegmentedControlComponent()
-    }
-
-    private func setView() {
         backgroundColor = .systemBackground
-    }
 
-    private func setCollectionViewComponent() {
+        _ = collectionView
+        _ = toolbarView
+    }
+}
+
+private extension LibraryView {
+    func makeCollectionView() -> UICollectionView {
+        let layout = UICollectionViewFlowLayout()
+        layout.minimumLineSpacing = 0
+        layout.minimumInteritemSpacing = 0
+
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        addSubview(collectionView)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
         collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+
+        collectionView.backgroundColor = .clear
+        collectionView.contentInset.left = collectionViewContentInset.left
+        collectionView.contentInset.right = collectionViewContentInset.right
+        collectionView.contentInset.top = collectionViewContentInset.top
+        collectionView.contentInset.bottom = collectionViewContentInset.bottom
+        collectionView.verticalScrollIndicatorInsets.bottom = toolbarView.frame.height
+
+        return collectionView
     }
 
-    private func setToolbarViewComponent() {
+    func makeSegmentedToolbarView() -> SegmentedScrollableToolbarView {
+        let toolbarView = SegmentedScrollableToolbarView()
+        addSubview(toolbarView)
         toolbarView.translatesAutoresizingMaskIntoConstraints = false
         toolbarView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
         toolbarView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
         toolbarView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        toolbarView.heightAnchor.constraint(equalToConstant: 64).isActive = true
+        toolbarView.heightAnchor.constraint(equalToConstant: toolbarHeight).isActive = true
         toolbarView.scrollView.contentLayoutGuide.heightAnchor.constraint(equalTo: toolbarView.heightAnchor)
             .isActive = true
         toolbarView.scrollView.contentLayoutGuide.widthAnchor
             .constraint(greaterThanOrEqualTo: toolbarView.scrollView.frameLayoutGuide.widthAnchor)
             .isActive = true
-    }
 
-    private func setToolbarSegmentedControlComponent() {
-        let scrollViewContent = toolbarView.scrollView.contentLayoutGuide
-
-        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        segmentedControl.leadingAnchor.constraint(equalTo: scrollViewContent.leadingAnchor, constant: 16)
-            .isActive = true
-        segmentedControl.trailingAnchor.constraint(equalTo: scrollViewContent.trailingAnchor, constant: -16)
-            .isActive = true
-        segmentedControl.topAnchor.constraint(equalTo: scrollViewContent.topAnchor, constant: 12)
-            .isActive = true
-        segmentedControl.bottomAnchor.constraint(equalTo: scrollViewContent.bottomAnchor, constant: -12).isActive = true
-    }
-
-    // MARK: - UI Configure methods
-
-    private func configureComponents() {
-        configureCollectionViewComponent()
-        configureToolbarComponent()
-    }
-
-    private func configureCollectionViewComponent() {
-        collectionView.backgroundColor = .clear
-        collectionView.contentInset.left = 8
-        collectionView.contentInset.right = 8
-        collectionView.contentInset.bottom = toolbarView.frame.height + 8
-        collectionView.verticalScrollIndicatorInsets.bottom = toolbarView.frame.height
-    }
-
-    private func configureToolbarComponent() {
         toolbarView.scrollView.showsVerticalScrollIndicator = false
         toolbarView.scrollView.showsHorizontalScrollIndicator = false
+
+        return toolbarView
     }
 }
