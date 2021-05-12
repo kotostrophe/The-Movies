@@ -3,14 +3,14 @@
 
 import UIKit
 
-protocol ApplicationFlow: Coordinatable {}
+protocol ApplicationCoordiantorProtocol: Coordinatable {}
 
-final class ApplicationCoordiantor: ApplicationFlow {
+final class ApplicationCoordiantor: ApplicationCoordiantorProtocol {
     // MARK: - Properties
 
-    weak var window: UIWindow?
+    var coordinators: [Coordinatable] = []
 
-    var libraryCoordinator: LibraryFlow?
+    weak var window: UIWindow?
 
     // MARK: - Initializer
 
@@ -23,8 +23,8 @@ final class ApplicationCoordiantor: ApplicationFlow {
     func start() {
         let navigationController = UINavigationController()
         let libraryCoordinator = LibraryCoordinator(navigationController: navigationController)
-        self.libraryCoordinator = libraryCoordinator
         coordinate(to: libraryCoordinator)
+        coordinators.append(libraryCoordinator)
 
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()

@@ -4,6 +4,8 @@
 import Foundation
 
 protocol Coordinatable: AnyObject {
+    var coordinators: [Coordinatable] { get }
+
     func start()
     func coordinate(to coordinator: Coordinatable)
 }

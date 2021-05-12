@@ -9,7 +9,7 @@ final class LibraryViewController: UIViewController {
     let libraryNetworkService: LibraryNetworkServiceProtocol
     let libraryImageProxyService: ImageProxyServiceProtocol
     let libraryGenreProxyService: GenreProxyServiceProtocol
-    let libraryCoordinator: LibraryFlow
+    let libraryCoordinator: LibraryCoordinatorProtocol
     var libraryModel: LibraryModel
 
     // MARK: - UI Properties
@@ -25,7 +25,7 @@ final class LibraryViewController: UIViewController {
         networkService: LibraryNetworkServiceProtocol,
         genreProxyService: GenreProxyServiceProtocol,
         imageProxyService: ImageProxyServiceProtocol,
-        coordinator: LibraryFlow
+        coordinator: LibraryCoordinatorProtocol
     ) {
         libraryModel = model
         libraryNetworkService = networkService

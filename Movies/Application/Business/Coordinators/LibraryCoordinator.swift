@@ -3,34 +3,46 @@
 
 import UIKit
 
-protocol LibraryFlow: Coordinatable {
+protocol LibraryCoordinatorProtocol: Coordinatable {
     func startDetails(movie: Movie)
     func startErrorAlert(error: Error)
 }
 
-final class LibraryCoordinator: LibraryFlow {
+final class LibraryCoordinator: LibraryCoordinatorProtocol {
     // MARK: - Properties
 
+    var coordinators: [Coordinatable] = []
+
     let navigationController: UINavigationController
-    var detailsCoordinator: DetailsFlow?
+    let screenFactory: ScreenFactoryProtocol
 
     // MARK: - Initializer
 
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController, screenFactory: ScreenFactoryProtocol) {
         self.navigationController = navigationController
+        self.screenFactory = screenFactory
+    }
+
+    convenience init(navigationController: UINavigationController) {
+        let screenFactory = ScreenFactory()
+        self.init(navigationController: navigationController, screenFactory: screenFactory)
+    }
+
+    convenience init() {
+        let navigationController = UINavigationController()
+        self.init(navigationController: navigationController)
     }
 
     // MARK: - Methods
 
     func start() {
-        let viewController = ScreenBuilder.buildLibrary(coordinator: self)
-        navigationController.setViewControllers([viewController], animated: false)
+        let viewController = screenFactory.makeLibrary(coordinator: self)
+        navigationController.setViewControllers([viewController], animated: true)
     }
 
     func startDetails(movie: Movie) {
-        let detailsCoordinator = DetailsCoordinator(navigationController: navigationController, movie: movie)
-        self.detailsCoordinator = detailsCoordinator
-        coordinate(to: detailsCoordinator)
+        let viewController = screenFactory.makeDetails(movie: movie, coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
     }
 
     func startErrorAlert(error: Error) {

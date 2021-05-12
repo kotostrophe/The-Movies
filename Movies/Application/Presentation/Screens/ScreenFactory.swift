@@ -1,17 +1,17 @@
-// ScreenBuilder.swift
+// ScreenFactory.swift
 // Copyright © Taras Kotsur. All rights reserved.
 
 import UIKit
 
-protocol ScreenBuilderProtocol: AnyObject {
-    static func buildLibrary(coordinator: LibraryFlow) -> UIViewController
-    static func buildDetails(movie: Movie, coordinator: DetailsFlow) -> UIViewController
+protocol ScreenFactoryProtocol: AnyObject {
+    func makeLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController
+    func makeDetails(movie: Movie, coordinator: LibraryCoordinatorProtocol) -> UIViewController
 }
 
-final class ScreenBuilder: ScreenBuilderProtocol {
+final class ScreenFactory: ScreenFactoryProtocol {
     // MARK: - Methods
 
-    static func buildLibrary(coordinator: LibraryFlow) -> UIViewController {
+    func makeLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController {
         let model = LibraryModel()
         let imageProxyService = ImageProxyService.shared
         let genresProxyService = GenreProxyService.shared
@@ -26,7 +26,7 @@ final class ScreenBuilder: ScreenBuilderProtocol {
         )
     }
 
-    static func buildDetails(movie: Movie, coordinator: DetailsFlow) -> UIViewController {
+    func makeDetails(movie: Movie, coordinator: LibraryCoordinatorProtocol) -> UIViewController {
         let model = DetailsModel(movie: movie, components: [.title, .info, .description])
         let imageProxyService = ImageProxyService.shared
         let genreProxyService = GenreProxyService.shared
