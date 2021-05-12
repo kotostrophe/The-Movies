@@ -41,9 +41,8 @@ final class LibraryCoordinator: LibraryCoordinatorProtocol {
     }
 
     func startDetails(movie: Movie) {
-        let detailsCoordinator = DetailsCoordinator(navigationController: navigationController, movie: movie)
-        coordinate(to: detailsCoordinator)
-        coordinators.append(detailsCoordinator)
+        let viewController = screenFactory.makeDetails(movie: movie, coordinator: self)
+        navigationController.pushViewController(viewController, animated: true)
     }
 
     func startErrorAlert(error: Error) {
