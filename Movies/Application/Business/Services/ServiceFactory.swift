@@ -17,8 +17,8 @@ final class ServiceFactory: ServiceFactoryProtocol {
     func makeProxiesFactory() -> ProxiesFactoryProtocol {
         ProxiesFactory()
     }
-    
+
     func makeImageFileService() -> ImageFileServiceProtocol {
-        return ImageFileService()
+        ImageFileService()
     }
 }

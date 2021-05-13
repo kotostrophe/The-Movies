@@ -10,6 +10,7 @@
 		02BF2A2F40D2894ADB9586A1 /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */; };
 		ED08A6ED264D8E150024F718 /* ImageFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08A6EC264D8E150024F718 /* ImageFileService.swift */; };
 		ED08A6F6264D9D6D0024F718 /* String+Trimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08A6F5264D9D6D0024F718 /* String+Trimmer.swift */; };
+		ED08A6FA264D9FAC0024F718 /* ImageNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08A6F9264D9FAC0024F718 /* ImageNetworkService.swift */; };
 		ED14860F264CFED2006EA303 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED14860E264CFED2006EA303 /* ServiceFactory.swift */; };
 		ED148615264CFFC0006EA303 /* GenreNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED148614264CFFC0006EA303 /* GenreNetworkService.swift */; };
 		ED18B05E264CEC7600B1D8FA /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED18B05D264CEC7600B1D8FA /* CategoryView.swift */; };
@@ -75,6 +76,7 @@
 		B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
 		ED08A6EC264D8E150024F718 /* ImageFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileService.swift; sourceTree = "<group>"; };
 		ED08A6F5264D9D6D0024F718 /* String+Trimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Trimmer.swift"; sourceTree = "<group>"; };
+		ED08A6F9264D9FAC0024F718 /* ImageNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageNetworkService.swift; sourceTree = "<group>"; };
 		ED14860E264CFED2006EA303 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		ED148614264CFFC0006EA303 /* GenreNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreNetworkService.swift; sourceTree = "<group>"; };
 		ED18B05D264CEC7600B1D8FA /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -171,6 +173,14 @@
 				ED08A6EC264D8E150024F718 /* ImageFileService.swift */,
 			);
 			path = ImageFileService;
+			sourceTree = "<group>";
+		};
+		ED08A6F8264D9F9F0024F718 /* ImageNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				ED08A6F9264D9FAC0024F718 /* ImageNetworkService.swift */,
+			);
+			path = ImageNetworkService;
 			sourceTree = "<group>";
 		};
 		ED148612264CFF83006EA303 /* Core */ = {
@@ -627,6 +637,7 @@
 		EDF7AD8D264D0527004A74A2 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				ED08A6F8264D9F9F0024F718 /* ImageNetworkService */,
 				ED148613264CFFA8006EA303 /* GenreNetworkService */,
 				ED74CA1225F2BD7500AC8AAF /* LibraryNetworking */,
 				EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */,
@@ -811,6 +822,7 @@
 				EDF7AD89264D0199004A74A2 /* NetworkingRequestHeaders.swift in Sources */,
 				ED9B394025F4A8A400035982 /* ToolbarView.swift in Sources */,
 				EDE39C3625F60A2100930182 /* NetworkingEnvironment.swift in Sources */,
+				ED08A6FA264D9FAC0024F718 /* ImageNetworkService.swift in Sources */,
 				ED74CA1925F2BFE600AC8AAF /* LibraryView.swift in Sources */,
 				ED148615264CFFC0006EA303 /* GenreNetworkService.swift in Sources */,
 				ED42B44825FAABF20045F2AC /* DetailsTitleView.swift in Sources */,

@@ -10,14 +10,14 @@ protocol ImageProxyServiceProtocol: AnyObject {
 final class ImageProxyService: ImageProxyServiceProtocol {
     // MARK: - Properties
 
-    let networkService: NetworkingProtocol
+    let networkService: ImageNetworkServiceProtocol
     let fileService: ImageFileServiceProtocol
     var cacheDictionary: [String: Data]
 
     // MARK: - Initializer
 
     private init(
-        networkService: NetworkingProtocol,
+        networkService: ImageNetworkServiceProtocol,
         fileService: ImageFileServiceProtocol,
         cacheDictionary: [String: Data]
     ) {
@@ -40,17 +40,16 @@ final class ImageProxyService: ImageProxyServiceProtocol {
                 completion(data)
 
             case .none:
-                let request = NetworkingRequest.request(method: .get, route: "/" + path)
-                networkService.perform(request: request, completion: { [weak self] response in
-                    switch response {
-                    case let .data(data):
-                        self?.cacheDictionary[path] = data
-                        try? self?.fileService.save(data: data, with: path)
-                        completion(data)
-
-                    case .error:
+                networkService.fetchImage(by: path, completion: { [weak self] data in
+                    guard let self = self else { return }
+                    guard let data = data else {
                         completion(nil)
+                        return
                     }
+
+                    self.cacheDictionary[path] = data
+                    try? self.fileService.save(data: data, with: path)
+                    completion(data)
                 })
             }
         }
@@ -59,11 +58,10 @@ final class ImageProxyService: ImageProxyServiceProtocol {
 
 extension ImageProxyService: Shareble {
     static let shared: ImageProxyServiceProtocol = {
-        let environment = NetworkingEnvironment.images
-        let network = Networking(environment: environment)
+        let networkService = ImageNetworkService.shared
         let fileService = ImageFileService()
         let cache = [String: Data]()
 
-        return ImageProxyService(networkService: network, fileService: fileService, cacheDictionary: cache)
+        return ImageProxyService(networkService: networkService, fileService: fileService, cacheDictionary: cache)
     }()
 }
