@@ -35,6 +35,8 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     let genreProxyService: GenreProxyServiceProtocol
     let coordinator: LibraryCoordinatorProtocol
 
+    let cd = LibraryCoreDataService(coreData: CoreData.shared)
+
     var movies: [Movie] {
         model.movies
     }
@@ -61,6 +63,10 @@ final class LibraryViewModel: LibraryViewModelProtocol {
         self.genreProxyService = genreProxyService
         self.imageProxyService = imageProxyService
         self.coordinator = coordinator
+
+        cd.fetchMovies(completion: {
+            print($0)
+        })
     }
 
     // MARK: - Methods
@@ -84,6 +90,9 @@ final class LibraryViewModel: LibraryViewModelProtocol {
             switch result {
             case let .success(movies):
                 self.model.movies = movies
+
+                self.cd.save(movies: movies)
+
                 DispatchQueue.main.async {
                     self.didUpdateMovies?(movies)
                 }
