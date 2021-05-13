@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		02BF2A2F40D2894ADB9586A1 /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */; };
+		ED08A6ED264D8E150024F718 /* ImageFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08A6EC264D8E150024F718 /* ImageFileService.swift */; };
+		ED08A6F6264D9D6D0024F718 /* String+Trimmer.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED08A6F5264D9D6D0024F718 /* String+Trimmer.swift */; };
 		ED14860F264CFED2006EA303 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED14860E264CFED2006EA303 /* ServiceFactory.swift */; };
 		ED148615264CFFC0006EA303 /* GenreNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED148614264CFFC0006EA303 /* GenreNetworkService.swift */; };
 		ED18B05E264CEC7600B1D8FA /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED18B05D264CEC7600B1D8FA /* CategoryView.swift */; };
@@ -71,6 +73,8 @@
 		3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90E61768D271DD64013A7F80 /* Pods-Movies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.debug.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.debug.xcconfig"; sourceTree = "<group>"; };
 		B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
+		ED08A6EC264D8E150024F718 /* ImageFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFileService.swift; sourceTree = "<group>"; };
+		ED08A6F5264D9D6D0024F718 /* String+Trimmer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Trimmer.swift"; sourceTree = "<group>"; };
 		ED14860E264CFED2006EA303 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
 		ED148614264CFFC0006EA303 /* GenreNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreNetworkService.swift; sourceTree = "<group>"; };
 		ED18B05D264CEC7600B1D8FA /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
@@ -161,6 +165,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		ED08A6EA264D8DFC0024F718 /* ImageFileService */ = {
+			isa = PBXGroup;
+			children = (
+				ED08A6EC264D8E150024F718 /* ImageFileService.swift */,
+			);
+			path = ImageFileService;
+			sourceTree = "<group>";
+		};
 		ED148612264CFF83006EA303 /* Core */ = {
 			isa = PBXGroup;
 			children = (
@@ -184,6 +196,7 @@
 				ED734574264C70F3002B9C26 /* Collection+SafeSubscript.swift */,
 				ED690525264CF60300C543F0 /* Date+DateFormatter.swift */,
 				ED18B061264CF55400B1D8FA /* String+DateFormatter.swift */,
+				ED08A6F5264D9D6D0024F718 /* String+Trimmer.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -546,6 +559,7 @@
 		EDD6311C25F6765900CF7112 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				ED08A6EA264D8DFC0024F718 /* ImageFileService */,
 				EDF7AD8D264D0527004A74A2 /* Networking */,
 				EDF7AD8C264D0515004A74A2 /* Proxies */,
 				ED14860E264CFED2006EA303 /* ServiceFactory.swift */,
@@ -780,11 +794,13 @@
 				EDF7AD8F264D0542004A74A2 /* NetworkingFactory.swift in Sources */,
 				ED74CA0525F2BC3700AC8AAF /* ScreenFactory.swift in Sources */,
 				EDF7AD92264D05DC004A74A2 /* ProxiesFactory.swift in Sources */,
+				ED08A6ED264D8E150024F718 /* ImageFileService.swift in Sources */,
 				EDF7AD8A264D0199004A74A2 /* NetworkingResponse.swift in Sources */,
 				ED74CA0B25F2BCD700AC8AAF /* LibraryViewController.swift in Sources */,
 				ED74CA1425F2BD8C00AC8AAF /* LibraryNetworkService.swift in Sources */,
 				ED74C9F425F2B1CB00AC8AAF /* Coordinatable.swift in Sources */,
 				ED1AF44C25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift in Sources */,
+				ED08A6F6264D9D6D0024F718 /* String+Trimmer.swift in Sources */,
 				ED48AD7825FCAECB0099E4B3 /* LibraryMovieModel.swift in Sources */,
 				EDA033F025F6220400EA173A /* Genre.swift in Sources */,
 				ED690526264CF60300C543F0 /* Date+DateFormatter.swift in Sources */,

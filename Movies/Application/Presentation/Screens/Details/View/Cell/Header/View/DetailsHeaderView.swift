@@ -67,7 +67,8 @@ extension DetailsHeaderView {
         imageView.clipsToBounds = true
         imageView.backgroundColor = .secondarySystemBackground
 
-        detailImageProxyService.getImage(by: detailHeaderModel.imagePath ?? "", completion: { [weak self] data in
+        guard let posterPath = detailHeaderModel.imagePath?.trimLast("/") else { return }
+        detailImageProxyService.getImage(by: posterPath, completion: { [weak self] data in
             guard let self = self else { return }
             guard let data = data else { return }
 
