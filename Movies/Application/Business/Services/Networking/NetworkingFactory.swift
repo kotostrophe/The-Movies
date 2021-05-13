@@ -16,4 +16,8 @@ final class NetworkingFactory: NetworkingFactoryProtocol {
     func makeLibraryNetworkingService() -> LibraryNetworkServiceProtocol {
         LibraryNetworkService()
     }
+    
+    func makeImageNetworkService() -> ImageNetworkServiceProtocol {
+        ImageNetworkService.shared
+    }
 }
