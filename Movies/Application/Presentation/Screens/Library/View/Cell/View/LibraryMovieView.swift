@@ -11,29 +11,11 @@ final class LibraryMovieView: UICollectionViewCell {
 
     // MARK: - UI Properties
 
-    private let padding: CGFloat = 8
+    private let padding: UIEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
 
-    private let stackView: UIStackView
-
-    let imageView: UIImageView
-    let titleLabel: UILabel
-
-    // MARK: - Initializer
-
-    override required init(frame: CGRect) {
-        imageView = UIImageView()
-        titleLabel = UILabel()
-
-        stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
-        super.init(frame: frame)
-
-        placeComponents()
-    }
-
-    @available(*, unavailable)
-    required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private lazy var stackView: UIStackView = makeStacKView()
+    lazy var imageView: UIImageView = makeImageView()
+    lazy var titleLabel: UILabel = makeTitleLabel()
 
     // MARK: - Life cycle methods
 
@@ -47,57 +29,7 @@ final class LibraryMovieView: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
 
-        setComponents()
-        configureComponents()
-    }
-
-    // MARK: - UI Place methods
-
-    private func placeComponents() {
-        addSubview(stackView)
-    }
-
-    // MARK: - UI Setup methods
-
-    private func setComponents() {
-        setStackViewComponent()
-    }
-
-    private func setStackViewComponent() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding).isActive = true
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding).isActive = true
-    }
-
-    // MARK: - UI Configure methods
-
-    private func configureComponents() {
-        configureStackView()
-        configureImageViewComponent()
-        configureTitleLabelComponent()
-    }
-
-    private func configureStackView() {
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = 4
-    }
-
-    private func configureImageViewComponent() {
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 8
-        imageView.backgroundColor = .secondarySystemBackground
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-    }
-
-    private func configureTitleLabelComponent() {
-        titleLabel.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        titleLabel.numberOfLines = 0
-        titleLabel.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        _ = stackView
     }
 
     // MARK: - Configuration methods
@@ -113,5 +45,43 @@ final class LibraryMovieView: UICollectionViewCell {
                 self?.imageView.image = UIImage(data: data)
             }
         })
+    }
+}
+
+extension LibraryMovieView {
+    func makeStacKView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
+        addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.left).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding.right).isActive = true
+        stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom).isActive = true
+
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = 4
+        return stackView
+    }
+
+    func makeImageView() -> UIImageView {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = 8
+        imageView.backgroundColor = .secondarySystemBackground
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        return imageView
+    }
+
+    func makeTitleLabel() -> UILabel {
+        let label = UILabel()
+
+        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
+        label.numberOfLines = 0
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+
+        return label
     }
 }
