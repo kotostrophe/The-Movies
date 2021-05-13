@@ -9,13 +9,28 @@ protocol ScreenFactoryProtocol: AnyObject {
 }
 
 final class ScreenFactory: ScreenFactoryProtocol {
+    // MARK: - Properties
+
+    let serviceFactory: ServiceFactoryProtocol
+
+    // MARK: - Initializer
+
+    init(serviceFactory: ServiceFactoryProtocol) {
+        self.serviceFactory = serviceFactory
+    }
+
+    convenience init() {
+        let serviceFactory = ServiceFactory()
+        self.init(serviceFactory: serviceFactory)
+    }
+
     // MARK: - Methods
 
     func makeLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController {
         let model = LibraryModel()
-        let imageProxyService = ImageProxyService.shared
-        let genresProxyService = GenreProxyService.shared
-        let networkService = LibraryNetworkService()
+        let imageProxyService = serviceFactory.makeProxiesFactory().makeImageProxyService()
+        let genresProxyService = serviceFactory.makeProxiesFactory().makeGenreProxyService()
+        let networkService = serviceFactory.makeNetworkingFactory().makeLibraryNetworkingService()
 
         let viewModel = LibraryViewModel(
             model: model,
@@ -29,8 +44,8 @@ final class ScreenFactory: ScreenFactoryProtocol {
     }
 
     func makeDetails(movie: Movie, coordinator: LibraryCoordinatorProtocol) -> UIViewController {
-        let imageProxyService = ImageProxyService.shared
-        let genreProxyService = GenreProxyService.shared
+        let imageProxyService = serviceFactory.makeProxiesFactory().makeImageProxyService()
+        let genreProxyService = serviceFactory.makeProxiesFactory().makeGenreProxyService()
 
         let viewModel = DetailsViewModel(
             movie: movie,

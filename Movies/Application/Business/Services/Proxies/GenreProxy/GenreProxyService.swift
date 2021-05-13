@@ -11,12 +11,12 @@ protocol GenreProxyServiceProtocol: AnyObject {
 final class GenreProxyService: GenreProxyServiceProtocol {
     // MARK: - Properties
 
-    let networkService: NetworkingProtocol
+    let networkService: GenreNetworkServiceProtocol
     var cacheDictionary: [Int: Genre]
 
     // MARK: - Initializer
 
-    private init(networkService: NetworkingProtocol, cacheDictionary: [Int: Genre]) {
+    private init(networkService: GenreNetworkServiceProtocol, cacheDictionary: [Int: Genre]) {
         self.networkService = networkService
         self.cacheDictionary = cacheDictionary
     }
@@ -38,25 +38,15 @@ final class GenreProxyService: GenreProxyServiceProtocol {
         if !data.isEmpty {
             completion(data)
         } else {
-            let params: [String: String] = [
-                "api_key": "5fc2771c0dd981e40a71bb09d876d946",
-                "language": "en-US",
-            ]
-
-            let request = NetworkingRequest.request(method: .get, route: "/genre/movie/list", parameters: params)
-            networkService.perform(request: request, completion: { [weak self] result in
+            networkService.fetchGenres(completion: { [weak self] result in
+                guard let self = self else { return }
                 switch result {
-                case let .success(data):
-                    guard let response = try? JSONDecoder().decode(GenreResponse.self, from: data) else {
-                        completion(nil)
-                        return
+                case let .success(genres):
+                    genres.forEach {
+                        self.cacheDictionary[$0.id] = $0
                     }
 
-                    completion(response.genres)
-
-                    response.genres.forEach {
-                        self?.cacheDictionary[$0.id] = $0
-                    }
+                    completion(genres)
 
                 case .failure:
                     completion(nil)
@@ -69,7 +59,7 @@ final class GenreProxyService: GenreProxyServiceProtocol {
 extension GenreProxyService: Shareble {
     static let shared: GenreProxyServiceProtocol = {
         let environment = NetworkingEnvironment.base
-        let network = Networking(environment: environment)
+        let network = GenreNetworkService()
         let cache = [Int: Genre]()
 
         return GenreProxyService(networkService: network, cacheDictionary: cache)

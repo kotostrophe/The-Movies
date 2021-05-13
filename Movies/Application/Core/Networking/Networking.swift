@@ -13,13 +13,10 @@ enum NetworkError: Error {
 protocol NetworkingProtocol: AnyObject {
     var environment: NetworkingEnvironment { get }
 
-    func perform(
-        request: NetworkingRequestProtocol,
-        completion: @escaping (Result<Data, Error>) -> Void
-    )
+    func perform(request: NetworkingRequestDataModel, completion: @escaping (NetworkingRawResponse) -> Void)
 }
 
-/// Manages networking
+/// Manage networking
 class Networking: NetworkingProtocol {
     // MARK: - Properties
 
@@ -34,51 +31,50 @@ class Networking: NetworkingProtocol {
     // MARK: - Methods
 
     func perform(
-        request: NetworkingRequestProtocol,
-        completion: @escaping (Result<Data, Error>) -> Void
+        request: NetworkingRequestDataModel,
+        completion: @escaping (NetworkingRawResponse) -> Void
     ) {
-        guard let request = buildRequest(with: request.requestModel) else {
-            completion(.failure(NetworkError.failToPrepareRequest))
+        guard let request = buildRequest(with: request) else {
+            completion(.error(NetworkError.failToPrepareRequest))
             return
         }
 
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
-                completion(.failure(error))
+                completion(.error(error))
                 return
             }
 
             if let data = data {
-                completion(.success(data))
+                completion(.data(data))
                 return
             }
 
-            completion(.failure(NetworkError.somethingWentWrong(response)))
+            completion(.error(NetworkError.somethingWentWrong(response)))
         }).resume()
     }
 
     // MARK: - Preparation methods
 
     private func buildRequest(with requestData: NetworkingRequestDataModel) -> URLRequest? {
-        guard let url = buildURL(environment, route: requestData.route, parameters: requestData.parameters ?? [:])
+        guard let url = buildURL(environment, route: requestData.route, parameters: requestData.parameters)
         else { return nil }
+
         var request = URLRequest(url: url)
         request.httpMethod = requestData.method.rawValue
         request.httpBody = requestData.method == .get ? nil : buildBody(requestData.body ?? [:])
         request.allHTTPHeaderFields = requestData.headers
-
         return request
     }
 
-    private func buildURL(_ enviroment: NetworkingEnvironment, route: String, parameters: [String: String]) -> URL? {
-        let queries: [URLQueryItem] = parameters.map {
-            URLQueryItem(name: $0.key, value: $0.value)
-        }
-
+    private func buildURL(_ enviroment: NetworkingEnvironment, route: String, parameters: [String: String]?) -> URL? {
         guard let enviromentURL = enviroment.url?.absoluteString else { return nil }
         let url = [enviromentURL, route].joined()
 
         var urlComponents = URLComponents(string: url)
+        guard let queries = parameters?.compactMap({ URLQueryItem(name: $0.key, value: $0.value) })
+        else { return urlComponents?.url }
+
         urlComponents?.queryItems = queries
         return urlComponents?.url
     }

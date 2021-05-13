@@ -34,18 +34,16 @@ final class LibraryNetworkService: LibraryNetworkServiceProtocol {
         }
 
         let request = NetworkingRequest.request(method: .get, route: "/discover/movie", parameters: params)
-        Networking.shared.perform(request: request, completion: { result in
-            switch result {
-            case let .success(data):
-                guard let response = try? JSONDecoder().decode(MovieResponse.self, from: data) else {
-                    completion(.failure(LibraryNetworkServiceError.failToDecode))
-                    return
-                }
-                completion(.success(response.movies))
+        Networking.shared.perform(request: request, completion: { response in
+            response.decode(MovieResponse.self, completion: { result in
+                switch result {
+                case let .data(data):
+                    completion(.success(data.movies))
 
-            case let .failure(error):
-                completion(.failure(error))
-            }
+                case let .error(error):
+                    completion(.failure(error))
+                }
+            })
         })
     }
 
@@ -60,18 +58,16 @@ final class LibraryNetworkService: LibraryNetworkServiceProtocol {
         ]
 
         let request = NetworkingRequest.request(method: .get, route: "/search/movie", parameters: params)
-        Networking.shared.perform(request: request, completion: { result in
-            switch result {
-            case let .success(data):
-                guard let response = try? JSONDecoder().decode(MovieResponse.self, from: data) else {
-                    completion(.failure(LibraryNetworkServiceError.failToDecode))
-                    return
-                }
-                completion(.success(response.movies))
+        Networking.shared.perform(request: request, completion: { response in
+            response.decode(MovieResponse.self, completion: { result in
+                switch result {
+                case let .data(data):
+                    completion(.success(data.movies))
 
-            case let .failure(error):
-                completion(.failure(error))
-            }
+                case let .error(error):
+                    completion(.failure(error))
+                }
+            })
         })
     }
 }

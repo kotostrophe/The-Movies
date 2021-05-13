@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		02BF2A2F40D2894ADB9586A1 /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */; };
+		ED14860F264CFED2006EA303 /* ServiceFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED14860E264CFED2006EA303 /* ServiceFactory.swift */; };
+		ED148615264CFFC0006EA303 /* GenreNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED148614264CFFC0006EA303 /* GenreNetworkService.swift */; };
 		ED18B05E264CEC7600B1D8FA /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED18B05D264CEC7600B1D8FA /* CategoryView.swift */; };
 		ED18B062264CF55400B1D8FA /* String+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED18B061264CF55400B1D8FA /* String+DateFormatter.swift */; };
 		ED1A092925F4AF33008C656F /* ScrollableToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A092825F4AF33008C656F /* ScrollableToolbarView.swift */; };
@@ -59,12 +61,18 @@
 		EDE39C3625F60A2100930182 /* NetworkingEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE39C3525F60A2100930182 /* NetworkingEnvironment.swift */; };
 		EDE39C3925F60E4C00930182 /* NetworkingRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE39C3825F60E4C00930182 /* NetworkingRequest.swift */; };
 		EDE39C3C25F6145F00930182 /* NetworkingRequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE39C3B25F6145F00930182 /* NetworkingRequestMethod.swift */; };
+		EDF7AD89264D0199004A74A2 /* NetworkingRequestHeaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD87264D0199004A74A2 /* NetworkingRequestHeaders.swift */; };
+		EDF7AD8A264D0199004A74A2 /* NetworkingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD88264D0199004A74A2 /* NetworkingResponse.swift */; };
+		EDF7AD8F264D0542004A74A2 /* NetworkingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */; };
+		EDF7AD92264D05DC004A74A2 /* ProxiesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD91264D05DC004A74A2 /* ProxiesFactory.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Movies.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		90E61768D271DD64013A7F80 /* Pods-Movies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.debug.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.debug.xcconfig"; sourceTree = "<group>"; };
 		B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
+		ED14860E264CFED2006EA303 /* ServiceFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceFactory.swift; sourceTree = "<group>"; };
+		ED148614264CFFC0006EA303 /* GenreNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreNetworkService.swift; sourceTree = "<group>"; };
 		ED18B05D264CEC7600B1D8FA /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		ED18B061264CF55400B1D8FA /* String+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DateFormatter.swift"; sourceTree = "<group>"; };
 		ED1A092825F4AF33008C656F /* ScrollableToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableToolbarView.swift; sourceTree = "<group>"; };
@@ -118,6 +126,10 @@
 		EDE39C3525F60A2100930182 /* NetworkingEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingEnvironment.swift; sourceTree = "<group>"; };
 		EDE39C3825F60E4C00930182 /* NetworkingRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingRequest.swift; sourceTree = "<group>"; };
 		EDE39C3B25F6145F00930182 /* NetworkingRequestMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingRequestMethod.swift; sourceTree = "<group>"; };
+		EDF7AD87264D0199004A74A2 /* NetworkingRequestHeaders.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingRequestHeaders.swift; sourceTree = "<group>"; };
+		EDF7AD88264D0199004A74A2 /* NetworkingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingResponse.swift; sourceTree = "<group>"; };
+		EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingFactory.swift; sourceTree = "<group>"; };
+		EDF7AD91264D05DC004A74A2 /* ProxiesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesFactory.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -147,6 +159,22 @@
 				B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		ED148612264CFF83006EA303 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				EDE39C2E25F6094E00930182 /* Networking */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		ED148613264CFFA8006EA303 /* GenreNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				ED148614264CFFC0006EA303 /* GenreNetworkService.swift */,
+			);
+			path = GenreNetworkService;
 			sourceTree = "<group>";
 		};
 		ED1AF44A25F38F0C00811562 /* Extensions */ = {
@@ -423,6 +451,7 @@
 				ED87A8C725FCB7B9004DB404 /* Entities */,
 				EDA1B6D6264AEBA600F96737 /* Business */,
 				EDA1B6D5264AEB8A00F96737 /* Presentation */,
+				ED148612264CFF83006EA303 /* Core */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -517,10 +546,9 @@
 		EDD6311C25F6765900CF7112 /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				EDE39C2E25F6094E00930182 /* Networking */,
-				ED74CA1225F2BD7500AC8AAF /* LibraryNetworking */,
-				EDDD9C3F25FB5C8D00D67B6A /* GenreProxy */,
-				EDDD9C3325FB51A000D67B6A /* ImageProxy */,
+				EDF7AD8D264D0527004A74A2 /* Networking */,
+				EDF7AD8C264D0515004A74A2 /* Proxies */,
+				ED14860E264CFED2006EA303 /* ServiceFactory.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -562,12 +590,34 @@
 		EDE39C3025F6098300930182 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				EDF7AD87264D0199004A74A2 /* NetworkingRequestHeaders.swift */,
+				EDF7AD88264D0199004A74A2 /* NetworkingResponse.swift */,
 				EDE39C3525F60A2100930182 /* NetworkingEnvironment.swift */,
 				EDE39C3825F60E4C00930182 /* NetworkingRequest.swift */,
 				EDE39C3B25F6145F00930182 /* NetworkingRequestMethod.swift */,
 				EDA033E725F6167500EA173A /* NetworkingRequestDataModel.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		EDF7AD8C264D0515004A74A2 /* Proxies */ = {
+			isa = PBXGroup;
+			children = (
+				EDDD9C3325FB51A000D67B6A /* ImageProxy */,
+				EDDD9C3F25FB5C8D00D67B6A /* GenreProxy */,
+				EDF7AD91264D05DC004A74A2 /* ProxiesFactory.swift */,
+			);
+			path = Proxies;
+			sourceTree = "<group>";
+		};
+		EDF7AD8D264D0527004A74A2 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				ED148613264CFFA8006EA303 /* GenreNetworkService */,
+				ED74CA1225F2BD7500AC8AAF /* LibraryNetworking */,
+				EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -713,6 +763,7 @@
 				EDBA4A9A25F6AEA300DCCF60 /* DetailsViewController.swift in Sources */,
 				EDDD9C3525FB51B300D67B6A /* ImageProxyService.swift in Sources */,
 				EDA033E825F6167500EA173A /* NetworkingRequestDataModel.swift in Sources */,
+				ED14860F264CFED2006EA303 /* ServiceFactory.swift in Sources */,
 				EDBA4A9D25F6AEF200DCCF60 /* DetailsModel.swift in Sources */,
 				EDDD9C1C25FB392E00D67B6A /* DetailsInfoModel.swift in Sources */,
 				ED1A092925F4AF33008C656F /* ScrollableToolbarView.swift in Sources */,
@@ -726,7 +777,10 @@
 				ED734575264C70F3002B9C26 /* Collection+SafeSubscript.swift in Sources */,
 				ED1AF44825F3829F00811562 /* LibraryMovieView.swift in Sources */,
 				EDE39C3925F60E4C00930182 /* NetworkingRequest.swift in Sources */,
+				EDF7AD8F264D0542004A74A2 /* NetworkingFactory.swift in Sources */,
 				ED74CA0525F2BC3700AC8AAF /* ScreenFactory.swift in Sources */,
+				EDF7AD92264D05DC004A74A2 /* ProxiesFactory.swift in Sources */,
+				EDF7AD8A264D0199004A74A2 /* NetworkingResponse.swift in Sources */,
 				ED74CA0B25F2BCD700AC8AAF /* LibraryViewController.swift in Sources */,
 				ED74CA1425F2BD8C00AC8AAF /* LibraryNetworkService.swift in Sources */,
 				ED74C9F425F2B1CB00AC8AAF /* Coordinatable.swift in Sources */,
@@ -738,9 +792,11 @@
 				EDA4F991264C5EE000AF619F /* LibraryViewModel.swift in Sources */,
 				ED18B062264CF55400B1D8FA /* String+DateFormatter.swift in Sources */,
 				ED734571264C6B5C002B9C26 /* SegmentedScrollableToolbarView.swift in Sources */,
+				EDF7AD89264D0199004A74A2 /* NetworkingRequestHeaders.swift in Sources */,
 				ED9B394025F4A8A400035982 /* ToolbarView.swift in Sources */,
 				EDE39C3625F60A2100930182 /* NetworkingEnvironment.swift in Sources */,
 				ED74CA1925F2BFE600AC8AAF /* LibraryView.swift in Sources */,
+				ED148615264CFFC0006EA303 /* GenreNetworkService.swift in Sources */,
 				ED42B44825FAABF20045F2AC /* DetailsTitleView.swift in Sources */,
 				EDBF8A31264C550C00AFA5F7 /* DetailsViewModel.swift in Sources */,
 				EDE39C3225F6099B00930182 /* Networking.swift in Sources */,
