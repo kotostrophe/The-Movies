@@ -39,7 +39,9 @@ final class LibraryMovieView: UICollectionViewCell {
         self.imageProxy = imageProxy
 
         titleLabel.text = model.movie.title
-        imageProxy.getImage(by: model.movie.posterPath ?? "", completion: { [weak self] data in
+
+        guard let posterPath = model.movie.posterPath?.trimLast("/") else { return }
+        imageProxy.getImage(by: posterPath, completion: { [weak self] data in
             DispatchQueue.main.async {
                 guard let data = data else { return }
                 self?.imageView.image = UIImage(data: data)

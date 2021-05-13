@@ -6,6 +6,7 @@ import Foundation
 protocol ServiceFactoryProtocol: AnyObject {
     func makeNetworkingFactory() -> NetworkingFactoryProtocol
     func makeProxiesFactory() -> ProxiesFactoryProtocol
+    func makeImageFileService() -> ImageFileServiceProtocol
 }
 
 final class ServiceFactory: ServiceFactoryProtocol {
@@ -15,5 +16,9 @@ final class ServiceFactory: ServiceFactoryProtocol {
 
     func makeProxiesFactory() -> ProxiesFactoryProtocol {
         ProxiesFactory()
+    }
+
+    func makeImageFileService() -> ImageFileServiceProtocol {
+        ImageFileService()
     }
 }
