@@ -10,6 +10,7 @@ enum DetailsModel {
     /// Model for Details screen
     struct Data {
         let movie: Movie
+        let genres: [Genre]
         let components: [DetailsComponent]
     }
 }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		02BF2A2F40D2894ADB9586A1 /* Pods_Movies.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A5537127DFF24926C7CFAAF /* Pods_Movies.framework */; };
 		ED18B05E264CEC7600B1D8FA /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED18B05D264CEC7600B1D8FA /* CategoryView.swift */; };
+		ED18B062264CF55400B1D8FA /* String+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED18B061264CF55400B1D8FA /* String+DateFormatter.swift */; };
 		ED1A092925F4AF33008C656F /* ScrollableToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A092825F4AF33008C656F /* ScrollableToolbarView.swift */; };
 		ED1AF44825F3829F00811562 /* LibraryMovieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1AF44725F3829F00811562 /* LibraryMovieView.swift */; };
 		ED1AF44C25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1AF44B25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift */; };
@@ -17,6 +18,7 @@
 		ED42B44825FAABF20045F2AC /* DetailsTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED42B44725FAABF20045F2AC /* DetailsTitleView.swift */; };
 		ED42B44E25FAB3850045F2AC /* DetailsTitleModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED42B44D25FAB3850045F2AC /* DetailsTitleModel.swift */; };
 		ED48AD7825FCAECB0099E4B3 /* LibraryMovieModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED48AD7725FCAECB0099E4B3 /* LibraryMovieModel.swift */; };
+		ED690526264CF60300C543F0 /* Date+DateFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED690525264CF60300C543F0 /* Date+DateFormatter.swift */; };
 		ED70077B25FE3D930079B1E7 /* .swiftformat in Resources */ = {isa = PBXBuildFile; fileRef = ED70077925FE3D930079B1E7 /* .swiftformat */; };
 		ED70077C25FE3D930079B1E7 /* .swiftlint.yml in Resources */ = {isa = PBXBuildFile; fileRef = ED70077A25FE3D930079B1E7 /* .swiftlint.yml */; };
 		ED734571264C6B5C002B9C26 /* SegmentedScrollableToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED734570264C6B5C002B9C26 /* SegmentedScrollableToolbarView.swift */; };
@@ -64,6 +66,7 @@
 		90E61768D271DD64013A7F80 /* Pods-Movies.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.debug.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.debug.xcconfig"; sourceTree = "<group>"; };
 		B979BBACF50CACF81F27C594 /* Pods-Movies.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Movies.release.xcconfig"; path = "Target Support Files/Pods-Movies/Pods-Movies.release.xcconfig"; sourceTree = "<group>"; };
 		ED18B05D264CEC7600B1D8FA /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
+		ED18B061264CF55400B1D8FA /* String+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+DateFormatter.swift"; sourceTree = "<group>"; };
 		ED1A092825F4AF33008C656F /* ScrollableToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableToolbarView.swift; sourceTree = "<group>"; };
 		ED1AF44725F3829F00811562 /* LibraryMovieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMovieView.swift; sourceTree = "<group>"; };
 		ED1AF44B25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionReusableView+Identifiable.swift"; sourceTree = "<group>"; };
@@ -72,6 +75,7 @@
 		ED42B44725FAABF20045F2AC /* DetailsTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTitleView.swift; sourceTree = "<group>"; };
 		ED42B44D25FAB3850045F2AC /* DetailsTitleModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsTitleModel.swift; sourceTree = "<group>"; };
 		ED48AD7725FCAECB0099E4B3 /* LibraryMovieModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryMovieModel.swift; sourceTree = "<group>"; };
+		ED690525264CF60300C543F0 /* Date+DateFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+DateFormatter.swift"; sourceTree = "<group>"; };
 		ED70077925FE3D930079B1E7 /* .swiftformat */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .swiftformat; sourceTree = "<group>"; };
 		ED70077A25FE3D930079B1E7 /* .swiftlint.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		ED734570264C6B5C002B9C26 /* SegmentedScrollableToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedScrollableToolbarView.swift; sourceTree = "<group>"; };
@@ -150,6 +154,8 @@
 			children = (
 				ED1AF44B25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift */,
 				ED734574264C70F3002B9C26 /* Collection+SafeSubscript.swift */,
+				ED690525264CF60300C543F0 /* Date+DateFormatter.swift */,
+				ED18B061264CF55400B1D8FA /* String+DateFormatter.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -727,8 +733,10 @@
 				ED1AF44C25F38F2D00811562 /* UICollectionReusableView+Identifiable.swift in Sources */,
 				ED48AD7825FCAECB0099E4B3 /* LibraryMovieModel.swift in Sources */,
 				EDA033F025F6220400EA173A /* Genre.swift in Sources */,
+				ED690526264CF60300C543F0 /* Date+DateFormatter.swift in Sources */,
 				EDA033F525F641CE00EA173A /* MovieResponse.swift in Sources */,
 				EDA4F991264C5EE000AF619F /* LibraryViewModel.swift in Sources */,
+				ED18B062264CF55400B1D8FA /* String+DateFormatter.swift in Sources */,
 				ED734571264C6B5C002B9C26 /* SegmentedScrollableToolbarView.swift in Sources */,
 				ED9B394025F4A8A400035982 /* ToolbarView.swift in Sources */,
 				EDE39C3625F60A2100930182 /* NetworkingEnvironment.swift in Sources */,

@@ -75,9 +75,9 @@ extension DetailsView: UITableViewDataSource {
             let detailsInfoModel = DetailsInfoModel(
                 releaseDate: data.movie.releaseDate,
                 genresId: data.movie.genres,
-                genres: []
+                genres: data.genres
             )
-            return DetailsInfoView(model: detailsInfoModel, genreProxyService: GenreProxyService.shared)
+            return DetailsInfoView(model: detailsInfoModel)
 
         case .description:
             let description = DetailsDescriptionModel(description: data.movie.overview)

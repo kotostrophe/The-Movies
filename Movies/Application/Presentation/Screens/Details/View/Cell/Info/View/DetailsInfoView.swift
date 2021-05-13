@@ -7,7 +7,6 @@ final class DetailsInfoView: UITableViewCell {
     // MARK: - Properties
 
     var model: DetailsInfoModel
-    let genreProxyService: GenreProxyServiceProtocol
 
     // MARK: - UI Properties
 
@@ -19,9 +18,8 @@ final class DetailsInfoView: UITableViewCell {
 
     // MARK: - Initializer
 
-    required init(model: DetailsInfoModel, genreProxyService: GenreProxyServiceProtocol) {
+    required init(model: DetailsInfoModel) {
         self.model = model
-        self.genreProxyService = genreProxyService
 
         super.init(style: .default, reuseIdentifier: nil)
         selectionStyle = .none
@@ -41,45 +39,13 @@ final class DetailsInfoView: UITableViewCell {
 
     private func configureReleaseCategory() {
         releaseCategory.titleLabel.text = "Release date"
-
-        if let date = getDate(from: model.releaseDate ?? "") {
-            let formatedDate = formatDate(from: date)
-            releaseCategory.descriptionLabel.text = formatedDate ?? "Undefined"
-        } else {
-            releaseCategory.descriptionLabel.text = "Undefined"
-        }
+        releaseCategory.descriptionLabel.text = model.releaseDate?.toDate(with: "yyyy-MM-dd")?
+            .toString(with: "MMMM d, yyyy")
     }
 
     private func configureGenreCategory() {
         genreCategory.titleLabel.text = "Genre"
-
-        genreProxyService.getGenres(completion: { [weak self] genres in
-            guard let self = self else { return }
-            guard let genres = genres else { return }
-
-            self.model.genres = genres
-
-            let filteredGenres = genres.filter { self.model.genresId.contains($0.id) }
-            let genresText = filteredGenres.map(\.name).joined(separator: ", ")
-
-            DispatchQueue.main.async {
-                self.genreCategory.descriptionLabel.text = genresText
-            }
-        })
-    }
-
-    // MARK: - Date methods
-
-    private func getDate(from _: String) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        return dateFormatter.date(from: model.releaseDate ?? "")
-    }
-
-    private func formatDate(from date: Date) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM d, yyyy"
-        return dateFormatter.string(from: date)
+        genreCategory.descriptionLabel.text = model.genres.map(\.name).joined(separator: ", ")
     }
 }
 
@@ -94,6 +60,7 @@ private extension DetailsInfoView {
         stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
 
         stackView.axis = .horizontal
+        stackView.alignment = .top
         stackView.spacing = 4
         stackView.distribution = .fillEqually
         return stackView

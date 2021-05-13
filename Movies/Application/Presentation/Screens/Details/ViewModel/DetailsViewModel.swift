@@ -16,6 +16,10 @@ final class DetailsViewModel: DetailsViewModelProtocol {
 
     // MARK: - Properties
 
+    let movie: Movie
+    let components: [DetailsComponent]
+    var genres: [Genre]
+
     let model: DetailsModel
     let imageProxyService: ImageProxyServiceProtocol
     let genreProxyService: GenreProxyServiceProtocol
@@ -24,11 +28,17 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     // MARK: - Initializer
 
     init(
+        movie: Movie,
+        components: [DetailsComponent],
+        genres: [Genre],
         model: DetailsModel,
         imageProxyService: ImageProxyServiceProtocol,
         genreProxyService: GenreProxyServiceProtocol,
         coordinator: LibraryCoordinatorProtocol
     ) {
+        self.movie = movie
+        self.components = components
+        self.genres = genres
         self.model = model
         self.imageProxyService = imageProxyService
         self.genreProxyService = genreProxyService
@@ -38,6 +48,16 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     // MARK: - Methods
 
     func setup() {
-        didUpdateState?(model)
+        didUpdateState?(.loading)
+
+        genreProxyService.getGenres(completion: { [weak self] genres in
+            guard let self = self else { return }
+            guard let genres = genres else { return }
+
+            let filteredGenres = genres.filter { self.movie.genres.contains($0.id) }
+            self.genres = filteredGenres
+
+            self.didUpdateState?(.data(.init(movie: self.movie, genres: filteredGenres, components: self.components)))
+        })
     }
 }
