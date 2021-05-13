@@ -27,13 +27,13 @@ final class ImageProxyService: ImageProxyServiceProtocol {
             completion(data as Data)
         } else {
             let request = NetworkingRequest.request(method: .get, route: path)
-            networkService.perform(request: request, completion: { [weak self] result in
-                switch result {
-                case let .success(data):
+            networkService.perform(request: request, completion: { [weak self] response in
+                switch response {
+                case let .data(data):
                     self?.cacheDictionary[path] = data
                     completion(data)
 
-                case .failure:
+                case .error:
                     completion(nil)
                 }
             })

@@ -6,10 +6,7 @@ import UIKit
 final class DetailsViewController: UIViewController {
     // MARK: - Properties
 
-    let detailsImageProxyService: ImageProxyServiceProtocol
-    let detailsGenreProxyService: GenreProxyServiceProtocol
-    let detailsCoordinator: LibraryCoordinatorProtocol
-    let detailsModel: DetailsModel
+    let viewModel: DetailsViewModelProtocol
 
     // MARK: - UI Properties
 
@@ -20,16 +17,9 @@ final class DetailsViewController: UIViewController {
     // MARK: - Initializer
 
     required init(
-        model: DetailsModel,
-        imageProxyService: ImageProxyServiceProtocol,
-        genreProxyService: GenreProxyServiceProtocol,
-        coordinator: LibraryCoordinatorProtocol
+        viewModel: DetailsViewModelProtocol
     ) {
-        detailsModel = model
-        detailsImageProxyService = imageProxyService
-        detailsGenreProxyService = genreProxyService
-        detailsCoordinator = coordinator
-
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,8 +32,6 @@ final class DetailsViewController: UIViewController {
 
     override func loadView() {
         let view = DetailsView()
-        view.tableView.dataSource = self
-        view.tableView.delegate = self
         view.tableView.estimatedRowHeight = 98
         view.tableView.rowHeight = UITableView.automaticDimension
 
@@ -53,49 +41,15 @@ final class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = detailsModel.movie.title
+        configureCallbacks()
+        viewModel.setup()
     }
 
-    // MARK: - Configuretion methods
-}
+    // MARK: - Configuration methods
 
-extension DetailsViewController: UITableViewDataSource {
-    func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        detailsModel.components.count
-    }
-
-    func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch detailsModel.components[indexPath.item] {
-        case .title:
-            let detailsTitleModel = DetailsTitleModel(
-                title: detailsModel.movie.title,
-                popularity: detailsModel.movie.popularity,
-                rating: detailsModel.movie.voteAverage
-            )
-            return DetailsTitleView(model: detailsTitleModel)
-
-        case .info:
-            let detailsInfoModel = DetailsInfoModel(
-                releaseDate: detailsModel.movie.releaseDate,
-                genresId: detailsModel.movie.genres,
-                genres: []
-            )
-            return DetailsInfoView(model: detailsInfoModel, genreProxyService: detailsGenreProxyService)
-
-        case .description:
-            let description = DetailsDescriptionModel(description: detailsModel.movie.overview)
-            return DetailsDescriptionView(model: description)
+    private func configureCallbacks() {
+        viewModel.didUpdateState = { [weak contentView] state in
+            contentView?.state = state
         }
-    }
-}
-
-extension DetailsViewController: UITableViewDelegate {
-    func tableView(_: UITableView, viewForHeaderInSection _: Int) -> UIView? {
-        let headerModel = DetailsHeaderModel(imagePath: detailsModel.movie.posterPath)
-        return DetailsHeaderView(model: headerModel, imageProxyService: detailsImageProxyService)
-    }
-
-    func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
-        270
     }
 }
