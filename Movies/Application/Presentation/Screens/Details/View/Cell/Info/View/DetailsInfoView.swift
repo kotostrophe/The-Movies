@@ -11,15 +11,11 @@ final class DetailsInfoView: UITableViewCell {
 
     // MARK: - UI Properties
 
-    let stackView: UIStackView
+    private let padding: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
 
-    let releaseStackView: UIStackView
-    let releaseTitleLabel: UILabel
-    let releaseLabel: UILabel
-
-    let genreStackView: UIStackView
-    let genreTitleLabel: UILabel
-    let genreLabel: UILabel
+    lazy var stackView: UIStackView = makeStackView()
+    lazy var releaseCategory = CategoryView()
+    lazy var genreCategory = CategoryView()
 
     // MARK: - Initializer
 
@@ -27,84 +23,35 @@ final class DetailsInfoView: UITableViewCell {
         self.model = model
         self.genreProxyService = genreProxyService
 
-        releaseTitleLabel = UILabel()
-        releaseLabel = UILabel()
-
-        genreTitleLabel = UILabel()
-        genreLabel = UILabel()
-
-        releaseStackView = UIStackView(arrangedSubviews: [releaseTitleLabel, releaseLabel])
-        genreStackView = UIStackView(arrangedSubviews: [genreTitleLabel, genreLabel])
-
-        stackView = UIStackView(arrangedSubviews: [releaseStackView, genreStackView])
-
         super.init(style: .default, reuseIdentifier: nil)
         selectionStyle = .none
-        placeComponents()
 
-        configureComponents()
+        _ = stackView
+
+        configureReleaseCategory()
+        configureGenreCategory()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-}
 
-extension DetailsInfoView {
-    // MARK: - Place components
+    // MARK: - Configuration methods
 
-    private func placeComponents() {
-        placeStackView()
-    }
-
-    private func placeStackView() {
-        contentView.addSubview(stackView)
-    }
-
-    // MARK: - Configurate components
-
-    private func configureComponents() {
-        configureStackView()
-        configureReleaseStackView()
-        configureGenreStackView()
-    }
-
-    private func configureStackView() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
-
-        stackView.axis = .horizontal
-        stackView.spacing = 4
-        stackView.distribution = .fillEqually
-    }
-
-    private func configureReleaseStackView() {
-        releaseTitleLabel.text = "Release date"
-        releaseTitleLabel.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
+    private func configureReleaseCategory() {
+        releaseCategory.titleLabel.text = "Release date"
 
         if let date = getDate(from: model.releaseDate ?? "") {
             let formatedDate = formatDate(from: date)
-            releaseLabel.text = formatedDate ?? "Undefined"
+            releaseCategory.descriptionLabel.text = formatedDate ?? "Undefined"
         } else {
-            releaseLabel.text = "Undefined"
+            releaseCategory.descriptionLabel.text = "Undefined"
         }
-
-        releaseLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        releaseLabel.numberOfLines = 0
-        releaseLabel.textColor = .secondaryLabel
-
-        releaseStackView.spacing = 8
-        releaseStackView.axis = .vertical
-        releaseStackView.distribution = .equalSpacing
     }
 
-    private func configureGenreStackView() {
-        genreTitleLabel.text = "Genre"
-        genreTitleLabel.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
+    private func configureGenreCategory() {
+        genreCategory.titleLabel.text = "Genre"
 
         genreProxyService.getGenres(completion: { [weak self] genres in
             guard let self = self else { return }
@@ -116,16 +63,9 @@ extension DetailsInfoView {
             let genresText = filteredGenres.map(\.name).joined(separator: ", ")
 
             DispatchQueue.main.async {
-                self.genreLabel.text = genresText
+                self.genreCategory.descriptionLabel.text = genresText
             }
         })
-
-        genreLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        genreLabel.textColor = .secondaryLabel
-
-        genreStackView.spacing = 8
-        genreStackView.axis = .vertical
-        genreStackView.distribution = .equalSpacing
     }
 
     // MARK: - Date methods
@@ -140,5 +80,22 @@ extension DetailsInfoView {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMMM d, yyyy"
         return dateFormatter.string(from: date)
+    }
+}
+
+private extension DetailsInfoView {
+    func makeStackView() -> UIStackView {
+        let stackView = UIStackView(arrangedSubviews: [releaseCategory, genreCategory])
+        contentView.addSubview(stackView)
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
+        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+
+        stackView.axis = .horizontal
+        stackView.spacing = 4
+        stackView.distribution = .fillEqually
+        return stackView
     }
 }

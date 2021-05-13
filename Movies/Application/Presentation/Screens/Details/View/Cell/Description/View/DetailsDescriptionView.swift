@@ -10,70 +10,41 @@ final class DetailsDescriptionView: UITableViewCell {
 
     // MARK: - UI Properties
 
-    let stackView: UIStackView
+    private let padding: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
 
-    let descriptionTitleLabel: UILabel
-    let descriptionLabel: UILabel
+    lazy var categoryView = makeCategoryView()
 
     // MARK: - Initializer
 
     required init(model: DetailsDescriptionModel) {
         self.model = model
 
-        descriptionTitleLabel = UILabel()
-        descriptionLabel = UILabel()
-        stackView = UIStackView(arrangedSubviews: [descriptionTitleLabel, descriptionLabel])
-
         super.init(style: .default, reuseIdentifier: nil)
         selectionStyle = .none
-        placeComponents()
 
-        configureComponents()
+        categoryView.titleLabel.text = "Description"
+        categoryView.descriptionLabel.text = model.description
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) {
+    required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 }
 
-extension DetailsDescriptionView {
-    // MARK: - Place components
+private extension DetailsDescriptionView {
+    func makeCategoryView() -> CategoryView {
+        let categoryView = CategoryView()
+        contentView.addSubview(categoryView)
+        categoryView.translatesAutoresizingMaskIntoConstraints = false
+        categoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding.left)
+            .isActive = true
+        categoryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding.right)
+            .isActive = true
+        categoryView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding.top).isActive = true
+        categoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding.bottom)
+            .isActive = true
 
-    private func placeComponents() {
-        placeStackView()
-    }
-
-    private func placeStackView() {
-        contentView.addSubview(stackView)
-    }
-
-    // MARK: - Configurate components
-
-    private func configureComponents() {
-        configureStackView()
-        configureDescription()
-    }
-
-    private func configureStackView() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
-
-        stackView.axis = .vertical
-        stackView.spacing = 8
-        stackView.distribution = .fill
-    }
-
-    private func configureDescription() {
-        descriptionTitleLabel.text = "Description"
-        descriptionTitleLabel.font = UIFont.systemFont(ofSize: 19, weight: .semibold)
-
-        descriptionLabel.text = model.description
-        descriptionLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        descriptionLabel.numberOfLines = 0
-        descriptionLabel.textColor = .secondaryLabel
+        return categoryView
     }
 }

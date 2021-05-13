@@ -88,8 +88,10 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                     self.didUpdateMovies?(movies)
                 }
 
-            case .failure:
-                break
+            case let .failure(error):
+                DispatchQueue.main.async {
+                    self.coordinator.startErrorAlert(error: error)
+                }
             }
         })
     }
@@ -104,8 +106,10 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                     self.didUpdateMovies?(movies)
                 }
 
-            case .failure:
-                break
+            case let .failure(error):
+                DispatchQueue.main.async {
+                    self.coordinator.startErrorAlert(error: error)
+                }
             }
         })
     }
