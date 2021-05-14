@@ -78,6 +78,10 @@
 		EDBA8AE325F0EA05005BAF81 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EDBA8AE125F0EA05005BAF81 /* LaunchScreen.storyboard */; };
 		EDBF8A31264C550C00AFA5F7 /* DetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBF8A30264C550C00AFA5F7 /* DetailsViewModel.swift */; };
 		EDBF8A36264C569C00AFA5F7 /* DetailsComponent.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDBF8A35264C569C00AFA5F7 /* DetailsComponent.swift */; };
+		EDC20156264EA37A00EC23B6 /* GenreProxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC20155264EA37A00EC23B6 /* GenreProxyTests.swift */; };
+		EDC2015D264EA3AF00EC23B6 /* MockGenreDatabaseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC2015C264EA3AF00EC23B6 /* MockGenreDatabaseService.swift */; };
+		EDC20168264EA51700EC23B6 /* MockGenreNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC20167264EA51700EC23B6 /* MockGenreNetworkService.swift */; };
+		EDC20170264EA61800EC23B6 /* GenreFactories.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDC2016F264EA61800EC23B6 /* GenreFactories.swift */; };
 		EDDD9C1925FB374200D67B6A /* DetailsInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDD9C1825FB374200D67B6A /* DetailsInfoView.swift */; };
 		EDDD9C1C25FB392E00D67B6A /* DetailsInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDD9C1B25FB392E00D67B6A /* DetailsInfoModel.swift */; };
 		EDDD9C1F25FB3C0C00D67B6A /* DetailsDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDDD9C1E25FB3C0C00D67B6A /* DetailsDescriptionView.swift */; };
@@ -93,6 +97,9 @@
 		EDF7AD8A264D0199004A74A2 /* NetworkingResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD88264D0199004A74A2 /* NetworkingResponse.swift */; };
 		EDF7AD8F264D0542004A74A2 /* NetworkingFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */; };
 		EDF7AD92264D05DC004A74A2 /* ProxiesFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF7AD91264D05DC004A74A2 /* ProxiesFactory.swift */; };
+		EDF98880264E9FA700F77982 /* MockImageFileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF9887F264E9FA700F77982 /* MockImageFileService.swift */; };
+		EDF98889264EA02600F77982 /* ImageProxyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF98888264EA02600F77982 /* ImageProxyTests.swift */; };
+		EDF98891264EA08600F77982 /* MockImageNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF98890264EA08600F77982 /* MockImageNetworkService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -183,6 +190,10 @@
 		EDBA8AE425F0EA05005BAF81 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EDBF8A30264C550C00AFA5F7 /* DetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsViewModel.swift; sourceTree = "<group>"; };
 		EDBF8A35264C569C00AFA5F7 /* DetailsComponent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsComponent.swift; sourceTree = "<group>"; };
+		EDC20155264EA37A00EC23B6 /* GenreProxyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreProxyTests.swift; sourceTree = "<group>"; };
+		EDC2015C264EA3AF00EC23B6 /* MockGenreDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGenreDatabaseService.swift; sourceTree = "<group>"; };
+		EDC20167264EA51700EC23B6 /* MockGenreNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockGenreNetworkService.swift; sourceTree = "<group>"; };
+		EDC2016F264EA61800EC23B6 /* GenreFactories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreFactories.swift; sourceTree = "<group>"; };
 		EDDD9C1825FB374200D67B6A /* DetailsInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoView.swift; sourceTree = "<group>"; };
 		EDDD9C1B25FB392E00D67B6A /* DetailsInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsInfoModel.swift; sourceTree = "<group>"; };
 		EDDD9C1E25FB3C0C00D67B6A /* DetailsDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsDescriptionView.swift; sourceTree = "<group>"; };
@@ -198,6 +209,9 @@
 		EDF7AD88264D0199004A74A2 /* NetworkingResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NetworkingResponse.swift; sourceTree = "<group>"; };
 		EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingFactory.swift; sourceTree = "<group>"; };
 		EDF7AD91264D05DC004A74A2 /* ProxiesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProxiesFactory.swift; sourceTree = "<group>"; };
+		EDF9887F264E9FA700F77982 /* MockImageFileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageFileService.swift; sourceTree = "<group>"; };
+		EDF98888264EA02600F77982 /* ImageProxyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageProxyTests.swift; sourceTree = "<group>"; };
+		EDF98890264EA08600F77982 /* MockImageNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockImageNetworkService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,7 +414,7 @@
 		ED46A3AD264E9087005AD3CA /* MoviesTests */ = {
 			isa = PBXGroup;
 			children = (
-				ED46A406264E98A2005AD3CA /* MoviesFactory */,
+				ED46A406264E98A2005AD3CA /* Factories */,
 				ED46A3B8264E9165005AD3CA /* Services */,
 				ED46A3B0264E9087005AD3CA /* Info.plist */,
 			);
@@ -410,7 +424,9 @@
 		ED46A3B8264E9165005AD3CA /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				ED46A3F9264E972F005AD3CA /* Database */,
+				EDC2015B264EA39E00EC23B6 /* GenreDatabaseService */,
+				EDF9887C264E9F8300F77982 /* ImageFileService */,
+				ED46A3FA264E9734005AD3CA /* LibraryDatabaseService */,
 				ED46A3F0264E969F005AD3CA /* Proxies */,
 				ED46A3D6264E943C005AD3CA /* NetworkMonitor */,
 				ED46A3D5264E942A005AD3CA /* NetworkService */,
@@ -421,6 +437,8 @@
 		ED46A3D5264E942A005AD3CA /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
+				EDC20165264EA4F000EC23B6 /* GenreNetworkService */,
+				EDF9888E264EA06E00F77982 /* ImageNetworkService */,
 				ED46A3E7264E961F005AD3CA /* LibraryNetworkService */,
 			);
 			path = NetworkService;
@@ -479,6 +497,8 @@
 		ED46A3F0264E969F005AD3CA /* Proxies */ = {
 			isa = PBXGroup;
 			children = (
+				EDC20153264EA35C00EC23B6 /* GenreProxy */,
+				EDF98885264EA00600F77982 /* ImageProxy */,
 				ED46A3F1264E96AA005AD3CA /* LibraryProxy */,
 			);
 			path = Proxies;
@@ -500,20 +520,12 @@
 			path = Tests;
 			sourceTree = "<group>";
 		};
-		ED46A3F9264E972F005AD3CA /* Database */ = {
-			isa = PBXGroup;
-			children = (
-				ED46A3FA264E9734005AD3CA /* LibraryDatabase */,
-			);
-			path = Database;
-			sourceTree = "<group>";
-		};
-		ED46A3FA264E9734005AD3CA /* LibraryDatabase */ = {
+		ED46A3FA264E9734005AD3CA /* LibraryDatabaseService */ = {
 			isa = PBXGroup;
 			children = (
 				ED46A3FB264E973F005AD3CA /* Mock */,
 			);
-			path = LibraryDatabase;
+			path = LibraryDatabaseService;
 			sourceTree = "<group>";
 		};
 		ED46A3FB264E973F005AD3CA /* Mock */ = {
@@ -524,12 +536,13 @@
 			path = Mock;
 			sourceTree = "<group>";
 		};
-		ED46A406264E98A2005AD3CA /* MoviesFactory */ = {
+		ED46A406264E98A2005AD3CA /* Factories */ = {
 			isa = PBXGroup;
 			children = (
 				ED46A407264E98B0005AD3CA /* MoviesFactory.swift */,
+				EDC2016F264EA61800EC23B6 /* GenreFactories.swift */,
 			);
-			path = MoviesFactory;
+			path = Factories;
 			sourceTree = "<group>";
 		};
 		ED74C9F225F2B1BD00AC8AAF /* Coordinators */ = {
@@ -881,6 +894,54 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		EDC20153264EA35C00EC23B6 /* GenreProxy */ = {
+			isa = PBXGroup;
+			children = (
+				EDC20154264EA36600EC23B6 /* Tests */,
+			);
+			path = GenreProxy;
+			sourceTree = "<group>";
+		};
+		EDC20154264EA36600EC23B6 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				EDC20155264EA37A00EC23B6 /* GenreProxyTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		EDC2015B264EA39E00EC23B6 /* GenreDatabaseService */ = {
+			isa = PBXGroup;
+			children = (
+				EDC20162264EA3B300EC23B6 /* Mock */,
+			);
+			path = GenreDatabaseService;
+			sourceTree = "<group>";
+		};
+		EDC20162264EA3B300EC23B6 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				EDC2015C264EA3AF00EC23B6 /* MockGenreDatabaseService.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		EDC20165264EA4F000EC23B6 /* GenreNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				EDC20166264EA4F700EC23B6 /* Mock */,
+			);
+			path = GenreNetworkService;
+			sourceTree = "<group>";
+		};
+		EDC20166264EA4F700EC23B6 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				EDC20167264EA51700EC23B6 /* MockGenreNetworkService.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
 		EDD6311C25F6765900CF7112 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -963,6 +1024,54 @@
 				EDF7AD8E264D0542004A74A2 /* NetworkingFactory.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		EDF9887C264E9F8300F77982 /* ImageFileService */ = {
+			isa = PBXGroup;
+			children = (
+				EDF9887D264E9F9300F77982 /* Mock */,
+			);
+			path = ImageFileService;
+			sourceTree = "<group>";
+		};
+		EDF9887D264E9F9300F77982 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				EDF9887F264E9FA700F77982 /* MockImageFileService.swift */,
+			);
+			path = Mock;
+			sourceTree = "<group>";
+		};
+		EDF98885264EA00600F77982 /* ImageProxy */ = {
+			isa = PBXGroup;
+			children = (
+				EDF98886264EA00C00F77982 /* Tests */,
+			);
+			path = ImageProxy;
+			sourceTree = "<group>";
+		};
+		EDF98886264EA00C00F77982 /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				EDF98888264EA02600F77982 /* ImageProxyTests.swift */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		EDF9888E264EA06E00F77982 /* ImageNetworkService */ = {
+			isa = PBXGroup;
+			children = (
+				EDF9888F264EA07700F77982 /* Mock */,
+			);
+			path = ImageNetworkService;
+			sourceTree = "<group>";
+		};
+		EDF9888F264EA07700F77982 /* Mock */ = {
+			isa = PBXGroup;
+			children = (
+				EDF98890264EA08600F77982 /* MockImageNetworkService.swift */,
+			);
+			path = Mock;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1130,11 +1239,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EDF98889264EA02600F77982 /* ImageProxyTests.swift in Sources */,
 				ED46A3F4264E96C1005AD3CA /* LibraryProxyTests.swift in Sources */,
+				EDF98891264EA08600F77982 /* MockImageNetworkService.swift in Sources */,
+				EDC20156264EA37A00EC23B6 /* GenreProxyTests.swift in Sources */,
 				ED46A3D9264E9455005AD3CA /* MockNetworkMonitor.swift in Sources */,
 				ED46A3EB264E963E005AD3CA /* LibraryNetworkServiceTests.swift in Sources */,
+				EDC20170264EA61800EC23B6 /* GenreFactories.swift in Sources */,
+				EDC2015D264EA3AF00EC23B6 /* MockGenreDatabaseService.swift in Sources */,
 				ED46A408264E98B0005AD3CA /* MoviesFactory.swift in Sources */,
 				ED46A3E0264E94A8005AD3CA /* NetworkMonitorTests.swift in Sources */,
+				EDF98880264E9FA700F77982 /* MockImageFileService.swift in Sources */,
+				EDC20168264EA51700EC23B6 /* MockGenreNetworkService.swift in Sources */,
 				ED46A403264E9792005AD3CA /* MockLibraryNetworkService.swift in Sources */,
 				ED46A3FD264E9750005AD3CA /* MockLibraryDatabaseService.swift in Sources */,
 			);

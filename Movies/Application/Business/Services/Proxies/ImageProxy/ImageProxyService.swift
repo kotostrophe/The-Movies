@@ -15,7 +15,7 @@ final class ImageProxyService: ImageProxyServiceProtocol {
 
     // MARK: - Initializer
 
-    private init(
+    init(
         networkService: ImageNetworkServiceProtocol,
         fileService: ImageFileServiceProtocol
     ) {
