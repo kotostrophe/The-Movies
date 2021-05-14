@@ -3,8 +3,6 @@
 
 import UIKit
 
-protocol LibraryViewProtocol: AnyObject {}
-
 final class LibraryViewController: UIViewController {
     // MARK: - Properties
 
@@ -50,8 +48,7 @@ final class LibraryViewController: UIViewController {
         configureSearchBar()
         configuraViewModelCallbacks()
 
-        viewModel.fetchGenres()
-        viewModel.fetchMovies(genre: nil)
+        viewModel.setup()
     }
 
     // MARK: - Configuration methods
@@ -76,9 +73,13 @@ final class LibraryViewController: UIViewController {
             self.contentView?.toolbarView.segmentedControl.selectedSegmentIndex = index
         }
 
-        viewModel.didUpdateMovies = { [weak self] _ in
-            guard let self = self else { return }
-            self.contentView?.collectionView.reloadData()
+        viewModel.didUpdateMovies = { [weak contentView] _ in
+            guard let contentView = contentView else { return }
+            let navigationBarHeigth: CGFloat = 64.0
+            var offset = contentView.collectionView.contentOffset
+            offset.y = -navigationBarHeigth
+            contentView.collectionView.setContentOffset(offset, animated: true)
+            contentView.collectionView.reloadData()
         }
 
         viewModel.didUpdateGenres = { [weak self] _ in
@@ -92,10 +93,6 @@ final class LibraryViewController: UIViewController {
     private func clearSearchBar() {
         navigationItem.searchController?.searchBar.text = nil
         navigationItem.searchController?.isActive = false
-    }
-
-    private func scrollToTop() {
-        contentView?.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
     }
 }
 
@@ -157,11 +154,13 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout {
 extension LibraryViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
-        let selectedGenre = viewModel.selectedGenre
-
         switch query.isEmpty {
-        case true: viewModel.fetchMovies(genre: selectedGenre)
-        case false: viewModel.fetchMovies(query: query)
+        case true:
+            guard let selectedGenre = viewModel.selectedGenre else { return }
+            viewModel.fetchMovies(genre: selectedGenre)
+
+        case false:
+            viewModel.fetchMovies(query: query)
         }
     }
 }

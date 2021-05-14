@@ -50,14 +50,24 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     func setup() {
         didUpdateState?(.loading)
 
-        genreProxyService.getGenres(completion: { [weak self] genres in
+        genreProxyService.fetchGenres(completion: { [weak self] genres in
             guard let self = self else { return }
-            guard let genres = genres else { return }
 
-            let filteredGenres = genres.filter { self.movie.genres.contains($0.id) }
-            self.genres = filteredGenres
+            switch genres {
+            case let .success(genres):
+                let filteredGenres = genres.filter { self.movie.genres.contains($0.id) }
+                let data = DetailsModel.Data(movie: self.movie, genres: filteredGenres, components: self.components)
 
-            self.didUpdateState?(.data(.init(movie: self.movie, genres: filteredGenres, components: self.components)))
+                self.genres = filteredGenres
+                DispatchQueue.main.async {
+                    self.didUpdateState?(.data(data))
+                }
+
+            case let .failure(error):
+                DispatchQueue.main.async {
+                    self.didUpdateState?(.error(error))
+                }
+            }
         })
     }
 }

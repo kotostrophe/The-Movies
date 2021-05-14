@@ -12,8 +12,9 @@ protocol LibraryViewModelProtocol: AnyObject {
     var genres: [Genre] { get }
     var selectedGenre: Genre? { get }
 
-    func fetchGenres()
-    func fetchMovies(genre: Genre?)
+    func setup()
+
+    func fetchMovies(genre: Genre)
     func fetchMovies(query: String)
 
     func performSelectionGenre(at index: Int)
@@ -30,10 +31,12 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     // MARK: - Properties
 
     var model: LibraryModel
-    let networkService: LibraryNetworkServiceProtocol
+    let libraryProxyService: LibraryProxyServiceProtocol
     let imageProxyService: ImageProxyServiceProtocol
     let genreProxyService: GenreProxyServiceProtocol
     let coordinator: LibraryCoordinatorProtocol
+
+    let cd = LibraryCoreDataService(coreData: CoreData.shared)
 
     var movies: [Movie] {
         model.movies
@@ -51,13 +54,13 @@ final class LibraryViewModel: LibraryViewModelProtocol {
 
     required init(
         model: LibraryModel,
-        networkService: LibraryNetworkServiceProtocol,
+        libraryProxyService: LibraryProxyServiceProtocol,
         genreProxyService: GenreProxyServiceProtocol,
         imageProxyService: ImageProxyServiceProtocol,
         coordinator: LibraryCoordinatorProtocol
     ) {
         self.model = model
-        self.networkService = networkService
+        self.libraryProxyService = libraryProxyService
         self.genreProxyService = genreProxyService
         self.imageProxyService = imageProxyService
         self.coordinator = coordinator
@@ -65,25 +68,31 @@ final class LibraryViewModel: LibraryViewModelProtocol {
 
     // MARK: - Methods
 
-    func fetchGenres() {
-        genreProxyService.getGenres(completion: { [weak self] genres in
+    func setup() {
+        genreProxyService.fetchGenres(completion: { [weak self] genres in
             guard let self = self else { return }
-
-            let genres = genres ?? []
-            self.model.genres = genres
-
-            DispatchQueue.main.async {
-                self.didUpdateGenres?(genres)
+            switch genres {
+            case let .success(genres):
+                self.model.genres = genres
+                DispatchQueue.main.async {
+                    self.didUpdateGenres?(genres)
+                    self.performSelectionGenre(at: .zero)
+                }
+            case let .failure(error):
+                DispatchQueue.main.async {
+                    self.coordinator.startErrorAlert(error: error)
+                }
             }
         })
     }
 
-    func fetchMovies(genre: Genre?) {
-        networkService.fetchMovies(genreId: genre?.id, completion: { [weak self] result in
+    func fetchMovies(genre: Genre) {
+        libraryProxyService.fetchMovies(genre: genre, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):
                 self.model.movies = movies
+
                 DispatchQueue.main.async {
                     self.didUpdateMovies?(movies)
                 }
@@ -97,7 +106,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     }
 
     func fetchMovies(query: String) {
-        networkService.fetchMovies(query: query, completion: { [weak self] result in
+        libraryProxyService.fetchMovies(query: query, completion: { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):

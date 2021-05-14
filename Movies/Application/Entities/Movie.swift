@@ -37,3 +37,22 @@ struct Movie: Codable {
         case voteCount = "vote_count"
     }
 }
+
+extension Movie {
+    init(coreData: CDMovie) {
+        id = coreData.id.toInt
+        adult = coreData.adult
+        backdropPath = coreData.backdropPath
+        genres = coreData.genreIds ?? []
+        originalLanguage = coreData.originalLanguage ?? ""
+        originalTitle = coreData.originalTitle ?? ""
+        overview = coreData.overview ?? ""
+        popularity = coreData.popularity
+        posterPath = coreData.posterPath
+        releaseDate = coreData.releaseDate
+        title = coreData.title ?? ""
+        video = coreData.video
+        voteAverage = coreData.voteAverage
+        voteCount = coreData.voteCount.toInt
+    }
+}
