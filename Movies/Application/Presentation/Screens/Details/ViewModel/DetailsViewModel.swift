@@ -74,7 +74,7 @@ final class DetailsViewModel: DetailsViewModelProtocol {
         didSetupWithMovie?(model.movie)
 
         fetchGenres()
-        fetchPostersPath()
+        fetchPosters()
     }
 
     func fetchGenres() {
@@ -91,13 +91,25 @@ final class DetailsViewModel: DetailsViewModelProtocol {
         })
     }
 
-    func fetchPostersPath() {
+    func fetchPosters() {
         networkService.fetchPosters(for: model.movie, completion: { [weak self] result in
             guard let self = self else { return }
-            guard case let .success(posters) = result else { return }
+            switch result {
+            case let .success(posters):
+                self.model.posters = Array(posters.prefix(3))
+                self.fetchPostersData()
 
-            self.model.posters = Array(posters.prefix(3))
-            self.fetchPostersData()
+            case .failure:
+                guard let moviePoster = self.movie.posterPath?.trimLast("/") else { return }
+                self.imageProxyService.getImage(by: moviePoster, completion: { [weak self] data in
+                    guard let data = data else { return }
+                    self?.posterData = [data]
+
+                    DispatchQueue.main.async {
+                        self?.didFetchPosters?([data])
+                    }
+                })
+            }
         })
     }
 
