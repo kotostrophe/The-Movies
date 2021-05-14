@@ -39,6 +39,8 @@ class Networking: NetworkingProtocol {
             return
         }
 
+        print(request.url)
+
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
                 completion(.error(error))

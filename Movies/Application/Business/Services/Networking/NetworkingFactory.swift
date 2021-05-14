@@ -6,6 +6,8 @@ import Foundation
 protocol NetworkingFactoryProtocol: AnyObject {
     func makeGenreNetworkingService() -> GenreNetworkServiceProtocol
     func makeLibraryNetworkingService() -> LibraryNetworkServiceProtocol
+    func makeImageNetworkService() -> ImageNetworkServiceProtocol
+    func makeDetailsNetworkServer() -> DetailsNetworkServiceProtocol
 }
 
 final class NetworkingFactory: NetworkingFactoryProtocol {
@@ -19,5 +21,9 @@ final class NetworkingFactory: NetworkingFactoryProtocol {
 
     func makeImageNetworkService() -> ImageNetworkServiceProtocol {
         ImageNetworkService.shared
+    }
+
+    func makeDetailsNetworkServer() -> DetailsNetworkServiceProtocol {
+        DetailsNetworkService()
     }
 }

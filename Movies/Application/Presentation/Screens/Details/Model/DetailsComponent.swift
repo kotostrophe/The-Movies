@@ -4,6 +4,6 @@
 import Foundation
 
 /// Describes ui components
-enum DetailsComponent {
+enum DetailsComponent: CaseIterable {
     case title, info, description
 }

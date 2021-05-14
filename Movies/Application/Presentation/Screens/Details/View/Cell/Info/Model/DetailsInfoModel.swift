@@ -8,6 +8,5 @@ struct DetailsInfoModel {
     // MARK: - Properties
 
     let releaseDate: String?
-    let genresId: [Int]
     var genres: [Genre]
 }

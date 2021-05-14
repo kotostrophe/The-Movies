@@ -46,12 +46,12 @@ final class ScreenFactory: ScreenFactoryProtocol {
     func makeDetails(movie: Movie, coordinator: LibraryCoordinatorProtocol) -> UIViewController {
         let imageProxyService = serviceFactory.makeProxiesFactory().makeImageProxyService()
         let genreProxyService = serviceFactory.makeProxiesFactory().makeGenreProxyService()
+        let detailsNetworkService = serviceFactory.makeNetworkingFactory().makeDetailsNetworkServer()
+        let model = DetailsModel(movie: movie, posters: [], genres: [], components: DetailsComponent.allCases)
 
         let viewModel = DetailsViewModel(
-            movie: movie,
-            components: [.title, .info, .description],
-            genres: [],
-            model: .loading,
+            model: model,
+            networkService: detailsNetworkService,
             imageProxyService: imageProxyService,
             genreProxyService: genreProxyService,
             coordinator: coordinator
