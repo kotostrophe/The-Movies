@@ -3,23 +3,29 @@
 
 import UIKit
 
+protocol DetailsHeaderViewDataSource: AnyObject {
+    func numberOfImages(at detailsHeaderView: DetailsHeaderView) -> Int
+    func detailsHeaderView(_ detailsHeaderView: DetailsHeaderView, imageDataAt index: Int) -> Data
+}
+
 final class DetailsHeaderView: UIView {
     // MARK: - Properties
 
-    let detailImageProxyService: ImageProxyServiceProtocol
-    var detailHeaderModel: DetailsHeaderModel
+    weak var dataSource: DetailsHeaderViewDataSource?
 
     // MARK: - UI Properties
 
-    let imageView: UIImageView
+    let collectionView: UICollectionView
 
     // MARK: - Initializer
 
-    required init(model: DetailsHeaderModel, imageProxyService: ImageProxyServiceProtocol) {
-        detailHeaderModel = model
-        detailImageProxyService = imageProxyService
+    required init() {
+        let flowLayout = UICollectionViewFlowLayout()
+        flowLayout.scrollDirection = .horizontal
+        flowLayout.minimumLineSpacing = 0
+        flowLayout.minimumInteritemSpacing = 0
 
-        imageView = UIImageView()
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
 
         super.init(frame: .zero)
         placeComponents()
@@ -32,49 +38,71 @@ final class DetailsHeaderView: UIView {
 
     // MARK: - Life cycle methods
 
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    override func layoutSubviews() {
+        super.layoutSubviews()
 
         configureComponents()
     }
 }
 
-extension DetailsHeaderView {
+private extension DetailsHeaderView {
     // MARK: - Place components
 
-    private func placeComponents() {
-        placeImageView()
+    func placeComponents() {
+        placeCollectionView()
     }
 
-    private func placeImageView() {
-        addSubview(imageView)
+    func placeCollectionView() {
+        addSubview(collectionView)
     }
 
     // MARK: - Configurate components
 
-    private func configureComponents() {
-        configureImageView()
+    func configureComponents() {
+        configureCollectionView()
     }
 
-    private func configureImageView() {
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        imageView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        imageView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+    func configureCollectionView() {
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
 
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.backgroundColor = .secondarySystemBackground
+        collectionView.backgroundColor = .clear
+        collectionView.register(DetailsHeaderImageViewCell.self, forCellWithReuseIdentifier: "imageCell")
+        collectionView.isPagingEnabled = true
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+}
 
-        guard let posterPath = detailHeaderModel.imagePath?.trimLast("/") else { return }
-        detailImageProxyService.getImage(by: posterPath, completion: { [weak self] data in
-            guard let self = self else { return }
-            guard let data = data else { return }
+extension DetailsHeaderView: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        dataSource?.numberOfImages(at: self) ?? 0
+    }
 
-            DispatchQueue.main.async {
-                self.imageView.image = UIImage(data: data)
-            }
-        })
+    func collectionView(
+        _ collectionView: UICollectionView,
+        cellForItemAt indexPath: IndexPath
+    ) -> UICollectionViewCell {
+        guard let imageCell = collectionView.dequeueReusableCell(
+            withReuseIdentifier: "imageCell",
+            for: indexPath
+        ) as? DetailsHeaderImageViewCell
+        else { fatalError() }
+        guard let data = dataSource?.detailsHeaderView(self, imageDataAt: indexPath.item) else { return imageCell }
+        imageCell.imageView.image = UIImage(data: data)
+        return imageCell
+    }
+}
+
+extension DetailsHeaderView: UICollectionViewDelegateFlowLayout {
+    func collectionView(
+        _ collectionView: UICollectionView,
+        layout collectionViewLayout: UICollectionViewLayout,
+        sizeForItemAt indexPath: IndexPath
+    ) -> CGSize {
+        frame.size
     }
 }
