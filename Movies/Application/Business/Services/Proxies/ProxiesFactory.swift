@@ -6,6 +6,7 @@ import Foundation
 protocol ProxiesFactoryProtocol: AnyObject {
     func makeImageProxyService() -> ImageProxyServiceProtocol
     func makeGenreProxyService() -> GenreProxyServiceProtocol
+    func makeLibraryProxyService() -> LibraryProxyServiceProtocol
 }
 
 final class ProxiesFactory: ProxiesFactoryProtocol {
@@ -13,7 +14,27 @@ final class ProxiesFactory: ProxiesFactoryProtocol {
         ImageProxyService.shared
     }
 
+    func makeLibraryProxyService() -> LibraryProxyServiceProtocol {
+        let networkMonitor = NetworkMonitor()
+        let network = LibraryNetworkService()
+        let coreDataDatabase = LibraryCoreDataService.shared
+
+        return LibraryProxyService(
+            networkMonitor: networkMonitor,
+            networkService: network,
+            databaseService: coreDataDatabase
+        )
+    }
+
     func makeGenreProxyService() -> GenreProxyServiceProtocol {
-        GenreProxyService.shared
+        let networkMonitor = NetworkMonitor()
+        let network = GenreNetworkService()
+        let coreDataDatabase = GenreCoreDataService.shared
+
+        return GenreProxyService(
+            networkMonitor: networkMonitor,
+            networkService: network,
+            databaseService: coreDataDatabase
+        )
     }
 }

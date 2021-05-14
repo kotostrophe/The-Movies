@@ -30,11 +30,11 @@ final class ScreenFactory: ScreenFactoryProtocol {
         let model = LibraryModel()
         let imageProxyService = serviceFactory.makeProxiesFactory().makeImageProxyService()
         let genresProxyService = serviceFactory.makeProxiesFactory().makeGenreProxyService()
-        let networkService = serviceFactory.makeNetworkingFactory().makeLibraryNetworkingService()
+        let libraryProxyService = serviceFactory.makeProxiesFactory().makeLibraryProxyService()
 
         let viewModel = LibraryViewModel(
             model: model,
-            networkService: networkService,
+            libraryProxyService: libraryProxyService,
             genreProxyService: genresProxyService,
             imageProxyService: imageProxyService,
             coordinator: coordinator

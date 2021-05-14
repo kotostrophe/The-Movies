@@ -25,9 +25,13 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
         coreData.saveToStore()
     }
 
-    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(
+        with predicate: @escaping @autoclosure () -> NSPredicate?,
+        completion: @escaping (Result<[Movie], Error>) -> ()
+    ) {
         coreData.context.perform {
             let request: NSFetchRequest<CDMovie> = CDMovie.fetchRequest()
+            request.predicate = predicate()
 
             do {
                 let coreDataMovies = try request.execute().map { Movie(coreData: $0) }
@@ -36,19 +40,33 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
                 completion(.failure(error))
             }
         }
+    }
+
+    func fetchMovies(with query: String, completion: @escaping (Result<[Movie], Error>) -> ()) {
+        fetchMovies(with: nil, completion: completion)
+    }
+
+    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
+        fetchMovies(with: nil, completion: completion)
     }
 
     func fetchMovies(by genreId: Int, completion: @escaping (Result<[Movie], Error>) -> ()) {
-        coreData.context.perform {
-            let request: NSFetchRequest<CDMovie> = CDMovie.fetchRequest()
-            request.predicate = NSPredicate(format: "ANY genreIds = %i", genreId)
+        fetchMovies(with: nil, completion: { result in
+            switch result {
+            case let .success(movies):
+                let filteredMovies = movies.filter { $0.genres.contains(genreId) }
+                completion(.success(filteredMovies))
 
-            do {
-                let coreDataMovies = try request.execute().map { Movie(coreData: $0) }
-                completion(.success(coreDataMovies))
-            } catch {
+            case let .failure(error):
                 completion(.failure(error))
             }
-        }
+        })
     }
+}
+
+extension LibraryCoreDataService: Shareble {
+    static let shared: LibraryCoreDataServiceProtocol = {
+        let coreData = CoreData.shared
+        return LibraryCoreDataService(coreData: coreData)
+    }()
 }

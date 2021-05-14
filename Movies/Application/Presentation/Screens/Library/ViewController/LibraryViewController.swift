@@ -51,7 +51,7 @@ final class LibraryViewController: UIViewController {
         configuraViewModelCallbacks()
 
         viewModel.fetchGenres()
-        viewModel.fetchMovies(genre: nil)
+//        viewModel.fetchMovies(genre: nil)
     }
 
     // MARK: - Configuration methods
@@ -156,12 +156,12 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout {
 
 extension LibraryViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let query = searchController.searchBar.text else { return }
-        let selectedGenre = viewModel.selectedGenre
+//        guard let query = searchController.searchBar.text else { return }
+//        let selectedGenre = viewModel.selectedGenre
 
-        switch query.isEmpty {
-        case true: viewModel.fetchMovies(genre: selectedGenre)
-        case false: viewModel.fetchMovies(query: query)
-        }
+//        switch query.isEmpty {
+//        case true: viewModel.fetchMovies(genre: selectedGenre)
+//        case false: viewModel.fetchMovies(query: query)
+//        }
     }
 }
