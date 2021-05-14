@@ -4,11 +4,7 @@
 import CoreData
 import Foundation
 
-protocol LibraryCoreDataServiceProtocol: AnyObject {
-    func save(movies: [Movie])
-    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> ())
-    func fetchMovies(by genreId: Int, completion: @escaping (Result<[Movie], Error>) -> ())
-}
+protocol LibraryCoreDataServiceProtocol: LibraryDatabaseServiceProtocol {}
 
 final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
     // MARK: - Properties

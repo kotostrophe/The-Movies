@@ -4,53 +4,61 @@
 import Foundation
 
 protocol GenreProxyServiceProtocol: AnyObject {
-    func getGenre(id: Int, completion: @escaping (Genre?) -> Void)
+    func getGenre(by id: Int, completion: @escaping (Genre?) -> Void)
     func getGenres(completion: @escaping ([Genre]?) -> Void)
 }
 
 final class GenreProxyService: GenreProxyServiceProtocol {
     // MARK: - Properties
 
+    let networkMonitor: NetworkMonitorProtocol
     let networkService: GenreNetworkServiceProtocol
-    var cacheDictionary: [Int: Genre]
+    let databaseService: GenreDatabaseServiceProtocol
 
     // MARK: - Initializer
 
-    private init(networkService: GenreNetworkServiceProtocol, cacheDictionary: [Int: Genre]) {
+    private init(
+        networkMonitor: NetworkMonitorProtocol,
+        networkService: GenreNetworkServiceProtocol,
+        databaseService: GenreDatabaseServiceProtocol
+    ) {
+        self.networkMonitor = networkMonitor
         self.networkService = networkService
-        self.cacheDictionary = cacheDictionary
+        self.databaseService = databaseService
+
+        self.networkMonitor.start()
     }
 
     // MARK: - Methods
 
-    func getGenre(id: Int, completion: @escaping (Genre?) -> Void) {
-        if let data = cacheDictionary[id] {
-            completion(data)
-        } else {
+    func getGenre(by id: Int, completion: @escaping (Genre?) -> Void) {
+        switch networkMonitor.isSatisfied {
+        case true:
             getGenres(completion: { genres in
                 completion(genres?.first(where: { $0.id == id }))
+            })
+
+        case false:
+            databaseService.getGenre(id: id, completion: { result in
+                guard case let .success(genre) = result else { return }
+                completion(genre)
             })
         }
     }
 
     func getGenres(completion: @escaping ([Genre]?) -> Void) {
-        let data = cacheDictionary.values.compactMap { $0 }
-        if !data.isEmpty {
-            completion(data)
-        } else {
+        switch networkMonitor.isSatisfied {
+        case true:
             networkService.fetchGenres(completion: { [weak self] result in
-                guard let self = self else { return }
-                switch result {
-                case let .success(genres):
-                    genres.forEach {
-                        self.cacheDictionary[$0.id] = $0
-                    }
+                guard case let .success(genres) = result else { return }
+                self?.databaseService.saveGenres(genres: genres)
+                completion(genres)
+            })
 
-                    completion(genres)
-
-                case .failure:
-                    completion(nil)
-                }
+        case false:
+            databaseService.getGenres(completion: { result in
+                guard case let .success(genres) = result else { return }
+                completion(genres)
             })
         }
     }
@@ -58,10 +66,14 @@ final class GenreProxyService: GenreProxyServiceProtocol {
 
 extension GenreProxyService: Shareble {
     static let shared: GenreProxyServiceProtocol = {
-        let environment = NetworkingEnvironment.base
+        let networkMonitor = NetworkMonitor()
         let network = GenreNetworkService()
-        let cache = [Int: Genre]()
+        let coreDataDatabase = GenreCoreDataService.shared
 
-        return GenreProxyService(networkService: network, cacheDictionary: cache)
+        return GenreProxyService(
+            networkMonitor: networkMonitor,
+            networkService: network,
+            databaseService: coreDataDatabase
+        )
     }()
 }
