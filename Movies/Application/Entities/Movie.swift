@@ -38,6 +38,12 @@ struct Movie: Codable {
     }
 }
 
+extension Movie: Equatable {
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 extension Movie {
     init(coreData: CDMovie) {
         id = coreData.id.toInt
