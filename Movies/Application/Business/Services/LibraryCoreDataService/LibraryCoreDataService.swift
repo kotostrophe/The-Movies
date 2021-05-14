@@ -9,7 +9,7 @@ protocol LibraryCoreDataServiceProtocol: LibraryDatabaseServiceProtocol {}
 final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
     // MARK: - Properties
 
-    let coreData: CoreDataProtocol
+    private let coreData: CoreDataProtocol
 
     // MARK: - Initializer
 
@@ -25,7 +25,7 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
         coreData.saveToStore()
     }
 
-    func fetchMovies(
+    private func fetchMovies(
         with predicate: @escaping @autoclosure () -> NSPredicate?,
         completion: @escaping (Result<[Movie], Error>) -> ()
     ) {
@@ -42,8 +42,9 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
         }
     }
 
-    func fetchMovies(with query: String, completion: @escaping (Result<[Movie], Error>) -> ()) {
-        fetchMovies(with: nil, completion: completion)
+    func fetchMovies(using query: String, completion: @escaping (Result<[Movie], Error>) -> ()) {
+        let predicate = NSPredicate(format: "title CONTAINS %@", query)
+        fetchMovies(with: predicate, completion: completion)
     }
 
     func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {

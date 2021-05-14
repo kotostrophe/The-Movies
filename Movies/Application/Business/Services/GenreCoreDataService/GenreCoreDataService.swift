@@ -20,7 +20,7 @@ enum GenreCoreDataServiceError: Error {
 final class GenreCoreDataService: GenreCoreDataServiceProtocol {
     // MARK: - Properties
 
-    let coreData: CoreDataProtocol
+    private let coreData: CoreDataProtocol
 
     // MARK: - Initializer
 

@@ -12,7 +12,8 @@ protocol LibraryViewModelProtocol: AnyObject {
     var genres: [Genre] { get }
     var selectedGenre: Genre? { get }
 
-    func fetchGenres()
+    func setup()
+
     func fetchMovies(genre: Genre)
     func fetchMovies(query: String)
 
@@ -67,15 +68,15 @@ final class LibraryViewModel: LibraryViewModelProtocol {
 
     // MARK: - Methods
 
-    func fetchGenres() {
+    func setup() {
         genreProxyService.fetchGenres(completion: { [weak self] genres in
             guard let self = self else { return }
             switch genres {
             case let .success(genres):
                 self.model.genres = genres
-
                 DispatchQueue.main.async {
                     self.didUpdateGenres?(genres)
+                    self.performSelectionGenre(at: .zero)
                 }
             case let .failure(error):
                 DispatchQueue.main.async {

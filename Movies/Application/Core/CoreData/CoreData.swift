@@ -16,8 +16,12 @@ final class CoreData: CoreDataProtocol {
     private let modelName: String
     private let storeName: String
 
+    private let storeDispatchGroup: DispatchGroup
+
     lazy var context: NSManagedObjectContext = {
-        DispatchQueue.safeMain(work: {
+        storeDispatchGroup.wait()
+
+        return DispatchQueue.safeMain(work: {
             let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             context.persistentStoreCoordinator = persistanceCoordinator
@@ -26,6 +30,8 @@ final class CoreData: CoreDataProtocol {
     }()
 
     var privateContext: NSManagedObjectContext {
+        storeDispatchGroup.wait()
+
         let context = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
         context.parent = context
         context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
@@ -62,6 +68,7 @@ final class CoreData: CoreDataProtocol {
     init(modelName: String, storeName: String) {
         self.modelName = modelName
         self.storeName = storeName
+        storeDispatchGroup = DispatchGroup()
 
         registerStore()
     }
@@ -69,6 +76,8 @@ final class CoreData: CoreDataProtocol {
     // MARK: - Methods
 
     func saveToStore() {
+        storeDispatchGroup.wait()
+
         DispatchQueue.safeMain(work: {
             guard context.hasChanges else { return }
 
@@ -82,6 +91,8 @@ final class CoreData: CoreDataProtocol {
     }
 
     private func registerStore() {
+        storeDispatchGroup.enter()
+
         DispatchQueue.global(qos: .background).async {
             do {
                 let storeURL = self.documentsURL.appendingPathComponent(self.storeName)
@@ -90,6 +101,7 @@ final class CoreData: CoreDataProtocol {
                     configurationName: nil,
                     at: storeURL
                 )
+                self.storeDispatchGroup.leave()
             } catch {
                 fatalError(error.localizedDescription)
             }

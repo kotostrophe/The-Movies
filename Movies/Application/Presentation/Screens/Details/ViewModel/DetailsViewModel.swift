@@ -56,16 +56,17 @@ final class DetailsViewModel: DetailsViewModelProtocol {
             switch genres {
             case let .success(genres):
                 let filteredGenres = genres.filter { self.movie.genres.contains($0.id) }
+                let data = DetailsModel.Data(movie: self.movie, genres: filteredGenres, components: self.components)
+
                 self.genres = filteredGenres
-                self
-                    .didUpdateState?(.data(.init(
-                        movie: self.movie,
-                        genres: filteredGenres,
-                        components: self.components
-                    )))
+                DispatchQueue.main.async {
+                    self.didUpdateState?(.data(data))
+                }
 
             case let .failure(error):
-                self.didUpdateState?(.error(error))
+                DispatchQueue.main.async {
+                    self.didUpdateState?(.error(error))
+                }
             }
         })
     }

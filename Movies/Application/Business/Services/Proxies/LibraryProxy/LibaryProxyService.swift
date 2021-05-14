@@ -43,7 +43,7 @@ final class LibraryProxyService: LibraryProxyServiceProtocol {
             })
 
         case false:
-            databaseService.fetchMovies(with: query, completion: completion)
+            databaseService.fetchMovies(using: query, completion: completion)
         }
     }
 
