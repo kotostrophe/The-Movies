@@ -3,15 +3,10 @@
 
 import Foundation
 
-/// Describes ui components
-enum DetailsComponent {
-    case title, info, description
-}
-
 /// Model for Details screen
 struct DetailsModel {
-    // MARK: - Properties
-
     let movie: Movie
+    var posters: [Poster]
+    var genres: [Genre]
     let components: [DetailsComponent]
 }

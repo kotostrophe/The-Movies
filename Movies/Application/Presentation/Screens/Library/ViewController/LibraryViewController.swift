@@ -6,11 +6,7 @@ import UIKit
 final class LibraryViewController: UIViewController {
     // MARK: - Properties
 
-    let libraryNetworkService: LibraryNetworkServiceProtocol
-    let libraryImageProxyService: ImageProxyServiceProtocol
-    let libraryGenreProxyService: GenreProxyServiceProtocol
-    let libraryCoordinator: LibraryFlow
-    var libraryModel: LibraryModel
+    let viewModel: LibraryViewModelProtocol
 
     // MARK: - UI Properties
 
@@ -20,18 +16,8 @@ final class LibraryViewController: UIViewController {
 
     // MARK: - Initializer
 
-    required init(
-        model: LibraryModel,
-        networkService: LibraryNetworkServiceProtocol,
-        genreProxyService: GenreProxyServiceProtocol,
-        imageProxyService: ImageProxyServiceProtocol,
-        coordinator: LibraryFlow
-    ) {
-        libraryModel = model
-        libraryNetworkService = networkService
-        libraryGenreProxyService = genreProxyService
-        libraryImageProxyService = imageProxyService
-        libraryCoordinator = coordinator
+    required init(viewModel: LibraryViewModelProtocol) {
+        self.viewModel = viewModel
 
         super.init(nibName: nil, bundle: nil)
     }
@@ -48,8 +34,8 @@ final class LibraryViewController: UIViewController {
         view.collectionView.register(LibraryMovieView.self, forCellWithReuseIdentifier: LibraryMovieView.identifire)
         view.collectionView.dataSource = self
         view.collectionView.delegate = self
-        view.segmentedControl.dataSource = self
-        view.segmentedControl.delegate = self
+        view.toolbarView.segmentedControl.dataSource = self
+        view.toolbarView.segmentedControl.delegate = self
 
         self.view = view
     }
@@ -60,9 +46,9 @@ final class LibraryViewController: UIViewController {
 
         configureNavigationBar()
         configureSearchBar()
+        configuraViewModelCallbacks()
 
-        fetchGenres()
-        fetchMovies(genre: nil)
+        viewModel.setup()
     }
 
     // MARK: - Configuration methods
@@ -81,90 +67,54 @@ final class LibraryViewController: UIViewController {
         definesPresentationContext = true
     }
 
+    private func configuraViewModelCallbacks() {
+        viewModel.didUpdateSelectedGenre = { [weak self] _, index in
+            guard let self = self else { return }
+            self.contentView?.toolbarView.segmentedControl.selectedSegmentIndex = index
+        }
+
+        viewModel.didUpdateMovies = { [weak contentView] _ in
+            guard let contentView = contentView else { return }
+            let navigationBarHeigth: CGFloat = 64.0
+            var offset = contentView.collectionView.contentOffset
+            offset.y = -navigationBarHeigth
+            contentView.collectionView.setContentOffset(offset, animated: true)
+            contentView.collectionView.reloadData()
+        }
+
+        viewModel.didUpdateGenres = { [weak self] _ in
+            guard let self = self else { return }
+            self.contentView?.toolbarView.segmentedControl.reloadData()
+        }
+    }
+
     // MARK: - Methods
 
     private func clearSearchBar() {
         navigationItem.searchController?.searchBar.text = nil
         navigationItem.searchController?.isActive = false
     }
-
-    private func scrollToTop() {
-        contentView?.collectionView.scrollToItem(at: .init(item: 0, section: 0), at: .top, animated: true)
-    }
-
-    // MARK: - Networking methods
-
-    private func fetchGenres() {
-        libraryGenreProxyService.getGenres(completion: { [weak self] genres in
-            self?.libraryModel.genres = genres ?? []
-
-            DispatchQueue.main.async {
-                self?.contentView?.segmentedControl.reloadData()
-            }
-        })
-    }
-
-    private func fetchMovies(genre: Genre?) {
-        libraryNetworkService.fetchMovies(genreId: genre?.id, completion: { [weak self] result in
-            switch result {
-            case let .success(movies):
-                self?.libraryModel.movies = movies
-
-                DispatchQueue.main.async {
-                    self?.contentView?.collectionView.reloadData()
-                }
-
-            case let .failure(error):
-                DispatchQueue.main.async {
-                    self?.libraryCoordinator.startErrorAlert(error: error)
-                }
-            }
-        })
-    }
-
-    private func fetchMovies(query: String) {
-        libraryNetworkService.fetchMovies(query: query, completion: { [weak self] result in
-            switch result {
-            case let .success(movies):
-                self?.libraryModel.movies = movies
-
-                DispatchQueue.main.async {
-                    self?.contentView?.collectionView.reloadData()
-                }
-
-            case let .failure(error):
-                DispatchQueue.main.async {
-                    self?.libraryCoordinator.startErrorAlert(error: error)
-                }
-            }
-        })
-    }
 }
 
 extension LibraryViewController: SegmentedControlDelegate {
     func segmentedControl(_: SegmentedControl, didSelectItemAt index: Int) {
-        clearSearchBar()
-        scrollToTop()
-
-        let genre = libraryModel.genres[index]
-        libraryModel.selectedGenre = genre
-        fetchMovies(genre: genre)
+        viewModel.performSelectionGenre(at: index)
     }
 }
 
 extension LibraryViewController: SegmentedControlDataSource {
     func numberOfItems(segmentedControl _: SegmentedControl) -> Int {
-        libraryModel.genres.count
+        viewModel.genres.count
     }
 
     func segmentedControl(_: SegmentedControl, by index: Int) -> String {
-        libraryModel.genres[index].name
+        viewModel.genres[index].name
     }
 }
 
 extension LibraryViewController: UICollectionViewDataSource {
     func collectionView(_: UICollectionView, numberOfItemsInSection _: Int) -> Int {
-        libraryModel.movies.count
+        viewModel.movies.count
     }
 
     func collectionView(
@@ -176,7 +126,7 @@ extension LibraryViewController: UICollectionViewDataSource {
             for: indexPath
         ) as? LibraryMovieView else { return .init() }
 
-        let movie = libraryModel.movies[indexPath.item]
+        let movie = viewModel.movies[indexPath.item]
         let model = LibraryMovieModel(movie: movie)
         let imageProxy = ImageProxyService.shared
 
@@ -187,8 +137,7 @@ extension LibraryViewController: UICollectionViewDataSource {
 
 extension LibraryViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movie = libraryModel.movies[indexPath.item]
-        libraryCoordinator.startDetails(movie: movie)
+        viewModel.performSelectionMovie(at: indexPath.item)
     }
 
     func collectionView(
@@ -200,32 +149,18 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout {
         let width = (collectionView.bounds.width - horisontalInset) / 2
         return CGSize(width: width, height: width * 1.5)
     }
-
-    func collectionView(
-        _: UICollectionView,
-        layout _: UICollectionViewLayout,
-        minimumLineSpacingForSectionAt _: Int
-    ) -> CGFloat {
-        0
-    }
-
-    func collectionView(
-        _: UICollectionView,
-        layout _: UICollectionViewLayout,
-        minimumInteritemSpacingForSectionAt _: Int
-    ) -> CGFloat {
-        0
-    }
 }
 
 extension LibraryViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         guard let query = searchController.searchBar.text else { return }
-        let selectedGenre = libraryModel.selectedGenre
-
         switch query.isEmpty {
-        case true: fetchMovies(genre: selectedGenre)
-        case false: fetchMovies(query: query)
+        case true:
+            guard let selectedGenre = viewModel.selectedGenre else { return }
+            viewModel.fetchMovies(genre: selectedGenre)
+
+        case false:
+            viewModel.fetchMovies(query: query)
         }
     }
 }

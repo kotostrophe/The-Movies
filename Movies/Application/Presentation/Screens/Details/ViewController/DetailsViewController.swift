@@ -6,10 +6,7 @@ import UIKit
 final class DetailsViewController: UIViewController {
     // MARK: - Properties
 
-    let detailsImageProxyService: ImageProxyServiceProtocol
-    let detailsGenreProxyService: GenreProxyServiceProtocol
-    let detailsCoordinator: DetailsFlow
-    let detailsModel: DetailsModel
+    let viewModel: DetailsViewModelProtocol
 
     // MARK: - UI Properties
 
@@ -20,16 +17,9 @@ final class DetailsViewController: UIViewController {
     // MARK: - Initializer
 
     required init(
-        model: DetailsModel,
-        imageProxyService: ImageProxyServiceProtocol,
-        genreProxyService: GenreProxyServiceProtocol,
-        coordinator: DetailsFlow
+        viewModel: DetailsViewModelProtocol
     ) {
-        detailsModel = model
-        detailsImageProxyService = imageProxyService
-        detailsGenreProxyService = genreProxyService
-        detailsCoordinator = coordinator
-
+        self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -53,37 +43,54 @@ final class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = detailsModel.movie.title
+        configureCallbacks()
+        viewModel.setup()
     }
 
-    // MARK: - Configuretion methods
+    // MARK: - Configuration methods
+
+    private func configureCallbacks() {
+        viewModel.didSetupWithMovie = { [weak self] movie in
+            self?.title = movie.title
+        }
+
+        viewModel.didFetchPosters = { [weak contentView] _ in
+            contentView?.tableView.reloadData()
+        }
+
+        viewModel.didFetchGenres = { [weak contentView] _ in
+            contentView?.tableView.reloadData()
+        }
+    }
 }
 
 extension DetailsViewController: UITableViewDataSource {
     func tableView(_: UITableView, numberOfRowsInSection _: Int) -> Int {
-        detailsModel.components.count
+        viewModel.components.count
     }
 
     func tableView(_: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        switch detailsModel.components[indexPath.item] {
+        let movie = viewModel.movie
+        let genres = viewModel.genres
+
+        switch viewModel.components[indexPath.item] {
         case .title:
             let detailsTitleModel = DetailsTitleModel(
-                title: detailsModel.movie.title,
-                popularity: detailsModel.movie.popularity,
-                rating: detailsModel.movie.voteAverage
+                title: movie.title,
+                popularity: movie.popularity,
+                rating: movie.voteAverage
             )
             return DetailsTitleView(model: detailsTitleModel)
 
         case .info:
             let detailsInfoModel = DetailsInfoModel(
-                releaseDate: detailsModel.movie.releaseDate,
-                genresId: detailsModel.movie.genres,
-                genres: []
+                releaseDate: movie.releaseDate,
+                genres: genres
             )
-            return DetailsInfoView(model: detailsInfoModel, genreProxyService: detailsGenreProxyService)
+            return DetailsInfoView(model: detailsInfoModel)
 
         case .description:
-            let description = DetailsDescriptionModel(description: detailsModel.movie.overview)
+            let description = DetailsDescriptionModel(description: movie.overview)
             return DetailsDescriptionView(model: description)
         }
     }
@@ -91,11 +98,22 @@ extension DetailsViewController: UITableViewDataSource {
 
 extension DetailsViewController: UITableViewDelegate {
     func tableView(_: UITableView, viewForHeaderInSection _: Int) -> UIView? {
-        let headerModel = DetailsHeaderModel(imagePath: detailsModel.movie.posterPath)
-        return DetailsHeaderView(model: headerModel, imageProxyService: detailsImageProxyService)
+        let header = DetailsHeaderView()
+        header.dataSource = self
+        return header
     }
 
     func tableView(_: UITableView, heightForHeaderInSection _: Int) -> CGFloat {
         270
+    }
+}
+
+extension DetailsViewController: DetailsHeaderViewDataSource {
+    func numberOfImages(at detailsHeaderView: DetailsHeaderView) -> Int {
+        viewModel.posters.count
+    }
+
+    func detailsHeaderView(_ detailsHeaderView: DetailsHeaderView, imageDataAt index: Int) -> Data {
+        viewModel.posters[index]
     }
 }
