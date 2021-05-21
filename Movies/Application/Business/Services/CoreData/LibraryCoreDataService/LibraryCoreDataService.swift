@@ -65,7 +65,7 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
     }
 }
 
-extension LibraryCoreDataService: Shareble {
+extension LibraryCoreDataService: Sharable {
     static let shared: LibraryCoreDataServiceProtocol = {
         let coreData = CoreData.shared
         return LibraryCoreDataService(coreData: coreData)

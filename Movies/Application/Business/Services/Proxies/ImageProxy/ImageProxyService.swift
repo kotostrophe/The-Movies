@@ -44,12 +44,3 @@ final class ImageProxyService: ImageProxyServiceProtocol {
         }
     }
 }
-
-extension ImageProxyService: Shareble {
-    static let shared: ImageProxyServiceProtocol = {
-        let networkService = ImageNetworkService.shared
-        let fileService = ImageFileService()
-
-        return ImageProxyService(networkService: networkService, fileService: fileService)
-    }()
-}

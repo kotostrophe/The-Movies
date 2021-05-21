@@ -20,7 +20,7 @@ final class ScreenFactory: ScreenFactoryProtocol {
     }
 
     convenience init() {
-        let serviceFactory = ServiceFactory()
+        let serviceFactory = ServiceFactory.shared
         self.init(serviceFactory: serviceFactory)
     }
 

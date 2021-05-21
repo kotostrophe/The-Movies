@@ -6,7 +6,7 @@ import UIKit
 final class LibraryMovieView: UICollectionViewCell {
     // MARK: - Properties
 
-    private(set) var model: LibraryMovieModel?
+    private(set) var movie: Movie?
     private(set) weak var imageProxy: ImageProxyServiceProtocol?
 
     // MARK: - UI Properties
@@ -34,13 +34,13 @@ final class LibraryMovieView: UICollectionViewCell {
 
     // MARK: - Configuration methods
 
-    func configure(with model: LibraryMovieModel, imageProxy: ImageProxyServiceProtocol) {
-        self.model = model
+    func configure(with movie: Movie, imageProxy: ImageProxyServiceProtocol) {
+        self.movie = movie
         self.imageProxy = imageProxy
 
-        titleLabel.text = model.movie.title
+        titleLabel.text = movie.title
 
-        guard let posterPath = model.movie.posterPath?.trimLast("/") else { return }
+        guard let posterPath = movie.posterPath?.trimLast("/") else { return }
         imageProxy.getImage(by: posterPath, completion: { [weak self] data in
             DispatchQueue.main.async {
                 guard let data = data else { return }

@@ -11,7 +11,11 @@ protocol ProxiesFactoryProtocol: AnyObject {
 
 final class ProxiesFactory: ProxiesFactoryProtocol {
     func makeImageProxyService() -> ImageProxyServiceProtocol {
-        ImageProxyService.shared
+        let networking = Networking(environment: .images)
+        let networkService = ImageNetworkService(networking: networking)
+        let fileService = ImageFileService()
+
+        return ImageProxyService(networkService: networkService, fileService: fileService)
     }
 
     func makeLibraryProxyService() -> LibraryProxyServiceProtocol {
