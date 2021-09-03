@@ -10,6 +10,12 @@ protocol ServiceFactoryProtocol: AnyObject {
 }
 
 final class ServiceFactory: ServiceFactoryProtocol {
+    // MARK: - Initializer
+
+    private init() {}
+
+    // MARK: - Methods
+
     func makeNetworkingFactory() -> NetworkingFactoryProtocol {
         NetworkingFactory()
     }
@@ -21,4 +27,8 @@ final class ServiceFactory: ServiceFactoryProtocol {
     func makeImageFileService() -> ImageFileServiceProtocol {
         ImageFileService()
     }
+}
+
+extension ServiceFactory: Sharable {
+    static let shared: ServiceFactoryProtocol = ServiceFactory()
 }

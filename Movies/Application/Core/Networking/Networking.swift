@@ -17,7 +17,7 @@ protocol NetworkingProtocol: AnyObject {
 }
 
 /// Manage networking
-class Networking: NetworkingProtocol {
+final class Networking: NetworkingProtocol {
     // MARK: - Properties
 
     let environment: NetworkingEnvironment
@@ -38,8 +38,6 @@ class Networking: NetworkingProtocol {
             completion(.error(NetworkError.failToPrepareRequest))
             return
         }
-
-        print(request.url)
 
         URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
             if let error = error {
@@ -86,7 +84,7 @@ class Networking: NetworkingProtocol {
     }
 }
 
-extension Networking: Shareble {
+extension Networking: Sharable {
     static let shared: NetworkingProtocol = {
         let environment = NetworkingEnvironment.base
         return Networking(environment: environment)

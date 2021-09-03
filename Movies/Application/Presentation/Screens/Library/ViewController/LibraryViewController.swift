@@ -127,10 +127,9 @@ extension LibraryViewController: UICollectionViewDataSource {
         ) as? LibraryMovieView else { return .init() }
 
         let movie = viewModel.movies[indexPath.item]
-        let model = LibraryMovieModel(movie: movie)
-        let imageProxy = ImageProxyService.shared
+        let imageProxy = ServiceFactory.shared.makeProxiesFactory().makeImageProxyService()
 
-        movieCell.configure(with: model, imageProxy: imageProxy)
+        movieCell.configure(with: movie, imageProxy: imageProxy)
         return movieCell
     }
 }
