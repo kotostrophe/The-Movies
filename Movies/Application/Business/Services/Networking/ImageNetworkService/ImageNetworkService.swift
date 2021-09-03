@@ -30,10 +30,3 @@ final class ImageNetworkService: ImageNetworkServiceProtocol {
         })
     }
 }
-
-extension ImageNetworkService: Shareble {
-    static let shared: ImageNetworkServiceProtocol = {
-        let networking = Networking(environment: .images)
-        return ImageNetworkService(networking: networking)
-    }()
-}

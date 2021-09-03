@@ -58,14 +58,14 @@ final class CoreData: CoreDataProtocol {
 
     private lazy var documentsURL: URL = {
         guard let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).last else {
-            fatalError("Unable to resolve documentdirectory")
+            fatalError("Unable to resolve document directory")
         }
         return url
     }()
 
     // MARK: - Initialzier
 
-    init(modelName: String, storeName: String) {
+    private init(modelName: String, storeName: String) {
         self.modelName = modelName
         self.storeName = storeName
         storeDispatchGroup = DispatchGroup()
@@ -109,7 +109,7 @@ final class CoreData: CoreDataProtocol {
     }
 }
 
-extension CoreData: Shareble {
+extension CoreData: Sharable {
     static let shared: CoreDataProtocol = {
         let model = "Movies"
         let store = "Movies.sqlite"

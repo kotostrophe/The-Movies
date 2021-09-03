@@ -20,7 +20,8 @@ final class NetworkingFactory: NetworkingFactoryProtocol {
     }
 
     func makeImageNetworkService() -> ImageNetworkServiceProtocol {
-        ImageNetworkService.shared
+        let networking = Networking(environment: .images)
+        return ImageNetworkService(networking: networking)
     }
 
     func makeDetailsNetworkServer() -> DetailsNetworkServiceProtocol {

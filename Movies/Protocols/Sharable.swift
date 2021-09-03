@@ -3,7 +3,7 @@
 
 import Foundation
 
-protocol Shareble {
+protocol Sharable {
     associatedtype SharableProtocol
     static var shared: SharableProtocol { get }
 }

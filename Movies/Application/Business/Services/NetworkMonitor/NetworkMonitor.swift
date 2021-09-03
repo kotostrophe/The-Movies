@@ -59,6 +59,6 @@ final class NetworkMonitor: NetworkMonitorProtocol {
     }
 }
 
-extension NetworkMonitor: Shareble {
+extension NetworkMonitor: Sharable {
     static let shared: NetworkMonitorProtocol = NetworkMonitor(queue: .global())
 }
