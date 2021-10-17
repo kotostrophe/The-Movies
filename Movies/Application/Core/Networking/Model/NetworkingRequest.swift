@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes networking requests
 enum NetworkingRequest {
     static func request(
         method: NetworkingRequestMethod,

@@ -9,7 +9,9 @@ final class MockNetworkMonitor: NetworkMonitorProtocol {
     // MARK: - Properties
 
     var lastPathStatus: NWPath.Status?
-    var isSatisfied: Bool = true
+    var isSatisfied: Bool {
+        lastPathStatus == .satisfied
+    }
 
     weak var delegate: NetworkServiceDelegate?
 
