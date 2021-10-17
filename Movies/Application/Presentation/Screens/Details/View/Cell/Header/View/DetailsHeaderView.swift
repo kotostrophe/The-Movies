@@ -13,73 +13,41 @@ final class DetailsHeaderView: UIView {
 
     weak var dataSource: DetailsHeaderViewDataSource?
 
-    // MARK: - UI Properties
+    // MARK: - Private UI properties
 
-    let collectionView: UICollectionView
-
-    // MARK: - Initializer
-
-    required init() {
+    private let collectionView: UICollectionView = {
         let flowLayout = UICollectionViewFlowLayout()
         flowLayout.scrollDirection = .horizontal
         flowLayout.minimumLineSpacing = 0
         flowLayout.minimumInteritemSpacing = 0
 
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
+        collectionView.backgroundColor = .clear
+        collectionView.register(DetailsHeaderImageViewCell.self, forCellWithReuseIdentifier: "imageCell")
+        collectionView.isPagingEnabled = true
+        return collectionView
+    }()
 
-        super.init(frame: .zero)
-        placeComponents()
+    // MARK: - Initializer
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        configureView()
+        setConstraints()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
-    // MARK: - Life cycle methods
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        configureComponents()
-    }
 }
 
-private extension DetailsHeaderView {
-    // MARK: - Place components
-
-    func placeComponents() {
-        placeCollectionView()
-    }
-
-    func placeCollectionView() {
-        addSubview(collectionView)
-    }
-
-    // MARK: - Configurate components
-
-    func configureComponents() {
-        configureCollectionView()
-    }
-
-    func configureCollectionView() {
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-
-        collectionView.backgroundColor = .clear
-        collectionView.register(DetailsHeaderImageViewCell.self, forCellWithReuseIdentifier: "imageCell")
-        collectionView.isPagingEnabled = true
-        collectionView.dataSource = self
-        collectionView.delegate = self
-    }
-}
+// MARK: - UICollectionViewDataSource
 
 extension DetailsHeaderView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        dataSource?.numberOfImages(at: self) ?? 0
+        dataSource?.numberOfImages(at: self) ?? .zero
     }
 
     func collectionView(
@@ -91,11 +59,14 @@ extension DetailsHeaderView: UICollectionViewDataSource {
             for: indexPath
         ) as? DetailsHeaderImageViewCell
         else { fatalError("Failed to dequeue cell") }
+        
         guard let data = dataSource?.detailsHeaderView(self, imageDataAt: indexPath.item) else { return imageCell }
         imageCell.imageView.image = UIImage(data: data)
         return imageCell
     }
 }
+
+// MARK: - UICollectionViewDelegateFlowLayout
 
 extension DetailsHeaderView: UICollectionViewDelegateFlowLayout {
     func collectionView(
@@ -104,5 +75,40 @@ extension DetailsHeaderView: UICollectionViewDelegateFlowLayout {
         sizeForItemAt indexPath: IndexPath
     ) -> CGSize {
         frame.size
+    }
+}
+
+// MARK: - Configuration methods
+
+private extension DetailsHeaderView {
+    func configureView() {
+        configureCollectionView()
+    }
+
+    func configureCollectionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+    }
+}
+
+// MARK: - Constratins
+
+private extension DetailsHeaderView {
+    func setConstraints() {
+        setCollectionViewConstraints()
+    }
+
+    func setCollectionViewConstraints() {
+        addSubview(collectionView)
+        collectionView.anchor
+            .edgesToSuperview(insets: Appearance.padding)
+            .activate()
+    }
+}
+
+
+extension DetailsHeaderView {
+    enum Appearance {
+        static let padding: UIEdgeInsets = .init(.zero)
     }
 }

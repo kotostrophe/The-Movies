@@ -6,15 +6,22 @@ import UIKit
 final class DetailsInfoView: UITableViewCell {
     // MARK: - Properties
 
-    var model: DetailsInfoModel
+    private let model: DetailsInfoModel
 
-    // MARK: - UI Properties
+    // MARK: - Private UI properties
 
-    private let padding: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .top
+        stackView.spacing = 4
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
 
-    lazy var stackView: UIStackView = makeStackView()
-    lazy var releaseCategory = CategoryView()
-    lazy var genreCategory = CategoryView()
+    private let releaseCategory = CategoryView()
+
+    private let genreCategory = CategoryView()
 
     // MARK: - Initializer
 
@@ -22,47 +29,62 @@ final class DetailsInfoView: UITableViewCell {
         self.model = model
 
         super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
 
-        _ = stackView
-
-        configureReleaseCategory()
-        configureGenreCategory()
+        configureComponents()
+        setComponentsConstraints()
     }
 
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+}
 
-    // MARK: - Configuration methods
+// MARK: - Configuration methods
 
-    private func configureReleaseCategory() {
+private extension DetailsInfoView {
+    func configureComponents() {
+        configureView()
+        configureReleaseCategory()
+        configureGenreCategory()
+    }
+
+    func configureView() {
+        selectionStyle = .none
+    }
+
+    func configureReleaseCategory() {
         releaseCategory.titleLabel.text = "Release date"
-        releaseCategory.descriptionLabel.text = model.releaseDate?.toDate(with: "yyyy-MM-dd")?
+        releaseCategory.descriptionLabel.text = model
+            .releaseDate?
+            .toDate(with: "yyyy-MM-dd")?
             .toString(with: "MMMM d, yyyy")
     }
 
-    private func configureGenreCategory() {
+    func configureGenreCategory() {
         genreCategory.titleLabel.text = "Genre"
         genreCategory.descriptionLabel.text = model.genres.map(\.name).joined(separator: ", ")
     }
 }
 
-private extension DetailsInfoView {
-    func makeStackView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [releaseCategory, genreCategory])
-        contentView.addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
+// MARK: - Constraints
 
-        stackView.axis = .horizontal
-        stackView.alignment = .top
-        stackView.spacing = 4
-        stackView.distribution = .fillEqually
-        return stackView
+private extension DetailsInfoView {
+    func setComponentsConstraints() {
+        setStackViewConstraints()
+    }
+
+    func setStackViewConstraints() {
+        contentView.addSubview(stackView)
+        stackView.set(arrangedSubviews: [releaseCategory, genreCategory])
+        stackView.anchor
+            .edgesToSuperview(insets: Appearance.padding)
+            .activate()
+    }
+}
+
+private extension DetailsInfoView {
+    enum Appearance {
+        static let padding: UIEdgeInsets = .init(16)
     }
 }
