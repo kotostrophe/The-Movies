@@ -6,7 +6,7 @@ import UIKit
 final class DetailsView: UIView {
     // MARK: - UI Properties
 
-    lazy var tableView: UITableView = {
+    let tableView: UITableView = {
         let tableView = UITableView(frame: .zero, style: .grouped)
         tableView.backgroundColor = .clear
         tableView.tableFooterView = .init()

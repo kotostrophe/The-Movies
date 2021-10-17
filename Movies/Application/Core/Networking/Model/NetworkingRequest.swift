@@ -11,9 +11,7 @@ enum NetworkingRequest {
         headers: [String: String] = [:],
         parameters: [String: String] = [:]
     ) -> NetworkingRequestDataModel {
-        print(parameters)
-
-        return NetworkingRequestDataModel(
+        NetworkingRequestDataModel(
             method: method,
             route: route,
             headers: headers,

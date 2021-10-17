@@ -23,7 +23,7 @@ final class DetailsHeaderView: UIView {
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: flowLayout)
         collectionView.backgroundColor = .clear
-        collectionView.register(DetailsHeaderImageViewCell.self, forCellWithReuseIdentifier: "imageCell")
+        collectionView.register(DetailsHeaderImageViewCell.self)
         collectionView.isPagingEnabled = true
         return collectionView
     }()
@@ -54,15 +54,10 @@ extension DetailsHeaderView: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let imageCell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: "imageCell",
-            for: indexPath
-        ) as? DetailsHeaderImageViewCell
-        else { fatalError("Failed to dequeue cell") }
-        
-        guard let data = dataSource?.detailsHeaderView(self, imageDataAt: indexPath.item) else { return imageCell }
-        imageCell.imageView.image = UIImage(data: data)
-        return imageCell
+        let cell = collectionView.dequeueCell(DetailsHeaderImageViewCell.self, for: indexPath)
+        guard let data = dataSource?.detailsHeaderView(self, imageDataAt: indexPath.item) else { return cell }
+        cell.imageView.image = UIImage(data: data)
+        return cell
     }
 }
 
@@ -105,7 +100,6 @@ private extension DetailsHeaderView {
             .activate()
     }
 }
-
 
 extension DetailsHeaderView {
     enum Appearance {

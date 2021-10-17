@@ -31,7 +31,7 @@ final class LibraryViewController: UIViewController {
 
     override func loadView() {
         let view = LibraryView()
-        view.collectionView.register(LibraryMovieView.self, forCellWithReuseIdentifier: LibraryMovieView.identifire)
+        view.collectionView.register(LibraryMovieView.self)
         view.collectionView.dataSource = self
         view.collectionView.delegate = self
         view.segmentedControl.dataSource = self
@@ -75,11 +75,15 @@ final class LibraryViewController: UIViewController {
 
         viewModel.didUpdateMovies = { [weak contentView] _ in
             guard let contentView = contentView else { return }
-            let navigationBarHeigth: CGFloat = 64.0
-            var offset = contentView.collectionView.contentOffset
-            offset.y = -navigationBarHeigth
-            contentView.collectionView.setContentOffset(offset, animated: true)
+            let offset: CGPoint = {
+                let navigationBarHeigth: CGFloat = 196.0
+                var offset = contentView.collectionView.contentOffset
+                offset.y = -navigationBarHeigth
+                return offset
+            }()
+
             contentView.collectionView.reloadData()
+            contentView.collectionView.setContentOffset(offset, animated: true)
         }
 
         viewModel.didUpdateGenres = { [weak self] _ in
@@ -121,16 +125,11 @@ extension LibraryViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        guard let movieCell = collectionView.dequeueReusableCell(
-            withReuseIdentifier: LibraryMovieView.identifire,
-            for: indexPath
-        ) as? LibraryMovieView else { return .init() }
-
+        let cell = collectionView.dequeueCell(LibraryMovieView.self, for: indexPath)
         let movie = viewModel.movies[indexPath.item]
         let imageProxy = ServiceFactory.shared.makeProxiesFactory().makeImageProxyService()
-
-        movieCell.configure(movie: movie, imageProxy: imageProxy)
-        return movieCell
+        cell.configure(movie: movie, imageProxy: imageProxy)
+        return cell
     }
 }
 
@@ -152,7 +151,7 @@ extension LibraryViewController: UICollectionViewDelegateFlowLayout {
 
 extension LibraryViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        guard let query = searchController.searchBar.text else { return }
+        guard let query = searchController.searchBar.text?.trimmingCharacters(in: .whitespaces) else { return }
         switch query.isEmpty {
         case true:
             guard let selectedGenre = viewModel.selectedGenre else { return }
