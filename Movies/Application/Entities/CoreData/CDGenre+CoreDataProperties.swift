@@ -6,7 +6,8 @@ import Foundation
 
 ///
 public extension CDGenre {
-    @nonobjc class func fetchRequest() -> NSFetchRequest<CDGenre> {
+    @nonobjc
+    class func fetchRequest() -> NSFetchRequest<CDGenre> {
         NSFetchRequest<CDGenre>(entityName: "CDGenre")
     }
 

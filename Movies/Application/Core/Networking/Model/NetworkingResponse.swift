@@ -14,7 +14,7 @@ enum NetworkingRawResponse {
 
     // MARK: - Methods
 
-    func decode<Response: Decodable>(_ type: Response.Type, completion: (NetworkingResponse<Response>) -> ()) {
+    func decode<Response: Decodable>(_ type: Response.Type, completion: (NetworkingResponse<Response>) -> Void) {
         switch self {
         case let .data(data):
             do {

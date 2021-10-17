@@ -90,7 +90,7 @@ extension DetailsHeaderView: UICollectionViewDataSource {
             withReuseIdentifier: "imageCell",
             for: indexPath
         ) as? DetailsHeaderImageViewCell
-        else { fatalError() }
+        else { fatalError("Failed to dequeue cell") }
         guard let data = dataSource?.detailsHeaderView(self, imageDataAt: indexPath.item) else { return imageCell }
         imageCell.imageView.image = UIImage(data: data)
         return imageCell

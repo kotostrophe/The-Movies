@@ -45,7 +45,7 @@ final class GenreProxyTests: XCTestCase {
         databaseService.genres = []
         networkService.genres = GenreFactory().makeGenres().shuffled()
 
-        genresProxyService.fetchGenres(completion: { [weak self] result in
+        genresProxyService.fetchGenres { [weak self] result in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -57,7 +57,7 @@ final class GenreProxyTests: XCTestCase {
 
             XCTAssertTrue(genres == self.databaseService.genres, "Expected caching to database")
             XCTAssert(genres == self.networkService.genres, "Expected genres from network")
-        })
+        }
     }
 
     func testFetchGenresByIdIfNetworkIsUnsatisfiedAndDatabaseIsFull() {
@@ -71,13 +71,13 @@ final class GenreProxyTests: XCTestCase {
             return
         }
 
-        genresProxyService.fetchGenre(by: firstGenre.id, completion: { result in
+        genresProxyService.fetchGenre(by: firstGenre.id) { result in
             guard case let .success(genre) = result else {
                 XCTFail("Expected successfull response")
                 return
             }
 
             XCTAssert(genre == firstGenre)
-        })
+        }
     }
 }

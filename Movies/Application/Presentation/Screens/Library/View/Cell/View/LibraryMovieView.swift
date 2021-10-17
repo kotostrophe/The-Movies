@@ -41,12 +41,12 @@ final class LibraryMovieView: UICollectionViewCell {
         titleLabel.text = movie.title
 
         guard let posterPath = movie.posterPath?.trimLast("/") else { return }
-        imageProxy.getImage(by: posterPath, completion: { [weak self] data in
+        imageProxy.getImage(by: posterPath) { [weak self] data in
             DispatchQueue.main.async {
                 guard let data = data else { return }
                 self?.imageView.image = UIImage(data: data)
             }
-        })
+        }
     }
 }
 

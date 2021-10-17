@@ -44,7 +44,7 @@ final class LibraryProxyTests: XCTestCase {
 
         databaseService.movies = []
         networkService.movies = MoviesFactory().makeMovies().shuffled()
-        proxyService.fetchMovies(query: "some film", completion: { [weak self] result in
+        proxyService.fetchMovies(query: "some film") { [weak self] result in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -56,7 +56,7 @@ final class LibraryProxyTests: XCTestCase {
 
             XCTAssertTrue(movies == self.databaseService.movies, "Expected caching to database")
             XCTAssert(movies == self.networkService.movies, "Expected movies from network")
-        })
+        }
     }
 
     func testFetchMoviesByQueryIfNetworkIsUnsatisfiedAndDatabaseIsFull() {
@@ -64,7 +64,7 @@ final class LibraryProxyTests: XCTestCase {
 
         databaseService.movies = MoviesFactory().makeMovies().shuffled()
         networkService.movies = []
-        proxyService.fetchMovies(query: "some film", completion: { [weak self] result in
+        proxyService.fetchMovies(query: "some film") { [weak self] result in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -75,7 +75,7 @@ final class LibraryProxyTests: XCTestCase {
             }
 
             XCTAssert(movies == self.databaseService.movies)
-        })
+        }
     }
 
     func testFetchMoviesByGenrefNetworkIsSatisfiedAndDatabaseIsEmpty() {
@@ -85,7 +85,7 @@ final class LibraryProxyTests: XCTestCase {
         networkService.movies = MoviesFactory().makeMovies().shuffled()
 
         let genre = Genre(id: 0, name: "some genre")
-        proxyService.fetchMovies(genre: genre, completion: { [weak self] result in
+        proxyService.fetchMovies(genre: genre) { [weak self] result in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -97,7 +97,7 @@ final class LibraryProxyTests: XCTestCase {
 
             XCTAssertTrue(movies == self.databaseService.movies, "Expected caching to database")
             XCTAssert(movies == self.networkService.movies, "Expected movies from network")
-        })
+        }
     }
 
     func testFetchMoviesByGenreIfNetworkIsUnsatisfiedAndDatabaseIsFull() {
@@ -107,7 +107,7 @@ final class LibraryProxyTests: XCTestCase {
         networkService.movies = []
 
         let genre = Genre(id: 0, name: "some genre")
-        proxyService.fetchMovies(genre: genre, completion: { [weak self] result in
+        proxyService.fetchMovies(genre: genre) { [weak self] result in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -118,6 +118,6 @@ final class LibraryProxyTests: XCTestCase {
             }
 
             XCTAssert(movies == self.databaseService.movies)
-        })
+        }
     }
 }

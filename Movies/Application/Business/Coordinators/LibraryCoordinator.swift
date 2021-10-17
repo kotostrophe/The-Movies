@@ -14,17 +14,17 @@ final class LibraryCoordinator: LibraryCoordinatorProtocol {
     var coordinators: [Coordinatable] = []
 
     let navigationController: UINavigationController
-    let screenFactory: ScreenFactoryProtocol
+    let screenFactory: ScreenBuilderProtocol
 
     // MARK: - Initializer
 
-    init(navigationController: UINavigationController, screenFactory: ScreenFactoryProtocol) {
+    init(navigationController: UINavigationController, screenFactory: ScreenBuilderProtocol) {
         self.navigationController = navigationController
         self.screenFactory = screenFactory
     }
 
     convenience init(navigationController: UINavigationController) {
-        let screenFactory = ScreenFactory()
+        let screenFactory = ScreenBuilder()
         self.init(navigationController: navigationController, screenFactory: screenFactory)
     }
 

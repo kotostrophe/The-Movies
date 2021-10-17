@@ -7,7 +7,7 @@ import Foundation
 final class MockImageNetworkService: ImageNetworkServiceProtocol {
     var image: Data?
 
-    func fetchImage(by name: String, completion: @escaping (Data?) -> ()) {
+    func fetchImage(by name: String, completion: @escaping (Data?) -> Void) {
         completion(image)
     }
 }

@@ -11,7 +11,7 @@ final class MockGenreNetworkService: GenreNetworkServiceProtocol {
         self.genres = genres
     }
 
-    func fetchGenres(completion: @escaping (Result<[Genre], Error>) -> ()) {
+    func fetchGenres(completion: @escaping (Result<[Genre], Error>) -> Void) {
         completion(.success(genres))
     }
 }

@@ -6,7 +6,8 @@ import Foundation
 
 ///
 public extension CDMovie {
-    @nonobjc class func fetchRequest() -> NSFetchRequest<CDMovie> {
+    @nonobjc
+    class func fetchRequest() -> NSFetchRequest<CDMovie> {
         NSFetchRequest<CDMovie>(entityName: "CDMovie")
     }
 

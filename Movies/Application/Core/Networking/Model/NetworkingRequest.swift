@@ -4,7 +4,7 @@
 import Foundation
 
 /// Describes networking requests
-class NetworkingRequest {
+enum NetworkingRequest {
     static func request(
         method: NetworkingRequestMethod,
         route: String,

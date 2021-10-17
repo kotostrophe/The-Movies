@@ -5,8 +5,8 @@ import CoreData
 import Foundation
 
 protocol LibraryProxyServiceProtocol: AnyObject {
-    func fetchMovies(query: String, completion: @escaping (Result<[Movie], Error>) -> ())
-    func fetchMovies(genre: Genre, completion: @escaping (Result<[Movie], Error>) -> ())
+    func fetchMovies(query: String, completion: @escaping (Result<[Movie], Error>) -> Void)
+    func fetchMovies(genre: Genre, completion: @escaping (Result<[Movie], Error>) -> Void)
 }
 
 final class LibraryProxyService: LibraryProxyServiceProtocol {
@@ -32,7 +32,7 @@ final class LibraryProxyService: LibraryProxyServiceProtocol {
 
     // MARK: - Methods
 
-    func fetchMovies(query: String, completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
         switch networkMonitor.isSatisfied {
         case true:
             networkService.fetchMovies(query: query, completion: { [weak self] result in
@@ -47,7 +47,7 @@ final class LibraryProxyService: LibraryProxyServiceProtocol {
         }
     }
 
-    func fetchMovies(genre: Genre, completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(genre: Genre, completion: @escaping (Result<[Movie], Error>) -> Void) {
         switch networkMonitor.isSatisfied {
         case true:
             networkService.fetchMovies(genreId: genre.id, completion: { [weak self] result in

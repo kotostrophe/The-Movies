@@ -39,7 +39,7 @@ final class Networking: NetworkingProtocol {
             return
         }
 
-        URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.error(error))
                 return
@@ -51,7 +51,8 @@ final class Networking: NetworkingProtocol {
             }
 
             completion(.error(NetworkError.somethingWentWrong(response)))
-        }).resume()
+        }
+        dataTask.resume()
     }
 
     // MARK: - Preparation methods

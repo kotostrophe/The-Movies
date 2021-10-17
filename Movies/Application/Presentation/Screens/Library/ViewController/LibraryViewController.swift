@@ -34,8 +34,8 @@ final class LibraryViewController: UIViewController {
         view.collectionView.register(LibraryMovieView.self, forCellWithReuseIdentifier: LibraryMovieView.identifire)
         view.collectionView.dataSource = self
         view.collectionView.delegate = self
-        view.toolbarView.segmentedControl.dataSource = self
-        view.toolbarView.segmentedControl.delegate = self
+        view.segmentedControl.dataSource = self
+        view.segmentedControl.delegate = self
 
         self.view = view
     }
@@ -70,7 +70,7 @@ final class LibraryViewController: UIViewController {
     private func configuraViewModelCallbacks() {
         viewModel.didUpdateSelectedGenre = { [weak self] _, index in
             guard let self = self else { return }
-            self.contentView?.toolbarView.segmentedControl.selectedSegmentIndex = index
+            self.contentView?.segmentedControl.selectedSegmentIndex = index
         }
 
         viewModel.didUpdateMovies = { [weak contentView] _ in
@@ -84,7 +84,7 @@ final class LibraryViewController: UIViewController {
 
         viewModel.didUpdateGenres = { [weak self] _ in
             guard let self = self else { return }
-            self.contentView?.toolbarView.segmentedControl.reloadData()
+            self.contentView?.segmentedControl.reloadData()
         }
     }
 
