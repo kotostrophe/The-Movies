@@ -15,7 +15,20 @@ enum ImageFileServiceError: Error {
 final class ImageFileService: ImageFileServiceProtocol {
     // MARK: - Private properties
 
-    private lazy var cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+    private let folderPath = "Posters"
+
+    private lazy var cacheURL: URL? = {
+        let cacheFolder = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
+        guard let postersFolder = cacheFolder?.appendingPathComponent(folderPath, isDirectory: true)
+        else { return cacheFolder }
+        do {
+            try posterFolderIfNeeded(postersFolder)
+            return postersFolder
+        } catch {
+            print(self, error)
+            return cacheFolder
+        }
+    }()
 
     // MARK: - Methods
 
@@ -36,5 +49,10 @@ final class ImageFileService: ImageFileServiceProtocol {
         guard let path = cacheURL?.appendingPathComponent(name, isDirectory: false).path
         else { throw ImageFileServiceError.failedToPreparePath }
         return path
+    }
+
+    private func posterFolderIfNeeded(_ folderPath: URL) throws {
+        guard !FileManager.default.fileExists(atPath: folderPath.path) else { return }
+        try FileManager.default.createDirectory(at: folderPath, withIntermediateDirectories: true)
     }
 }

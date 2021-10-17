@@ -3,11 +3,19 @@
 
 import UIKit
 
+protocol LibraryMovieViewDelegate: AnyObject {
+    func libraryMovieView(_ cell: LibraryMovieView, loadImageBy movie: Movie)
+}
+
 final class LibraryMovieView: UICollectionViewCell {
     // MARK: - Properties
 
     private(set) var movie: Movie?
     private(set) weak var imageProxy: ImageProxyServiceProtocol?
+
+    // MARK: - Public properties
+
+    weak var dataSource: LibraryMovieViewDelegate?
 
     // MARK: - UI Properties
 
@@ -42,6 +50,8 @@ final class LibraryMovieView: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Initializers
+
     override init(frame: CGRect) {
         super.init(frame: frame)
 
@@ -64,20 +74,16 @@ final class LibraryMovieView: UICollectionViewCell {
 
     // MARK: - Configuration methods
 
-    func configure(movie: Movie, imageProxy: ImageProxyServiceProtocol) {
+    func configure(movie: Movie) {
         self.movie = movie
-        self.imageProxy = imageProxy
 
         titleLabel.text = movie.title
+        dataSource?.libraryMovieView(self, loadImageBy: movie)
+    }
 
-        guard let posterPath = movie.posterPath?.trimLast("/") else { return }
-        imageProxy.getImage(by: posterPath) { [weak self, movie] data in
-            guard movie == self?.movie else { return }
-            DispatchQueue.main.async {
-                guard let data = data else { return }
-                self?.imageView.image = UIImage(data: data)
-            }
-        }
+    func configureImageView(_ data: Data, for movie: Movie) {
+        guard movie == self.movie else { return }
+        imageView.image = UIImage(data: data)
     }
 }
 

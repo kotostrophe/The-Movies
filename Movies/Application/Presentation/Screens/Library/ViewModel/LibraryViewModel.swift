@@ -16,6 +16,7 @@ protocol LibraryViewModelProtocol: AnyObject {
 
     func fetchMovies(genre: Genre)
     func fetchMovies(query: String)
+    func fetchMoviePoster(_ movie: Movie, completion: @escaping (Data?) -> Void)
 
     func performSelectionGenre(at index: Int)
     func performSelectionMovie(at index: Int)
@@ -73,7 +74,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
             guard let self = self else { return }
             switch genres {
             case let .success(genres):
-                self.model.genres = genres
+                self.model.genres = genres.sorted(by: { $0.name < $1.name })
                 DispatchQueue.main.async {
                     self.didUpdateGenres?(genres)
                     self.performSelectionGenre(at: .zero)
@@ -119,6 +120,15 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                 DispatchQueue.main.async {
                     self.coordinator.startErrorAlert(error: error)
                 }
+            }
+        }
+    }
+
+    func fetchMoviePoster(_ movie: Movie, completion: @escaping (Data?) -> Void) {
+        guard let posterPath = movie.posterPath?.trimLast("/") else { return }
+        imageProxyService.getImage(by: posterPath) { data in
+            DispatchQueue.main.async {
+                completion(data)
             }
         }
     }
