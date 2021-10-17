@@ -3,8 +3,7 @@
 
 import Foundation
 
-/// Storage of headers for network requests
-struct NetworkingRequestHeaders {
+enum NetworkingRequestHeaders {
     static let standart: [String: String] = [
         "Content-Type": "application/json"
     ]

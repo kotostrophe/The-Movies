@@ -12,7 +12,6 @@ import Foundation
 
 protocol GenreCoreDataServiceProtocol: GenreDatabaseServiceProtocol {}
 
-/// Represent error for Genre CoreData Service
 enum GenreCoreDataServiceError: Error {
     case genreNotFound
 }

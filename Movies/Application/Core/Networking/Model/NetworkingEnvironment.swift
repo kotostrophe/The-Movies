@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describe enviroments which will be used for requesting to network
 enum NetworkingEnvironment: Int {
     case base, images
 

@@ -11,11 +11,47 @@ final class LibraryMovieView: UICollectionViewCell {
 
     // MARK: - UI Properties
 
-    private let padding: UIEdgeInsets = .init(top: 8, left: 8, bottom: 8, right: 8)
+    private let stackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fill
+        stackView.spacing = Appearance.spacing
+        return stackView
+    }()
 
-    private lazy var stackView: UIStackView = makeStacKView()
-    lazy var imageView: UIImageView = makeImageView()
-    lazy var titleLabel: UILabel = makeTitleLabel()
+    private let imageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.layer.cornerRadius = Appearance.Image.radius
+        imageView.backgroundColor = Appearance.Image.backgroundColor
+        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        return imageView
+    }()
+
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(
+            ofSize: Appearance.Title.fontSize,
+            weight: Appearance.Title.fontWeight
+        )
+        label.numberOfLines = 0
+        label.textColor = Appearance.Title.textColor
+        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        return label
+    }()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setComponentsConstraints()
+    }
+
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     // MARK: - Life cycle methods
 
@@ -26,64 +62,57 @@ final class LibraryMovieView: UICollectionViewCell {
         titleLabel.text = nil
     }
 
-    override func layoutSubviews() {
-        super.layoutSubviews()
-
-        _ = stackView
-    }
-
     // MARK: - Configuration methods
 
-    func configure(with movie: Movie, imageProxy: ImageProxyServiceProtocol) {
+    func configure(movie: Movie, imageProxy: ImageProxyServiceProtocol) {
         self.movie = movie
         self.imageProxy = imageProxy
 
         titleLabel.text = movie.title
 
         guard let posterPath = movie.posterPath?.trimLast("/") else { return }
-        imageProxy.getImage(by: posterPath, completion: { [weak self] data in
+        imageProxy.getImage(by: posterPath) { [weak self, movie] data in
+            guard movie == self?.movie else { return }
             DispatchQueue.main.async {
                 guard let data = data else { return }
                 self?.imageView.image = UIImage(data: data)
             }
-        })
+        }
     }
 }
 
-extension LibraryMovieView {
-    func makeStacKView() -> UIStackView {
-        let stackView = UIStackView(arrangedSubviews: [imageView, titleLabel])
+// MARK: - UI Setup methods
+
+private extension LibraryMovieView {
+    func setComponentsConstraints() {
+        setStackViewConstraints()
+    }
+
+    func setStackViewConstraints() {
         addSubview(stackView)
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: padding.left).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -padding.right).isActive = true
-        stackView.topAnchor.constraint(equalTo: topAnchor, constant: padding.top).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -padding.bottom).isActive = true
-
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fill
-        stackView.spacing = 4
-        return stackView
+        stackView.set(arrangedSubviews: [imageView, titleLabel])
+        stackView.anchor
+            .edgesToSuperview(insets: Appearance.padding)
+            .activate()
     }
+}
 
-    func makeImageView() -> UIImageView {
-        let imageView = UIImageView()
-        imageView.contentMode = .scaleAspectFill
-        imageView.clipsToBounds = true
-        imageView.layer.cornerRadius = 8
-        imageView.backgroundColor = .secondarySystemBackground
-        imageView.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
-        return imageView
-    }
+// MARK: - Appearance
 
-    func makeTitleLabel() -> UILabel {
-        let label = UILabel()
+private extension LibraryMovieView {
+    enum Appearance {
+        enum Image {
+            static let radius: CGFloat = 4.0
+            static let backgroundColor: UIColor = .secondarySystemBackground
+        }
 
-        label.font = UIFont.systemFont(ofSize: 15, weight: .medium)
-        label.numberOfLines = 0
-        label.setContentCompressionResistancePriority(.defaultHigh, for: .vertical)
+        enum Title {
+            static let fontSize: CGFloat = 15
+            static let fontWeight: UIFont.Weight = .medium
+            static let textColor: UIColor = .label
+        }
 
-        return label
+        static let padding: UIEdgeInsets = .init(8)
+        static let spacing: CGFloat = 4.0
     }
 }

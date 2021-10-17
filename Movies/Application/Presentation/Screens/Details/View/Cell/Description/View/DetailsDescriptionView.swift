@@ -6,13 +6,11 @@ import UIKit
 final class DetailsDescriptionView: UITableViewCell {
     // MARK: - Properties
 
-    let model: DetailsDescriptionModel
+    private let model: DetailsDescriptionModel
 
-    // MARK: - UI Properties
+    // MARK: - Private UI properties
 
-    private let padding: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
-
-    lazy var categoryView = makeCategoryView()
+    private let categoryView: CategoryView = .init()
 
     // MARK: - Initializer
 
@@ -20,10 +18,8 @@ final class DetailsDescriptionView: UITableViewCell {
         self.model = model
 
         super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
-
-        categoryView.titleLabel.text = "Description"
-        categoryView.descriptionLabel.text = model.description
+        configureComponents()
+        setComponentsConstraints()
     }
 
     @available(*, unavailable)
@@ -32,19 +28,41 @@ final class DetailsDescriptionView: UITableViewCell {
     }
 }
 
-private extension DetailsDescriptionView {
-    func makeCategoryView() -> CategoryView {
-        let categoryView = CategoryView()
-        contentView.addSubview(categoryView)
-        categoryView.translatesAutoresizingMaskIntoConstraints = false
-        categoryView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: padding.left)
-            .isActive = true
-        categoryView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -padding.right)
-            .isActive = true
-        categoryView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: padding.top).isActive = true
-        categoryView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -padding.bottom)
-            .isActive = true
+// MARK: - UI Configure methods
 
-        return categoryView
+private extension DetailsDescriptionView {
+    func configureComponents() {
+        configureView()
+        configureCategoryView()
+    }
+
+    func configureView() {
+        selectionStyle = .none
+    }
+
+    func configureCategoryView() {
+        categoryView.titleLabel.text = "Description"
+        categoryView.descriptionLabel.text = model.description
+    }
+}
+
+// MARK: - UI Setup methods
+
+private extension DetailsDescriptionView {
+    func setComponentsConstraints() {
+        setCollectionViewConstraints()
+    }
+
+    func setCollectionViewConstraints() {
+        contentView.addSubview(categoryView)
+        categoryView.anchor
+            .edgesToSuperview(insets: Appearance.padding)
+            .activate()
+    }
+}
+
+private extension DetailsDescriptionView {
+    enum Appearance {
+        static let padding: UIEdgeInsets = .init(16)
     }
 }

@@ -5,6 +5,8 @@ import Foundation
 @testable import Movies
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class NetworkMonitorTests: XCTestCase {
     // MARK: - Properties
 

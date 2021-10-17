@@ -4,68 +4,123 @@
 import UIKit
 
 final class LibraryView: UIView {
-    // MARK: - Properties
-
-    let toolbarHeight: CGFloat = 64.0
-    let collectionViewContentInset: UIEdgeInsets = .init(top: 0, left: 8, bottom: 64 + 8, right: 0)
-
     // MARK: - UI Properties
 
-    lazy var collectionView = makeCollectionView()
-    lazy var toolbarView = makeSegmentedToolbarView()
-
-    // MARK: - Life cycle methods
-
-    override func layoutSubviews() {
-        super.layoutSubviews()
-        backgroundColor = .systemBackground
-
-        _ = collectionView
-        _ = toolbarView
-    }
-}
-
-private extension LibraryView {
-    func makeCollectionView() -> UICollectionView {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.minimumLineSpacing = 0
         layout.minimumInteritemSpacing = 0
 
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        addSubview(collectionView)
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        collectionView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        collectionView.topAnchor.constraint(equalTo: topAnchor).isActive = true
-        collectionView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-
         collectionView.backgroundColor = .clear
-        collectionView.contentInset.left = collectionViewContentInset.left
-        collectionView.contentInset.right = collectionViewContentInset.right
-        collectionView.contentInset.top = collectionViewContentInset.top
-        collectionView.contentInset.bottom = collectionViewContentInset.bottom
-        collectionView.verticalScrollIndicatorInsets.bottom = toolbarView.frame.height
-
+        collectionView.contentInset = Appearance.contentMargin
+        collectionView.verticalScrollIndicatorInsets.bottom = 0
         return collectionView
+    }()
+
+    let segmentedControl: SegmentedControl = .init()
+
+    let scrollView: UIScrollView = {
+        let scrollView = UIScrollView()
+        scrollView.showsHorizontalScrollIndicator = false
+        scrollView.showsVerticalScrollIndicator = false
+        return scrollView
+    }()
+
+    let toolbarView: ToolbarView = .init()
+
+    // MARK: - Initializers
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+
+        setComponentsConstraints()
     }
 
-    func makeSegmentedToolbarView() -> SegmentedScrollableToolbarView {
-        let toolbarView = SegmentedScrollableToolbarView()
+    @available(*, unavailable)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    // MARK: - Life cycle methods
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        configureComponents()
+    }
+}
+
+// MARK: - UI Configure methods
+
+private extension LibraryView {
+    func configureComponents() {
+        configureView()
+    }
+
+    func configureView() {
+        backgroundColor = .systemBackground
+    }
+}
+
+// MARK: - UI Setup methods
+
+private extension LibraryView {
+    func setComponentsConstraints() {
+        setCollectionViewConstraints()
+        setToolbarViewConstraints()
+        setScrollViewConstraints()
+        setSegmentControlConstraints()
+    }
+
+    func setCollectionViewConstraints() {
+        addSubview(collectionView)
+        collectionView.anchor
+            .edgesToSuperview()
+            .activate()
+    }
+
+    func setToolbarViewConstraints() {
         addSubview(toolbarView)
-        toolbarView.translatesAutoresizingMaskIntoConstraints = false
-        toolbarView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        toolbarView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        toolbarView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        toolbarView.heightAnchor.constraint(equalToConstant: toolbarHeight).isActive = true
-        toolbarView.scrollView.contentLayoutGuide.heightAnchor.constraint(equalTo: toolbarView.heightAnchor)
-            .isActive = true
-        toolbarView.scrollView.contentLayoutGuide.widthAnchor
-            .constraint(greaterThanOrEqualTo: toolbarView.scrollView.frameLayoutGuide.widthAnchor)
-            .isActive = true
+        toolbarView.anchor
+            .leftToSuperview()
+            .rightToSuperview()
+            .bottomToSuperview()
+            .activate()
+    }
 
-        toolbarView.scrollView.showsVerticalScrollIndicator = false
-        toolbarView.scrollView.showsHorizontalScrollIndicator = false
+    func setScrollViewConstraints() {
+        toolbarView.contentView = scrollView
+    }
 
-        return toolbarView
+    func setSegmentControlConstraints() {
+        scrollView.addSubview(segmentedControl)
+
+        let scrollViewContent = scrollView.contentLayoutGuide
+        segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            segmentedControl.leadingAnchor.constraint(
+                equalTo: scrollViewContent.leadingAnchor,
+                constant: Appearance.toolbarContentPadding.left
+            ),
+            segmentedControl.trailingAnchor.constraint(
+                equalTo: scrollViewContent.trailingAnchor,
+                constant: -Appearance.toolbarContentPadding.right
+            ),
+            segmentedControl.topAnchor.constraint(
+                equalTo: scrollViewContent.topAnchor,
+                constant: Appearance.toolbarContentPadding.top
+            ),
+            segmentedControl.bottomAnchor.constraint(
+                equalTo: scrollViewContent.bottomAnchor,
+                constant: -Appearance.toolbarContentPadding.bottom
+            )
+        ])
+    }
+}
+
+private extension LibraryView {
+    enum Appearance {
+        static let contentMargin: UIEdgeInsets = .init(top: 0, left: 8, bottom: ToolbarView.height + 8, right: 0)
+        static let toolbarContentPadding: UIEdgeInsets = .init(top: 12, left: 16, bottom: 12, right: 16)
     }
 }

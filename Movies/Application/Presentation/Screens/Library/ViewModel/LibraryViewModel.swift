@@ -4,9 +4,9 @@
 import Foundation
 
 protocol LibraryViewModelProtocol: AnyObject {
-    var didUpdateMovies: ((_ movis: [Movie]) -> ())? { get set }
-    var didUpdateGenres: ((_ genres: [Genre]) -> ())? { get set }
-    var didUpdateSelectedGenre: ((_ genre: Genre, _ atIndex: Int) -> ())? { get set }
+    var didUpdateMovies: ((_ movis: [Movie]) -> Void)? { get set }
+    var didUpdateGenres: ((_ genres: [Genre]) -> Void)? { get set }
+    var didUpdateSelectedGenre: ((_ genre: Genre, _ atIndex: Int) -> Void)? { get set }
 
     var movies: [Movie] { get }
     var genres: [Genre] { get }
@@ -24,9 +24,9 @@ protocol LibraryViewModelProtocol: AnyObject {
 final class LibraryViewModel: LibraryViewModelProtocol {
     // MARK: - Callbacks
 
-    var didUpdateMovies: ((_ movis: [Movie]) -> ())?
-    var didUpdateGenres: ((_ genres: [Genre]) -> ())?
-    var didUpdateSelectedGenre: ((_ genre: Genre, _ atIndex: Int) -> ())?
+    var didUpdateMovies: ((_ movis: [Movie]) -> Void)?
+    var didUpdateGenres: ((_ genres: [Genre]) -> Void)?
+    var didUpdateSelectedGenre: ((_ genre: Genre, _ atIndex: Int) -> Void)?
 
     // MARK: - Properties
 
@@ -36,7 +36,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     let genreProxyService: GenreProxyServiceProtocol
     let coordinator: LibraryCoordinatorProtocol
 
-    let cd = LibraryCoreDataService(coreData: CoreData.shared)
+    let coreDataService = LibraryCoreDataService(coreData: CoreData.shared)
 
     var movies: [Movie] {
         model.movies
@@ -69,7 +69,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     // MARK: - Methods
 
     func setup() {
-        genreProxyService.fetchGenres(completion: { [weak self] genres in
+        genreProxyService.fetchGenres { [weak self] genres in
             guard let self = self else { return }
             switch genres {
             case let .success(genres):
@@ -83,11 +83,11 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                     self.coordinator.startErrorAlert(error: error)
                 }
             }
-        })
+        }
     }
 
     func fetchMovies(genre: Genre) {
-        libraryProxyService.fetchMovies(genre: genre, completion: { [weak self] result in
+        libraryProxyService.fetchMovies(genre: genre) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):
@@ -102,11 +102,11 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                     self.coordinator.startErrorAlert(error: error)
                 }
             }
-        })
+        }
     }
 
     func fetchMovies(query: String) {
-        libraryProxyService.fetchMovies(query: query, completion: { [weak self] result in
+        libraryProxyService.fetchMovies(query: query) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(movies):
@@ -120,7 +120,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
                     self.coordinator.startErrorAlert(error: error)
                 }
             }
-        })
+        }
     }
 
     func performSelectionGenre(at index: Int) {

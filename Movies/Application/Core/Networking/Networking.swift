@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes error from networking
 enum NetworkError: Error {
     case somethingWentWrong(URLResponse?)
     case failToPrepareRequest
@@ -16,7 +15,6 @@ protocol NetworkingProtocol: AnyObject {
     func perform(request: NetworkingRequestDataModel, completion: @escaping (NetworkingRawResponse) -> Void)
 }
 
-/// Manage networking
 final class Networking: NetworkingProtocol {
     // MARK: - Properties
 
@@ -39,7 +37,7 @@ final class Networking: NetworkingProtocol {
             return
         }
 
-        URLSession.shared.dataTask(with: request, completionHandler: { data, response, error in
+        let dataTask = URLSession.shared.dataTask(with: request) { data, response, error in
             if let error = error {
                 completion(.error(error))
                 return
@@ -51,7 +49,8 @@ final class Networking: NetworkingProtocol {
             }
 
             completion(.error(NetworkError.somethingWentWrong(response)))
-        }).resume()
+        }
+        dataTask.resume()
     }
 
     // MARK: - Preparation methods

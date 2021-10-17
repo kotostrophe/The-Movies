@@ -4,7 +4,6 @@
 import Foundation
 @testable import Movies
 
-///
 enum MockGenreDatabaseServiceError: Error {
     case notFound
 }

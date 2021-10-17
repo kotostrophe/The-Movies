@@ -21,12 +21,12 @@ final class CoreData: CoreDataProtocol {
     lazy var context: NSManagedObjectContext = {
         storeDispatchGroup.wait()
 
-        return DispatchQueue.safeMain(work: {
+        return DispatchQueue.safeMain {
             let context = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
             context.mergePolicy = NSMergeByPropertyObjectTrumpMergePolicy
             context.persistentStoreCoordinator = persistanceCoordinator
             return context
-        })
+        }
     }()
 
     var privateContext: NSManagedObjectContext {
@@ -78,7 +78,7 @@ final class CoreData: CoreDataProtocol {
     func saveToStore() {
         storeDispatchGroup.wait()
 
-        DispatchQueue.safeMain(work: {
+        DispatchQueue.safeMain {
             guard context.hasChanges else { return }
 
             do {
@@ -87,7 +87,7 @@ final class CoreData: CoreDataProtocol {
             } catch {
                 debugPrint(error.localizedDescription)
             }
-        })
+        }
     }
 
     private func registerStore() {

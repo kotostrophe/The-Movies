@@ -20,8 +20,8 @@ final class SegmentedControl: UISegmentedControl {
 
     // MARK: - Life cycle methods
 
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
 
         configureSegmentedControl()
     }
@@ -35,11 +35,11 @@ final class SegmentedControl: UISegmentedControl {
 
     // MARK: - Methods
 
-    public func reloadData() {
+    func reloadData() {
         configureSegmentedControl()
     }
 
-    // MARK: - Setup methods
+    // MARK: - Configuration methods
 
     private func configureSegmentedControl() {
         configureSegments()

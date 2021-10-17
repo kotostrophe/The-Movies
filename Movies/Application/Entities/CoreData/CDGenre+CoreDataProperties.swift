@@ -4,9 +4,9 @@
 import CoreData
 import Foundation
 
-///
 public extension CDGenre {
-    @nonobjc class func fetchRequest() -> NSFetchRequest<CDGenre> {
+    @nonobjc
+    class func fetchRequest() -> NSFetchRequest<CDGenre> {
         NSFetchRequest<CDGenre>(entityName: "CDGenre")
     }
 
@@ -15,7 +15,6 @@ public extension CDGenre {
     @NSManaged var movies: NSSet?
 }
 
-///
 public extension CDGenre {
     @objc(addMoviesObject:)
     @NSManaged func addToMovies(_ value: CDMovie)

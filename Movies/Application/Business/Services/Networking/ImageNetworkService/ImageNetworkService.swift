@@ -4,7 +4,7 @@
 import Foundation
 
 protocol ImageNetworkServiceProtocol: AnyObject {
-    func fetchImage(by name: String, completion: @escaping (Data?) -> ())
+    func fetchImage(by name: String, completion: @escaping (Data?) -> Void)
 }
 
 final class ImageNetworkService: ImageNetworkServiceProtocol {
@@ -20,13 +20,13 @@ final class ImageNetworkService: ImageNetworkServiceProtocol {
 
     // MARK: - Methods
 
-    func fetchImage(by name: String, completion: @escaping (Data?) -> ()) {
+    func fetchImage(by name: String, completion: @escaping (Data?) -> Void) {
         let request = NetworkingRequest.request(method: .get, route: "/" + name)
-        networking.perform(request: request, completion: { response in
+        networking.perform(request: request) { response in
             switch response {
             case let .data(data): completion(data)
             case .error: completion(nil)
             }
-        })
+        }
     }
 }
