@@ -9,12 +9,18 @@ protocol LibraryCoordinatorProtocol: Coordinatable {
 }
 
 final class LibraryCoordinator: LibraryCoordinatorProtocol {
-    // MARK: - Properties
+    // MARK: - Private lroperties
 
-    var coordinators: [Coordinatable] = []
+    private var coordinators: [Coordinatable] = []
 
-    let navigationController: UINavigationController
-    let screenFactory: ScreenBuilderProtocol
+    private let navigationController: UINavigationController
+    private let screenFactory: ScreenBuilderProtocol
+
+    // MARK: - Public properties
+
+    var rootViewController: UIViewController {
+        navigationController
+    }
 
     // MARK: - Initializer
 

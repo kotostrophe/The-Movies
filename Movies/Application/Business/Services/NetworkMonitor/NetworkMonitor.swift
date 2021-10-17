@@ -34,13 +34,9 @@ final class NetworkMonitor: NetworkMonitorProtocol {
 
     // MARK: - Initializer
 
-    init(queue: DispatchQueue) {
+    init(queue: DispatchQueue = .global()) {
         self.queue = queue
         monitor = NWPathMonitor()
-    }
-
-    convenience init() {
-        self.init(queue: .global())
     }
 
     // MARK: - Methods

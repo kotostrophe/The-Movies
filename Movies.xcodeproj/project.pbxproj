@@ -580,6 +580,24 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		ED6204BD271C5087004E4E95 /* System */ = {
+			isa = PBXGroup;
+			children = (
+				EDBA8AD625F0EA02005BAF81 /* AppDelegate.swift */,
+				EDBA8AD825F0EA02005BAF81 /* SceneDelegate.swift */,
+			);
+			path = System;
+			sourceTree = "<group>";
+		};
+		ED6204BE271C5292004E4E95 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				ED74C9F325F2B1CB00AC8AAF /* Coordinatable.swift */,
+				EDDD9C3825FB549F00D67B6A /* Sharable.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		ED74C9F225F2B1BD00AC8AAF /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -822,8 +840,7 @@
 		EDB6AC1C25FCA04200F470BE /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				EDBA8AD625F0EA02005BAF81 /* AppDelegate.swift */,
-				EDBA8AD825F0EA02005BAF81 /* SceneDelegate.swift */,
+				ED6204BD271C5087004E4E95 /* System */,
 				ED87A8C725FCB7B9004DB404 /* Entities */,
 				EDA1B6D6264AEBA600F96737 /* Business */,
 				EDA1B6D5264AEB8A00F96737 /* Presentation */,
@@ -984,9 +1001,8 @@
 		EDDD9C3725FB549000D67B6A /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				ED6204BE271C5292004E4E95 /* Common */,
 				ED6204B6271C4D35004E4E95 /* UI */,
-				ED74C9F325F2B1CB00AC8AAF /* Coordinatable.swift */,
-				EDDD9C3825FB549F00D67B6A /* Sharable.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
