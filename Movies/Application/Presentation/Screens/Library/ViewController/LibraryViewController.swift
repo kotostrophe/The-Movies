@@ -112,7 +112,7 @@ extension LibraryViewController: SegmentedControlDataSource {
     }
 
     func segmentedControl(_: SegmentedControl, by index: Int) -> String {
-        viewModel.genres[index].name
+        viewModel.genres[safe: index]?.name ?? ""
     }
 }
 
@@ -126,9 +126,9 @@ extension LibraryViewController: UICollectionViewDataSource {
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
         let cell = collectionView.dequeueCell(LibraryMovieView.self, for: indexPath)
-        let movie = viewModel.movies[indexPath.item]
-        let imageProxy = ServiceFactory.shared.makeProxiesFactory().makeImageProxyService()
-        cell.configure(movie: movie, imageProxy: imageProxy)
+        guard let movie = viewModel.movies[safe: indexPath.item] else { return cell }
+        cell.dataSource = self
+        cell.configure(movie: movie)
         return cell
     }
 }
@@ -159,6 +159,15 @@ extension LibraryViewController: UISearchResultsUpdating {
 
         case false:
             viewModel.fetchMovies(query: query)
+        }
+    }
+}
+
+extension LibraryViewController: LibraryMovieViewDelegate {
+    func libraryMovieView(_ cell: LibraryMovieView, loadImageBy movie: Movie) {
+        viewModel.fetchMoviePoster(movie) { [weak cell, movie] data in
+            guard let data = data else { return }
+            cell?.configureImageView(data, for: movie)
         }
     }
 }
