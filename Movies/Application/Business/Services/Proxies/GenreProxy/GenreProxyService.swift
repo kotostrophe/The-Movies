@@ -8,7 +8,6 @@ protocol GenreProxyServiceProtocol: AnyObject {
     func fetchGenres(completion: @escaping (Result<[Genre], Error>) -> Void)
 }
 
-/// Represent errors for Genre Proxy Service
 enum GenreProxyServiceError: Error {
     case genreNotFound
 }

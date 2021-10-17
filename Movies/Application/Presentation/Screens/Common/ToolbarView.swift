@@ -3,7 +3,6 @@
 
 import UIKit
 
-/// UI component with blurred backbground. Should be used on the bottom of the screen
 class ToolbarView: UIView {
     // MARK: - Static properties
 

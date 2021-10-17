@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes error from networking
 enum NetworkError: Error {
     case somethingWentWrong(URLResponse?)
     case failToPrepareRequest
@@ -16,7 +15,6 @@ protocol NetworkingProtocol: AnyObject {
     func perform(request: NetworkingRequestDataModel, completion: @escaping (NetworkingRawResponse) -> Void)
 }
 
-/// Manage networking
 final class Networking: NetworkingProtocol {
     // MARK: - Properties
 

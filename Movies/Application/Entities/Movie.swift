@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes movie
 struct Movie: Codable {
     // MARK: - Properties
 

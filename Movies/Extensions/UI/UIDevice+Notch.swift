@@ -3,7 +3,6 @@
 
 import UIKit
 
-/// Enum representing the different types of iOS devices available
 enum DeviceType: String, CaseIterable {
     case iPhone2G
     case iPhone3G
@@ -48,7 +47,6 @@ enum DeviceType: String, CaseIterable {
 
     // MARK: - Constants
 
-    /// The current device type
     static var current: DeviceType? {
         #if targetEnvironment(simulator)
         guard let identifier = ProcessInfo().environment["SIMULATOR_MODEL_IDENTIFIER"] else { return nil }
@@ -73,7 +71,6 @@ enum DeviceType: String, CaseIterable {
 
     // MARK: - Variables
 
-    /// The display name of the device type
     var displayName: String {
         switch self {
         case .iPhone2G: return "iPhone 2G"
@@ -119,7 +116,6 @@ enum DeviceType: String, CaseIterable {
         }
     }
 
-    /// The identifiers associated with each device type
     internal var identifiers: [String] {
         switch self {
         case .simulator: return ["i386", "x86_64"]
@@ -167,9 +163,6 @@ enum DeviceType: String, CaseIterable {
 
     // MARK: - Initializer
 
-    /// Creates a device type
-    ///
-    /// - Parameter identifier: The identifier of the device
     init?(identifier: String) {
         guard let device = Self.allCases.first(where: { $0.identifiers.contains(identifier) })
         else { return nil }

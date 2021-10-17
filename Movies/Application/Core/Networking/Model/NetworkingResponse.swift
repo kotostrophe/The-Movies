@@ -3,12 +3,10 @@
 
 import Foundation
 
-/// Represent  data from response
 enum NetworkingResponse<Response: Decodable> {
     case error(Error), data(Response)
 }
 
-/// Represent raw data from response
 enum NetworkingRawResponse {
     case error(Error), data(Data)
 

@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes model which is uses for decoding network response data
 struct MovieResponse: Codable {
     // MARK: - Properties
 

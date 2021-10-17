@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describe errors for local network service
 enum LibraryNetworkServiceError: Error, LocalizedError {
     case failToDecode
 

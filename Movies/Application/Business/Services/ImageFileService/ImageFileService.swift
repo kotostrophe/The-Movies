@@ -8,13 +8,12 @@ protocol ImageFileServiceProtocol: AnyObject {
     func fetchData(with name: String) -> Data?
 }
 
-///
 enum ImageFileServiceError: Error {
     case failedToPreparePath
 }
 
 final class ImageFileService: ImageFileServiceProtocol {
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private lazy var cacheURL = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first
 

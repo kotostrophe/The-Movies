@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describe types of methods with which network request must execute
 enum NetworkingRequestMethod: String {
     case get = "GET"
     case post = "POST"

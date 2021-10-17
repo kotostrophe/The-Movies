@@ -16,7 +16,6 @@ extension UIView {
     var centerY: NSLayoutYAxisAnchor { centerYAnchor }
 }
 
-///
 struct Anchor {
     // MARK: - Properties
 

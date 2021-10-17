@@ -19,10 +19,12 @@ protocol NetworkMonitorProtocol: AnyObject {
 }
 
 final class NetworkMonitor: NetworkMonitorProtocol {
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
+
+    // MARK: - Public properties
 
     var lastPathStatus: NWPath.Status?
 

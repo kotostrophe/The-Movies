@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes model of info of a film
 struct DetailsInfoModel {
     // MARK: - Properties
 
