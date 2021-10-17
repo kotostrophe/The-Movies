@@ -64,6 +64,8 @@
 		ED74CA1025F2BD6200AC8AAF /* LibraryModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA0F25F2BD6200AC8AAF /* LibraryModel.swift */; };
 		ED74CA1425F2BD8C00AC8AAF /* LibraryNetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA1325F2BD8C00AC8AAF /* LibraryNetworkService.swift */; };
 		ED74CA1925F2BFE600AC8AAF /* LibraryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED74CA1825F2BFE600AC8AAF /* LibraryView.swift */; };
+		ED7703ED271C7F29008070B8 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED7703EC271C7F29008070B8 /* UIColor.swift */; };
+		ED7703EF271C7F60008070B8 /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = ED7703EE271C7F60008070B8 /* Colors.xcassets */; };
 		ED844CD325F9555D00266119 /* DetailsHeaderModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED844CD225F9555D00266119 /* DetailsHeaderModel.swift */; };
 		ED9B394025F4A8A400035982 /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED9B393F25F4A8A400035982 /* ToolbarView.swift */; };
 		EDA033E825F6167500EA173A /* NetworkingRequestDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA033E725F6167500EA173A /* NetworkingRequestDataModel.swift */; };
@@ -163,7 +165,6 @@
 		ED46A3FC264E9750005AD3CA /* MockLibraryDatabaseService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLibraryDatabaseService.swift; sourceTree = "<group>"; };
 		ED46A402264E9792005AD3CA /* MockLibraryNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockLibraryNetworkService.swift; sourceTree = "<group>"; };
 		ED46A407264E98B0005AD3CA /* MoviesFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesFactory.swift; sourceTree = "<group>"; };
-		ED6204AA271C249F004E4E95 /* MoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MoviesTests.xctest; path = "/Users/kotsur/Developer/The-Movies/build/Debug-iphoneos/MoviesTests.xctest"; sourceTree = "<absolute>"; };
 		ED6204AB271C252F004E4E95 /* UIStackView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIStackView.swift; sourceTree = "<group>"; };
 		ED6204AE271C3B3A004E4E95 /* DetailsAttributeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsAttributeView.swift; sourceTree = "<group>"; };
 		ED6204B0271C4CF1004E4E95 /* UITableView+UIReusable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+UIReusable.swift"; sourceTree = "<group>"; };
@@ -182,6 +183,9 @@
 		ED74CA0F25F2BD6200AC8AAF /* LibraryModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryModel.swift; sourceTree = "<group>"; };
 		ED74CA1325F2BD8C00AC8AAF /* LibraryNetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryNetworkService.swift; sourceTree = "<group>"; };
 		ED74CA1825F2BFE600AC8AAF /* LibraryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LibraryView.swift; sourceTree = "<group>"; };
+		ED7703EB271C76F7008070B8 /* MoviesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MoviesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		ED7703EC271C7F29008070B8 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		ED7703EE271C7F60008070B8 /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		ED844CD225F9555D00266119 /* DetailsHeaderModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailsHeaderModel.swift; sourceTree = "<group>"; };
 		ED9B393F25F4A8A400035982 /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		EDA033E725F6167500EA173A /* NetworkingRequestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkingRequestDataModel.swift; sourceTree = "<group>"; };
@@ -394,6 +398,7 @@
 				EDA0EA78271C1D90000742FC /* UIEdgeInsets.swift */,
 				ED36CFEF271859FC0001A190 /* UIDevice+Notch.swift */,
 				ED36CFF227186FF20001A190 /* UIAnchor.swift */,
+				ED7703EC271C7F29008070B8 /* UIColor.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -688,6 +693,7 @@
 			children = (
 				EDBA8AE125F0EA05005BAF81 /* LaunchScreen.storyboard */,
 				EDBA8ADF25F0EA05005BAF81 /* Assets.xcassets */,
+				ED7703EE271C7F60008070B8 /* Colors.xcassets */,
 				EDBA8AE425F0EA05005BAF81 /* Info.plist */,
 				ED1EC2F8264DB34C0044BD7A /* Movies.xcdatamodeld */,
 			);
@@ -896,6 +902,7 @@
 				ED46A3AD264E9087005AD3CA /* MoviesTests */,
 				AADC62076697FED07F816C6F /* Pods */,
 				ED36CFF127186E7D0001A190 /* Movies.app */,
+				ED7703EB271C76F7008070B8 /* MoviesTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1127,7 +1134,7 @@
 			);
 			name = MoviesTests;
 			productName = MoviesTests;
-			productReference = ED6204AA271C249F004E4E95 /* MoviesTests.xctest */;
+			productReference = ED7703EB271C76F7008070B8 /* MoviesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		EDBA8AD225F0EA02005BAF81 /* Movies */ = {
@@ -1202,6 +1209,7 @@
 				EDA0EA7F271C21AB000742FC /* .gitignore in Resources */,
 				EDA0EA7E271C21AB000742FC /* .swiftlint.yml in Resources */,
 				EDBA8AE325F0EA05005BAF81 /* LaunchScreen.storyboard in Resources */,
+				ED7703EF271C7F60008070B8 /* Colors.xcassets in Resources */,
 				EDBA8AE025F0EA05005BAF81 /* Assets.xcassets in Resources */,
 				EDA0EA7D271C21AB000742FC /* .swiftformat in Resources */,
 			);
@@ -1325,6 +1333,7 @@
 				ED734575264C70F3002B9C26 /* Collection+SafeSubscript.swift in Sources */,
 				ED1AF44825F3829F00811562 /* LibraryMovieView.swift in Sources */,
 				EDE39C3925F60E4C00930182 /* NetworkingRequest.swift in Sources */,
+				ED7703ED271C7F29008070B8 /* UIColor.swift in Sources */,
 				EDF7AD8F264D0542004A74A2 /* NetworkingFactory.swift in Sources */,
 				ED6204BC271C4D6B004E4E95 /* UIView+UINib.swift in Sources */,
 				ED054432264E4063004B4012 /* GenreDatabaseProtocol.swift in Sources */,
