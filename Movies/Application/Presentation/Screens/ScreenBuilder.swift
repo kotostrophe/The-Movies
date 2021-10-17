@@ -1,14 +1,14 @@
-// ScreenFactory.swift
+// ScreenBuilder.swift
 // Copyright © Taras Kotsur. All rights reserved.
 
 import UIKit
 
-protocol ScreenFactoryProtocol: AnyObject {
+protocol ScreenBuilderProtocol: AnyObject {
     func makeLibrary(coordinator: LibraryCoordinatorProtocol) -> UIViewController
     func makeDetails(movie: Movie, coordinator: LibraryCoordinatorProtocol) -> UIViewController
 }
 
-final class ScreenFactory: ScreenFactoryProtocol {
+final class ScreenBuilder: ScreenBuilderProtocol {
     // MARK: - Properties
 
     let serviceFactory: ServiceFactoryProtocol

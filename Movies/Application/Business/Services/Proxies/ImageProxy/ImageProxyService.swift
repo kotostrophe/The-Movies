@@ -31,14 +31,9 @@ final class ImageProxyService: ImageProxyServiceProtocol {
             completion(data)
 
         case .none:
-            networkService.fetchImage(by: path, completion: { [weak self] data in
-                guard let self = self else { return }
-                guard let data = data else {
-                    completion(nil)
-                    return
-                }
-
-                try? self.fileService.save(data: data, with: path)
+            networkService.fetchImage(by: path, completion: { [weak fileService] data in
+                guard let data = data else { return completion(nil) }
+                try? fileService?.save(data: data, with: path)
                 completion(data)
             })
         }

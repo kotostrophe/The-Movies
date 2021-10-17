@@ -4,9 +4,9 @@
 import Foundation
 
 protocol DetailsViewModelProtocol: AnyObject {
-    var didSetupWithMovie: ((_ movie: Movie) -> ())? { get set }
-    var didFetchGenres: ((_ genres: [Genre]) -> ())? { get set }
-    var didFetchPosters: ((_ posters: [Data]) -> ())? { get set }
+    var didSetupWithMovie: ((_ movie: Movie) -> Void)? { get set }
+    var didFetchGenres: ((_ genres: [Genre]) -> Void)? { get set }
+    var didFetchPosters: ((_ posters: [Data]) -> Void)? { get set }
 
     var components: [DetailsComponent] { get }
     var posters: [Data] { get }
@@ -19,9 +19,9 @@ protocol DetailsViewModelProtocol: AnyObject {
 final class DetailsViewModel: DetailsViewModelProtocol {
     // MARK: - Callbacks
 
-    var didSetupWithMovie: ((_ movie: Movie) -> ())?
-    var didFetchGenres: ((_ genres: [Genre]) -> ())?
-    var didFetchPosters: ((_ posters: [Data]) -> ())?
+    var didSetupWithMovie: ((_ movie: Movie) -> Void)?
+    var didFetchGenres: ((_ genres: [Genre]) -> Void)?
+    var didFetchPosters: ((_ posters: [Data]) -> Void)?
 
     // MARK: - Properties
 
@@ -78,7 +78,7 @@ final class DetailsViewModel: DetailsViewModelProtocol {
     }
 
     func fetchGenres() {
-        genreProxyService.fetchGenres(completion: { [weak self] genres in
+        genreProxyService.fetchGenres { [weak self] genres in
             guard let self = self else { return }
             guard case let .success(genres) = genres else { return }
 
@@ -88,11 +88,11 @@ final class DetailsViewModel: DetailsViewModelProtocol {
             DispatchQueue.main.async {
                 self.didFetchGenres?(filteredGenres)
             }
-        })
+        }
     }
 
     func fetchPosters() {
-        networkService.fetchPosters(for: model.movie, completion: { [weak self] result in
+        networkService.fetchPosters(for: model.movie) { [weak self] result in
             guard let self = self else { return }
             switch result {
             case let .success(posters):
@@ -110,7 +110,7 @@ final class DetailsViewModel: DetailsViewModelProtocol {
                     }
                 })
             }
-        })
+        }
     }
 
     func fetchPostersData() {
@@ -118,18 +118,18 @@ final class DetailsViewModel: DetailsViewModelProtocol {
             guard let posterName = poster.filePath.trimLast("/") else { return }
 
             posterDispatchGroup.enter()
-            imageProxyService.getImage(by: posterName, completion: { [weak self] data in
+            imageProxyService.getImage(by: posterName) { [weak self] data in
                 guard let self = self else { return }
 
                 if let data = data {
                     self.posterData.append(data)
                 }
                 self.posterDispatchGroup.leave()
-            })
+            }
         }
 
-        posterDispatchGroup.notify(queue: .main, execute: {
+        posterDispatchGroup.notify(queue: .main) {
             self.didFetchPosters?(self.posterData)
-        })
+        }
     }
 }

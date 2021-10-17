@@ -16,15 +16,15 @@ final class MockLibraryDatabaseService: LibraryDatabaseServiceProtocol {
         self.movies.append(contentsOf: movies)
     }
 
-    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         completion(.success(movies))
     }
 
-    func fetchMovies(using query: String, completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(using query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
         completion(.success(movies))
     }
 
-    func fetchMovies(by genreId: Int, completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(by genreId: Int, completion: @escaping (Result<[Movie], Error>) -> Void) {
         completion(.success(movies))
     }
 }

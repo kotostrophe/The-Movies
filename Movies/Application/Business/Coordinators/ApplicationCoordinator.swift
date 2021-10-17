@@ -6,11 +6,11 @@ import UIKit
 protocol ApplicationCoordiantorProtocol: Coordinatable {}
 
 final class ApplicationCoordiantor: ApplicationCoordiantorProtocol {
-    // MARK: - Properties
+    // MARK: - Private properties
 
-    var coordinators: [Coordinatable] = []
+    private var coordinators: [Coordinatable] = []
 
-    weak var window: UIWindow?
+    private weak var window: UIWindow?
 
     // MARK: - Initializer
 

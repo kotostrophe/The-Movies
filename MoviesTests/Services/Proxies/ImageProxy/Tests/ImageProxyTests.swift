@@ -5,6 +5,8 @@ import Foundation
 @testable import Movies
 import XCTest
 
+// swiftlint:disable implicitly_unwrapped_optional
+
 final class ImageProxyTests: XCTestCase {
     // MARK: - Properties
 
@@ -36,7 +38,7 @@ final class ImageProxyTests: XCTestCase {
     func testFetchingImageDataDirectlyFromFileService() {
         imageFileService.data = Data()
 
-        imageProxyService.getImage(by: "some path", completion: { [weak self] data in
+        imageProxyService.getImage(by: "some path") { [weak self] data in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -47,14 +49,14 @@ final class ImageProxyTests: XCTestCase {
             }
 
             XCTAssert(data == self.imageFileService.data, "Extected data from file service")
-        })
+        }
     }
 
     func testFetchingImageDataDirectlyFromNetworkService() {
         imageFileService.data = nil
         networkService.image = Data()
 
-        imageProxyService.getImage(by: "some path", completion: { [weak self] data in
+        imageProxyService.getImage(by: "some path") { [weak self] data in
             guard let self = self else {
                 XCTFail("Expected alive self")
                 return
@@ -66,6 +68,6 @@ final class ImageProxyTests: XCTestCase {
 
             XCTAssert(data == self.imageFileService.data, "Caching data to file service doesn't work")
             XCTAssert(data == self.networkService.image, "Expected image data from network service")
-        })
+        }
     }
 }

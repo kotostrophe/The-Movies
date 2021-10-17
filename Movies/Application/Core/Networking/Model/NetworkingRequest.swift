@@ -3,17 +3,14 @@
 
 import Foundation
 
-/// Describes networking requests
-class NetworkingRequest {
+enum NetworkingRequest {
     static func request(
         method: NetworkingRequestMethod,
         route: String,
         headers: [String: String] = [:],
         parameters: [String: String] = [:]
     ) -> NetworkingRequestDataModel {
-        print(parameters)
-
-        return NetworkingRequestDataModel(
+        NetworkingRequestDataModel(
             method: method,
             route: route,
             headers: headers,

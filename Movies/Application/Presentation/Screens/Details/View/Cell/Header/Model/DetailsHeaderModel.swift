@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Model for details header
 struct DetailsHeaderModel {
     // MARK: - Properties
 

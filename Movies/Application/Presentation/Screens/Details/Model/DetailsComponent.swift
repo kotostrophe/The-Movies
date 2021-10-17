@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes ui components
 enum DetailsComponent: CaseIterable {
     case title, info, description
 }

@@ -27,7 +27,7 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
 
     private func fetchMovies(
         with predicate: @escaping @autoclosure () -> NSPredicate?,
-        completion: @escaping (Result<[Movie], Error>) -> ()
+        completion: @escaping (Result<[Movie], Error>) -> Void
     ) {
         coreData.context.perform {
             let request: NSFetchRequest<CDMovie> = CDMovie.fetchRequest()
@@ -42,17 +42,17 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
         }
     }
 
-    func fetchMovies(using query: String, completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(using query: String, completion: @escaping (Result<[Movie], Error>) -> Void) {
         let predicate = NSPredicate(format: "title CONTAINS %@", query)
         fetchMovies(with: predicate, completion: completion)
     }
 
-    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> ()) {
+    func fetchMovies(completion: @escaping (Result<[Movie], Error>) -> Void) {
         fetchMovies(with: nil, completion: completion)
     }
 
-    func fetchMovies(by genreId: Int, completion: @escaping (Result<[Movie], Error>) -> ()) {
-        fetchMovies(with: nil, completion: { result in
+    func fetchMovies(by genreId: Int, completion: @escaping (Result<[Movie], Error>) -> Void) {
+        fetchMovies(with: nil) { result in
             switch result {
             case let .success(movies):
                 let filteredMovies = movies.filter { $0.genres.contains(genreId) }
@@ -61,7 +61,7 @@ final class LibraryCoreDataService: LibraryCoreDataServiceProtocol {
             case let .failure(error):
                 completion(.failure(error))
             }
-        })
+        }
     }
 }
 

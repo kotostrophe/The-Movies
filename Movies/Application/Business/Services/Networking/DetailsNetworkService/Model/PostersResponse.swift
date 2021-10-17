@@ -3,7 +3,6 @@
 
 import Foundation
 
-///
 struct PostersResponse: Codable {
     let id: Int
     let posters: [Poster]

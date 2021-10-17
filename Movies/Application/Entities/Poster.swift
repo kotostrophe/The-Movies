@@ -3,7 +3,6 @@
 
 import Foundation
 
-///
 struct Poster: Codable {
     let aspectRatio: Double
     let filePath: String

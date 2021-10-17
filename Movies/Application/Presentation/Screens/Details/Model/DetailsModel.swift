@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Model for Details screen
 struct DetailsModel {
     let movie: Movie
     var posters: [Poster]

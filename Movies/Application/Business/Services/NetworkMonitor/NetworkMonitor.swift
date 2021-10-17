@@ -19,10 +19,12 @@ protocol NetworkMonitorProtocol: AnyObject {
 }
 
 final class NetworkMonitor: NetworkMonitorProtocol {
-    // MARK: - Properties
+    // MARK: - Private properties
 
     private let monitor: NWPathMonitor
     private let queue: DispatchQueue
+
+    // MARK: - Public properties
 
     var lastPathStatus: NWPath.Status?
 
@@ -34,13 +36,9 @@ final class NetworkMonitor: NetworkMonitorProtocol {
 
     // MARK: - Initializer
 
-    init(queue: DispatchQueue) {
+    init(queue: DispatchQueue = .global()) {
         self.queue = queue
         monitor = NWPathMonitor()
-    }
-
-    convenience init() {
-        self.init(queue: .global())
     }
 
     // MARK: - Methods

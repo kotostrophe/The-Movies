@@ -3,7 +3,6 @@
 
 import Foundation
 
-/// Describes model of title
 struct DetailsTitleModel {
     // MARK: - Properties
 

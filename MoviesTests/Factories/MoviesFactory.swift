@@ -70,7 +70,7 @@ final class MoviesFactory {
                 video: false,
                 voteAverage: 0.0,
                 voteCount: 0
-            ),
+            )
         ]
     }
 }

@@ -6,45 +6,50 @@ import UIKit
 final class DetailsTitleView: UITableViewCell {
     // MARK: - Properties
 
-    let model: DetailsTitleModel
+    private let model: DetailsTitleModel
 
-    // MARK: - UI Properties
+    // MARK: - Private UI properties
 
-    let stackView: UIStackView
-    let titleLabel: UILabel
-    let descriptionStackView: UIStackView
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
+        return label
+    }()
 
-    let popularityStackView: UIStackView
-    let popularityIcon: UIImageView
-    let popularityLabel: UILabel
+    private let attributesStackView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .horizontal
+        stackView.alignment = .top
+        stackView.spacing = 4
+        stackView.distribution = .fillEqually
+        return stackView
+    }()
 
-    let ratingStackView: UIStackView
-    let ratingIcon: UIImageView
-    let ratingLabel: UILabel
+    private let popularityAttributeView: DetailsAttributeView = {
+        let attributeView = DetailsAttributeView()
+        attributeView.imageView.image = UIImage(systemName: "arrow.up.arrow.down")
+        attributeView.imageView.tintColor = .secondaryLabel
+        attributeView.imageView.contentMode = .scaleAspectFit
+        return attributeView
+    }()
+
+    private let ratingAttributeView: DetailsAttributeView = {
+        let attributeView = DetailsAttributeView()
+        attributeView.imageView.image = UIImage(systemName: "star.fill")
+        attributeView.imageView.tintColor = .secondaryLabel
+        attributeView.imageView.contentMode = .scaleAspectFit
+        return attributeView
+    }()
 
     // MARK: - Initializer
 
     required init(model: DetailsTitleModel) {
         self.model = model
 
-        titleLabel = UILabel()
-        popularityIcon = UIImageView()
-        popularityLabel = UILabel()
-
-        ratingIcon = UIImageView()
-        ratingLabel = UILabel()
-
-        popularityStackView = UIStackView(arrangedSubviews: [popularityIcon, popularityLabel])
-        ratingStackView = UIStackView(arrangedSubviews: [ratingIcon, ratingLabel])
-        descriptionStackView = UIStackView(arrangedSubviews: [popularityStackView, ratingStackView])
-
-        stackView = UIStackView(arrangedSubviews: [titleLabel, descriptionStackView])
-
         super.init(style: .default, reuseIdentifier: nil)
-        selectionStyle = .none
-        placeComponents()
 
         configureComponents()
+        setConstraints()
     }
 
     @available(*, unavailable)
@@ -53,81 +58,67 @@ final class DetailsTitleView: UITableViewCell {
     }
 }
 
-extension DetailsTitleView {
-    // MARK: - Place components
+// MARK: - Configuration methods
 
-    private func placeComponents() {
-        placeStackView()
-    }
-
-    private func placeStackView() {
-        contentView.addSubview(stackView)
-    }
-
-    // MARK: - Configurate components
-
-    private func configureComponents() {
-        configureStackView()
-        configureDescriptionStackView()
-        configurePopularityStackView()
-        configureRatingStackView()
-
+private extension DetailsTitleView {
+    func configureComponents() {
+        configureView()
+        configurePopularityAttributeView()
+        configureRatingAttributeView()
         configureTitleLabel()
     }
 
-    private func configureStackView() {
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16).isActive = true
-        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16).isActive = true
-
-        stackView.axis = .vertical
-        stackView.spacing = 4
-        stackView.distribution = .fill
+    func configureView() {
+        selectionStyle = .none
     }
 
-    private func configureDescriptionStackView() {
-        descriptionStackView.translatesAutoresizingMaskIntoConstraints = false
-        descriptionStackView.heightAnchor.constraint(equalToConstant: 24).isActive = true
-        descriptionStackView.axis = .horizontal
-        descriptionStackView.distribution = .fillEqually
+    func configurePopularityAttributeView() {
+        popularityAttributeView.titleLabel.text = String(format: "Popularity %.0f", model.popularity)
     }
 
-    private func configurePopularityStackView() {
-        popularityIcon.translatesAutoresizingMaskIntoConstraints = false
-        popularityIcon.widthAnchor.constraint(equalTo: ratingIcon.heightAnchor).isActive = true
-        popularityIcon.image = UIImage(systemName: "arrow.up.arrow.down")
-        popularityIcon.tintColor = .secondaryLabel
-        popularityIcon.contentMode = .scaleAspectFit
-
-        popularityLabel.text = String(format: "Popularity %.0f", model.popularity)
-        popularityLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        popularityLabel.textColor = .secondaryLabel
-
-        popularityStackView.spacing = 8
-        popularityStackView.axis = .horizontal
-        popularityStackView.distribution = .fill
+    func configureRatingAttributeView() {
+        ratingAttributeView.titleLabel.text = String(format: "Popularity %.0f", model.popularity)
     }
 
-    private func configureRatingStackView() {
-        ratingIcon.translatesAutoresizingMaskIntoConstraints = false
-        ratingIcon.widthAnchor.constraint(equalTo: ratingIcon.heightAnchor).isActive = true
-        ratingIcon.image = UIImage(systemName: "star.fill")
-        ratingIcon.tintColor = .secondaryLabel
-        ratingIcon.contentMode = .scaleAspectFit
-
-        ratingLabel.text = String(format: "Rating %.1f", model.rating)
-        ratingLabel.font = UIFont.systemFont(ofSize: 13, weight: .regular)
-        ratingLabel.textColor = .secondaryLabel
-
-        ratingStackView.spacing = 8
-        ratingStackView.axis = .horizontal
-        ratingStackView.distribution = .fill
-    }
-
-    private func configureTitleLabel() {
-        titleLabel.font = UIFont.systemFont(ofSize: 21, weight: .semibold)
+    func configureTitleLabel() {
         titleLabel.text = model.title
+    }
+}
+
+// MARK: - Constraints
+
+private extension DetailsTitleView {
+    func setConstraints() {
+        setTitleLabelConstraints()
+        setAttributesStackViewStackViewConstraints()
+    }
+
+    func setTitleLabelConstraints() {
+        addSubview(titleLabel)
+        titleLabel.anchor
+            .leftToSuperview(constant: Appearance.padding.left)
+            .rightToSuperview(constant: -Appearance.padding.right)
+            .topToSuperview(constant: Appearance.padding.top)
+            .activate()
+    }
+
+    func setAttributesStackViewStackViewConstraints() {
+        addSubview(attributesStackView)
+        attributesStackView.set(arrangedSubviews: [popularityAttributeView, ratingAttributeView])
+        attributesStackView.anchor
+            .leftToSuperview(constant: Appearance.padding.left)
+            .rightToSuperview(constant: -Appearance.padding.right)
+            .top(to: titleLabel.bottom, constant: Appearance.spacing)
+            .bottomToSuperview(constant: -Appearance.padding.bottom)
+            .activate()
+    }
+}
+
+// MARK: - Appearance
+
+extension DetailsTitleView {
+    enum Appearance {
+        static let spacing: CGFloat = 8
+        static let padding: UIEdgeInsets = .init(16)
     }
 }
