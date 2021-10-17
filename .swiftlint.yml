@@ -89,6 +89,9 @@ line_length:
   ignores_function_declarations: true
   ignores_comments: true
 
+nesting:
+  type_level: 3
+
 multiline_arguments:
   first_argument_location: next_line
   only_enforce_after_first_closure_on_first_line: true

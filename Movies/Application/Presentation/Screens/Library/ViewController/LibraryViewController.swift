@@ -129,7 +129,7 @@ extension LibraryViewController: UICollectionViewDataSource {
         let movie = viewModel.movies[indexPath.item]
         let imageProxy = ServiceFactory.shared.makeProxiesFactory().makeImageProxyService()
 
-        movieCell.configure(with: movie, imageProxy: imageProxy)
+        movieCell.configure(movie: movie, imageProxy: imageProxy)
         return movieCell
     }
 }
