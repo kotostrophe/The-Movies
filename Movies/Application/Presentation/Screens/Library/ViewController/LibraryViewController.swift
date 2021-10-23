@@ -34,6 +34,7 @@ final class LibraryViewController: UIViewController {
         view.collectionView.register(LibraryMovieView.self)
         view.collectionView.dataSource = self
         view.collectionView.delegate = self
+        view.collectionView.prefetchDataSource = self
         view.segmentedControl.dataSource = self
         view.segmentedControl.delegate = self
 
@@ -68,9 +69,8 @@ final class LibraryViewController: UIViewController {
     }
 
     private func configuraViewModelCallbacks() {
-        viewModel.didUpdateSelectedGenre = { [weak self] _, index in
-            guard let self = self else { return }
-            self.contentView?.segmentedControl.selectedSegmentIndex = index
+        viewModel.didUpdateSelectedGenre = { [weak contentView] _, index in
+            contentView?.segmentedControl.selectedSegmentIndex = index
         }
 
         viewModel.didUpdateMovies = { [weak contentView] _ in
@@ -86,9 +86,8 @@ final class LibraryViewController: UIViewController {
             contentView.collectionView.setContentOffset(offset, animated: true)
         }
 
-        viewModel.didUpdateGenres = { [weak self] _ in
-            guard let self = self else { return }
-            self.contentView?.segmentedControl.reloadData()
+        viewModel.didUpdateGenres = { [weak contentView] _ in
+            contentView?.segmentedControl.reloadData()
         }
     }
 
@@ -133,19 +132,15 @@ extension LibraryViewController: UICollectionViewDataSource {
     }
 }
 
-extension LibraryViewController: UICollectionViewDelegateFlowLayout {
+extension LibraryViewController: UICollectionViewDataSourcePrefetching {
+    func collectionView(_ collectionView: UICollectionView, prefetchItemsAt indexPaths: [IndexPath]) {
+        print(indexPaths)
+    }
+}
+
+extension LibraryViewController: UICollectionViewDelegate {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.performSelectionMovie(at: indexPath.item)
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout _: UICollectionViewLayout,
-        sizeForItemAt _: IndexPath
-    ) -> CGSize {
-        let horisontalInset = collectionView.contentInset.left + collectionView.contentInset.right
-        let width = (collectionView.bounds.width - horisontalInset) / 2
-        return CGSize(width: width, height: width * 1.5)
     }
 }
 

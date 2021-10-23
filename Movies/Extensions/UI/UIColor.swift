@@ -3,8 +3,6 @@
 
 import UIKit
 
-// swiftlint:disable force_unwrapping
-
 extension UIColor {
-    static let accentColor: UIColor = .init(named: "color.accent")!
+    static let accentColor: UIColor = .label
 }
