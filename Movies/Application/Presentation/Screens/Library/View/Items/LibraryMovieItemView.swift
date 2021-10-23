@@ -120,6 +120,6 @@ private extension LibraryMovieView {
         }
 
         static let padding: UIEdgeInsets = .init(8)
-        static let spacing: CGFloat = 4.0
+        static let spacing: CGFloat = 8.0
     }
 }

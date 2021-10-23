@@ -138,19 +138,9 @@ extension LibraryViewController: UICollectionViewDataSourcePrefetching {
     }
 }
 
-extension LibraryViewController: UICollectionViewDelegateFlowLayout {
+extension LibraryViewController: UICollectionViewDelegate {
     func collectionView(_: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         viewModel.performSelectionMovie(at: indexPath.item)
-    }
-
-    func collectionView(
-        _ collectionView: UICollectionView,
-        layout _: UICollectionViewLayout,
-        sizeForItemAt _: IndexPath
-    ) -> CGSize {
-        let horisontalInset = collectionView.contentInset.left + collectionView.contentInset.right
-        let width = (collectionView.bounds.width - horisontalInset) / 2
-        return CGSize(width: width, height: width * 1.5)
     }
 }
 
