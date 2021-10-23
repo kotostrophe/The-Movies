@@ -1,4 +1,4 @@
-// LibraryMovieView.swift
+// LibraryMovieItemView.swift
 // Copyright © Taras Kotsur. All rights reserved.
 
 import UIKit
@@ -11,7 +11,6 @@ final class LibraryMovieView: UICollectionViewCell {
     // MARK: - Properties
 
     private(set) var movie: Movie?
-    private(set) weak var imageProxy: ImageProxyServiceProtocol?
 
     // MARK: - Public properties
 
@@ -70,6 +69,8 @@ final class LibraryMovieView: UICollectionViewCell {
 
         imageView.image = nil
         titleLabel.text = nil
+
+        movie = nil
     }
 
     // MARK: - Configuration methods

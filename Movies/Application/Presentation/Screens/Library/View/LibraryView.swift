@@ -14,7 +14,7 @@ final class LibraryView: UIView {
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.backgroundColor = .clear
         collectionView.contentInset = Appearance.contentMargin
-        collectionView.verticalScrollIndicatorInsets.bottom = 0
+        collectionView.verticalScrollIndicatorInsets = Appearance.contentMargin
         return collectionView
     }()
 
@@ -97,30 +97,18 @@ private extension LibraryView {
 
         let scrollViewContent = scrollView.contentLayoutGuide
         segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            segmentedControl.leadingAnchor.constraint(
-                equalTo: scrollViewContent.leadingAnchor,
-                constant: Appearance.toolbarContentPadding.left
-            ),
-            segmentedControl.trailingAnchor.constraint(
-                equalTo: scrollViewContent.trailingAnchor,
-                constant: -Appearance.toolbarContentPadding.right
-            ),
-            segmentedControl.topAnchor.constraint(
-                equalTo: scrollViewContent.topAnchor,
-                constant: Appearance.toolbarContentPadding.top
-            ),
-            segmentedControl.bottomAnchor.constraint(
-                equalTo: scrollViewContent.bottomAnchor,
-                constant: -Appearance.toolbarContentPadding.bottom
-            )
-        ])
+        segmentedControl.anchor
+            .left(to: scrollViewContent.leftAnchor, constant: Appearance.toolbarContentPadding.left)
+            .right(to: scrollViewContent.rightAnchor, constant: -Appearance.toolbarContentPadding.right)
+            .top(to: scrollViewContent.topAnchor, constant: Appearance.toolbarContentPadding.top)
+            .bottom(to: scrollViewContent.bottomAnchor, constant: -Appearance.toolbarContentPadding.bottom)
+            .activate()
     }
 }
 
 private extension LibraryView {
     enum Appearance {
-        static let contentMargin: UIEdgeInsets = .init(top: 0, left: 8, bottom: ToolbarView.height + 8, right: 0)
+        static let contentMargin: UIEdgeInsets = .init(top: 0, left: 0, bottom: ToolbarView.height + 8, right: 0)
         static let toolbarContentPadding: UIEdgeInsets = .init(top: 12, left: 16, bottom: 12, right: 16)
     }
 }
