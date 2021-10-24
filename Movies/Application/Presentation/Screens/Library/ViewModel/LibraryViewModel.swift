@@ -35,6 +35,7 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     let libraryProxyService: LibraryProxyServiceProtocol
     let imageProxyService: ImageProxyServiceProtocol
     let genreProxyService: GenreProxyServiceProtocol
+    let itemsService: LibraryItemsServiceProtocol
     let coordinator: LibraryCoordinatorProtocol
 
     let coreDataService = LibraryCoreDataService(coreData: CoreData.shared)
@@ -58,12 +59,14 @@ final class LibraryViewModel: LibraryViewModelProtocol {
         libraryProxyService: LibraryProxyServiceProtocol,
         genreProxyService: GenreProxyServiceProtocol,
         imageProxyService: ImageProxyServiceProtocol,
+        itemsService: LibraryItemsServiceProtocol,
         coordinator: LibraryCoordinatorProtocol
     ) {
         self.model = model
         self.libraryProxyService = libraryProxyService
         self.genreProxyService = genreProxyService
         self.imageProxyService = imageProxyService
+        self.itemsService = itemsService
         self.coordinator = coordinator
     }
 

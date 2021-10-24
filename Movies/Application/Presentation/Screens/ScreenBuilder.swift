@@ -31,12 +31,14 @@ final class ScreenBuilder: ScreenBuilderProtocol {
         let imageProxyService = serviceFactory.makeProxiesFactory().makeImageProxyService()
         let genresProxyService = serviceFactory.makeProxiesFactory().makeGenreProxyService()
         let libraryProxyService = serviceFactory.makeProxiesFactory().makeLibraryProxyService()
+        let itemsService = serviceFactory.makeItemsServiceFactory().makeLibraryItemsService()
 
         let viewModel = LibraryViewModel(
             model: model,
             libraryProxyService: libraryProxyService,
             genreProxyService: genresProxyService,
             imageProxyService: imageProxyService,
+            itemsService: itemsService,
             coordinator: coordinator
         )
 

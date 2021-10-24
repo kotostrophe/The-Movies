@@ -7,6 +7,7 @@ protocol ServiceFactoryProtocol: AnyObject {
     func makeNetworkingFactory() -> NetworkingFactoryProtocol
     func makeProxiesFactory() -> ProxiesFactoryProtocol
     func makeImageFileService() -> ImageFileServiceProtocol
+    func makeItemsServiceFactory() -> ItemsServiceFactoryProtocol
 }
 
 final class ServiceFactory: ServiceFactoryProtocol {
@@ -26,6 +27,10 @@ final class ServiceFactory: ServiceFactoryProtocol {
 
     func makeImageFileService() -> ImageFileServiceProtocol {
         ImageFileService()
+    }
+
+    func makeItemsServiceFactory() -> ItemsServiceFactoryProtocol {
+        ItemsServiceFactory()
     }
 }
 
