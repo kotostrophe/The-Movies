@@ -3,7 +3,7 @@
 
 import Foundation
 
-protocol LibraryViewModelProtocol: AnyObject {
+protocol LibraryViewModelProtocol: ReusableContainerDataSource {
     var didUpdateMovies: ((_ movis: [Movie]) -> Void)? { get set }
     var didUpdateGenres: ((_ genres: [Genre]) -> Void)? { get set }
     var didUpdateSelectedGenre: ((_ genre: Genre, _ atIndex: Int) -> Void)? { get set }
@@ -147,5 +147,15 @@ final class LibraryViewModel: LibraryViewModelProtocol {
     func performSelectionMovie(at index: Int) {
         guard let movie = model.movies[safe: index] else { return }
         coordinator.startDetails(movie: movie)
+    }
+}
+
+extension LibraryViewModel: ReusableContainerDataSource {
+    func registerObjects(to container: ReusableContainerProtocol) {
+        itemsService.registerObjects(to: container)
+    }
+
+    func dequeueObject(for conatiner: ReusableContainerProtocol, by indexPath: IndexPath) -> ReusableObjectProtocol {
+        itemsService.dequeueObject(for: conatiner, by: indexPath)
     }
 }

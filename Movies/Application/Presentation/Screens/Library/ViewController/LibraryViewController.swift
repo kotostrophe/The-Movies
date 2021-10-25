@@ -10,9 +10,7 @@ final class LibraryViewController: UIViewController {
 
     // MARK: - UI Properties
 
-    var contentView: LibraryView? {
-        view as? LibraryView
-    }
+    let contentView: LibraryView = .init()
 
     // MARK: - Initializer
 
@@ -30,15 +28,14 @@ final class LibraryViewController: UIViewController {
     // MARK: - Life cycle methods
 
     override func loadView() {
-        let view = LibraryView()
-        view.collectionView.register(LibraryMovieView.self)
-        view.collectionView.dataSource = self
-        view.collectionView.delegate = self
-        view.collectionView.prefetchDataSource = self
-        view.segmentedControl.dataSource = self
-        view.segmentedControl.delegate = self
+        contentView.collectionView.dataSource = self
+        contentView.collectionView.delegate = self
+        contentView.collectionView.prefetchDataSource = self
 
-        self.view = view
+        contentView.segmentedControl.dataSource = self
+        contentView.segmentedControl.delegate = self
+
+        view = contentView
     }
 
     override func viewDidLoad() {
@@ -47,7 +44,7 @@ final class LibraryViewController: UIViewController {
 
         configureNavigationBar()
         configureSearchBar()
-        configuraViewModelCallbacks()
+        configuraViewModel()
 
         viewModel.setup()
     }
@@ -68,7 +65,9 @@ final class LibraryViewController: UIViewController {
         definesPresentationContext = true
     }
 
-    private func configuraViewModelCallbacks() {
+    private func configuraViewModel() {
+        viewModel.registerObjects(to: contentView.collectionView)
+
         viewModel.didUpdateSelectedGenre = { [weak contentView] _, index in
             contentView?.segmentedControl.selectedSegmentIndex = index
         }
@@ -124,10 +123,9 @@ extension LibraryViewController: UICollectionViewDataSource {
         _ collectionView: UICollectionView,
         cellForItemAt indexPath: IndexPath
     ) -> UICollectionViewCell {
-        let cell = collectionView.dequeueCell(LibraryMovieView.self, for: indexPath)
-        guard let movie = viewModel.movies[safe: indexPath.item] else { return cell }
-        cell.dataSource = self
-        cell.configure(movie: movie)
+        let cell = viewModel.dequeueObject(for: collectionView, by: indexPath)
+        guard let cell = cell as? UICollectionViewCell
+        else { fatalError("Failed to cast \(cell) to UICollectionViewCell") }
         return cell
     }
 }

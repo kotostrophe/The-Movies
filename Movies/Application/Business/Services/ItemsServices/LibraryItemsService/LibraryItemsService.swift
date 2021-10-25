@@ -4,7 +4,7 @@
 import Foundation
 import UIKit
 
-protocol LibraryItemsServiceProtocol: AnyObject {}
+protocol LibraryItemsServiceProtocol: ReusableContainerDataSource {}
 
 final class LibraryItemsService: LibraryItemsServiceProtocol {
     // MARK: - Properties
@@ -20,9 +20,11 @@ final class LibraryItemsService: LibraryItemsServiceProtocol {
 }
 
 extension LibraryItemsService: ReusableContainerDataSource {
-    func registerObjects(to container: ReusableContainerProtocol) {}
+    func registerObjects(to container: ReusableContainerProtocol) {
+        container.register(cell: LibraryMovieView.self)
+    }
 
     func dequeueObject(for conatiner: ReusableContainerProtocol, by indexPath: IndexPath) -> ReusableObjectProtocol {
-        conatiner.dequeue(cell: UITableViewCell.self, for: indexPath)
+        conatiner.dequeue(cell: LibraryMovieView.self, for: indexPath)
     }
 }
